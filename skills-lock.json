@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "nuxt-ui": {
+      "source": "nuxt/ui",
+      "sourceType": "github",
+      "skillPath": "skills/nuxt-ui/SKILL.md",
+      "computedHash": "e8d67ab7f7b45ec4d34e5c50a665208db7909c825469da08dc8dd57ca9968ec3"
+    },
     "pinia": {
       "source": "antfu/skills",
       "sourceType": "github",
