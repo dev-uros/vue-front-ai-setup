@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "nuxt-ui": {
+      "type": "http",
+      "url": "https://ui.nuxt.com/mcp"
+    },
+    "zod": {
+      "type": "http",
+      "url": "https://mcp.inkeep.com/zod/mcp"
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest"
+      ],
+      "env": {}
+    }
+  }
+}
