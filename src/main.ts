@@ -10,8 +10,7 @@ import ui from '@nuxt/ui/vue-plugin'
 const app = createApp(App)
 
 app.use(createPinia())
-app
-.use(PiniaColada, {
+app.use(PiniaColada, {
   queryOptions: {
     // change the stale time for all queries to 0ms
     staleTime: 0,

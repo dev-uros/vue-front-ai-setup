@@ -1,5 +1,31 @@
 # frontend
 
+## Demo credentials
+
+Auth is mocked in `src/features/auth/api/login.ts` — no backend is involved yet.
+
+| Email | Password | Result |
+| --- | --- | --- |
+| `ana.kovac@fifthguild.dev` | `Password123!` | signs in |
+| `nikola.peric@fifthguild.dev` | `Password123!` | signs in |
+| `ne.postoji@fifthguild.dev` | anything | "No account exists for …" |
+| `ana.kovac@fifthguild.dev` | anything else | "That password does not match this account." |
+
+The session is kept in `localStorage` under `app.session.user`, so it survives a refresh. Every
+route is behind the auth guard unless it sets `meta.public` — see `src/router/guards.ts`.
+
+`/auth/forgot-password` accepts any syntactically valid address and always answers the same way,
+on purpose: a different answer for unknown addresses would let anyone enumerate registered
+accounts. Nothing is emailed — the mock lives in `src/features/auth/api/requestPasswordReset.ts`.
+Because no mail is sent, the confirmation screen shows the link the email would have carried, so
+the flow stays clickable.
+
+`/auth/reset-password?email=…&token=…` reads both values off the URL and parses them before use;
+an incomplete or malformed link renders a dead-link screen instead of a form. The new password
+must be at least 8 characters with an uppercase letter, a lowercase letter, a number and a symbol,
+and must match the confirmation. Submitting signs the user in and lands them on `/` — in the mock
+any valid link is accepted, and an address without an account gets a user synthesised from it.
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
