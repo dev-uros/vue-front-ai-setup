@@ -35,7 +35,7 @@ const canSeeHistory = computed(() => session.isAdmin)
 </script>
 
 <template>
-  <div class="space-y-6">
+  <div class="space-y-8">
     <UAlert
       v-if="error"
       color="error"
@@ -62,9 +62,11 @@ const canSeeHistory = computed(() => session.isAdmin)
           <UserAvatarField :user="user" size="xl" />
 
           <div class="min-w-0 flex-1">
-            <h2 class="text-xl font-semibold text-default">{{ userFullName(user) }}</h2>
-            <p class="text-sm text-muted">{{ user.email }}</p>
-            <div class="mt-2 flex flex-wrap gap-2">
+            <h2 class="font-serif text-2xl font-semibold text-highlighted">
+              {{ userFullName(user) }}
+            </h2>
+            <p class="mt-1 text-sm text-muted">{{ user.email }}</p>
+            <div class="mt-3 flex flex-wrap gap-2">
               <UserRoleBadge :role="user.role" />
               <UserStatusBadge :user="user" />
               <UBadge v-if="isSelf" label="Vi" color="info" variant="subtle" size="sm" />
@@ -76,7 +78,7 @@ const canSeeHistory = computed(() => session.isAdmin)
               label="Izmeni"
               icon="i-lucide-pencil"
               color="neutral"
-              variant="outline"
+              variant="subtle"
               data-testid="edit-user"
               @click="isFormOpen = true"
             />
@@ -87,7 +89,7 @@ const canSeeHistory = computed(() => session.isAdmin)
               label="Promeni ulogu"
               icon="i-lucide-shield"
               color="neutral"
-              variant="outline"
+              variant="subtle"
               data-testid="change-role"
               @click="isRoleOpen = true"
             />
@@ -97,7 +99,7 @@ const canSeeHistory = computed(() => session.isAdmin)
               label="Pošalji aktivacioni link"
               icon="i-lucide-mail"
               color="neutral"
-              variant="outline"
+              variant="subtle"
               :loading="isActing"
               data-testid="resend-activation"
               @click="resendActivation(user.id)"
@@ -149,7 +151,7 @@ const canSeeHistory = computed(() => session.isAdmin)
 
       <UCard v-if="canSeeHistory">
         <template #header>
-          <h3 class="text-sm font-medium text-default">Istorija izmena</h3>
+          <h3 class="text-base font-semibold text-highlighted">Istorija izmena</h3>
         </template>
 
         <UserLogsTable :user-id="user.id" :enabled="canSeeHistory" />
@@ -157,7 +159,7 @@ const canSeeHistory = computed(() => session.isAdmin)
 
       <UCard v-if="canSeeHistory">
         <template #header>
-          <h3 class="text-sm font-medium text-default">Istorija prijava</h3>
+          <h3 class="text-base font-semibold text-highlighted">Istorija prijava</h3>
         </template>
 
         <UserLoginsTable :user-id="user.id" :enabled="canSeeHistory" />

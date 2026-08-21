@@ -1,0 +1,249 @@
+- generic:
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - paragraph: Fifth Guild
+            - paragraph: Administracija
+          - button
+      - generic:
+        - separator
+        - navigation:
+          - list:
+            - listitem:
+              - link:
+                - /url: /
+                - generic: Početna
+            - listitem:
+              - link:
+                - /url: /users
+                - generic: Korisnici
+          - list:
+            - listitem:
+              - button [expanded]:
+                - generic: Podešavanja
+              - region:
+                - list:
+                  - listitem:
+                    - link:
+                      - /url: /settings/profile
+                      - generic: Moj nalog
+                  - listitem:
+                    - link:
+                      - /url: /settings/appearance
+                      - generic: Izgled
+      - generic:
+        - button:
+          - generic:
+            - generic: Uroš Minić
+            - generic: uros.minic@fifthguild.com
+    - generic:
+      - generic:
+        - generic:
+          - heading [level=1]: Korisnici
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - heading [level=2]: Korisnici
+              - paragraph: Svi nalozi u sistemu, uključujući isključene i one koji još nisu aktivirani.
+            - button:
+              - generic: Novi korisnik
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - paragraph: "8"
+                    - paragraph: Ukupno naloga
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - paragraph: "3"
+                    - paragraph: Administratori
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - paragraph: "1"
+                    - paragraph: Nisu aktivirani
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - paragraph: "1"
+                    - paragraph: Isključeni
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - textbox:
+                    - /placeholder: Pretraga po imenu ili email adresi
+                - combobox:
+                  - generic: Svi statusi
+                - paragraph: 8 od 8
+            - generic:
+              - generic:
+                - table:
+                  - rowgroup:
+                    - row:
+                      - columnheader: Korisnik
+                      - columnheader: Uloga
+                      - columnheader: Status
+                      - columnheader: Kreiran
+                      - columnheader
+                    - row
+                  - rowgroup:
+                    - row:
+                      - cell:
+                        - generic:
+                          - generic: AN
+                          - generic:
+                            - link:
+                              - /url: /users/4
+                              - text: Ana Nikolić
+                            - generic: ana.nikolic@fifthguild.com
+                      - cell:
+                        - generic: Korisnik
+                      - cell:
+                        - generic: Aktivan
+                      - cell: 22. 7. 2026.
+                      - cell:
+                        - button
+                    - row:
+                      - cell:
+                        - generic:
+                          - generic: JS
+                          - generic:
+                            - link:
+                              - /url: /users/6
+                              - text: Jovana Stanković
+                            - generic: jovana.stankovic@fifthguild.com
+                      - cell:
+                        - generic: Korisnik
+                      - cell:
+                        - generic: Nije aktiviran
+                      - cell: 29. 7. 2026.
+                      - cell:
+                        - button
+                    - row:
+                      - cell:
+                        - generic:
+                          - generic: MP
+                          - generic:
+                            - link:
+                              - /url: /users/3
+                              - text: Marko Petrović-Ilić
+                            - generic: marko.petrovic-ilic@fifthguild.com
+                      - cell:
+                        - generic: Korisnik
+                      - cell:
+                        - generic: Aktivan
+                      - cell: 14. 7. 2026.
+                      - cell:
+                        - button
+                    - row:
+                      - cell:
+                        - generic:
+                          - generic:
+                            - link:
+                              - /url: /users/2
+                              - text: Milica Jovanović
+                            - generic: milica.jovanovic@fifthguild.com
+                      - cell:
+                        - generic: Administrator
+                      - cell:
+                        - generic: Aktivan
+                      - cell: 8. 7. 2026.
+                      - cell:
+                        - button
+                    - row:
+                      - cell:
+                        - generic:
+                          - generic:
+                            - link:
+                              - /url: /users/7
+                              - text: Nikola Ilić
+                            - generic: nikola.ilic@fifthguild.com
+                      - cell:
+                        - generic: Korisnik
+                      - cell:
+                        - generic: Isključen
+                      - cell: 12. 7. 2026.
+                      - cell:
+                        - button
+                    - row:
+                      - cell:
+                        - generic:
+                          - generic: SĐ
+                          - generic:
+                            - link:
+                              - /url: /users/5
+                              - text: Stefan Đorđević
+                            - generic: stefan.djordjevic@fifthguild.com
+                      - cell:
+                        - generic: Korisnik
+                      - cell:
+                        - generic: Aktivan
+                      - cell: 31. 7. 2026.
+                      - cell:
+                        - button
+                    - row:
+                      - cell:
+                        - generic:
+                          - generic:
+                            - link:
+                              - /url: /users/8
+                              - text: Teodora Marković
+                            - generic: teodora.markovic@fifthguild.com
+                      - cell:
+                        - generic: Administrator
+                      - cell:
+                        - generic: Aktivan
+                      - cell: 18. 7. 2026.
+                      - cell:
+                        - button
+                    - row:
+                      - cell:
+                        - generic:
+                          - generic:
+                            - link:
+                              - /url: /users/1
+                              - text: Uroš Minić
+                            - generic: uros.minic@fifthguild.com
+                      - cell:
+                        - generic: Administrator
+                      - cell:
+                        - generic: Aktivan
+                      - cell: 21. 8. 2026.
+                      - cell:
+                        - button
+  - dialog [ref=f42e8]:
+    - generic [ref=f42e9]:
+      - generic [ref=f42e10]:
+        - heading "Novi korisnik" [level=2] [ref=f42e11]
+        - paragraph [ref=f42e12]: Korisnik dobija aktivacioni link na email i sam postavlja lozinku.
+      - button "Close" [active] [ref=f42e13]
+    - generic [ref=f42e17]:
+      - generic [ref=f42e18]:
+        - generic [ref=f42e19]:
+          - generic [ref=f42e20]: Ime*
+          - textbox "Ime*" [ref=f42e25]
+        - generic [ref=f42e26]:
+          - generic [ref=f42e27]: Prezime*
+          - textbox "Prezime*" [ref=f42e32]
+      - generic [ref=f42e33]:
+        - generic [ref=f42e34]: Email*
+        - textbox "Email*" [ref=f42e39]
+      - generic [ref=f42e40]:
+        - generic [ref=f42e41]: Uloga*
+        - generic [ref=f42e44]:
+          - combobox "Uloga*" [ref=f42e45]:
+            - generic: Korisnik — sme samo da čita
+          - combobox [ref=f42e49]
+          - generic [ref=f42e50]: Uloga se kasnije menja zasebnom radnjom.
+    - generic [ref=f42e52]:
+      - button "Odustani" [ref=f42e53]
+      - button "Kreiraj korisnika" [ref=f42e55]

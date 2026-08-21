@@ -56,12 +56,12 @@ const stats = computed(() => {
 </script>
 
 <template>
-  <div class="space-y-6">
+  <div class="space-y-8">
     <div>
-      <h2 class="text-xl font-semibold text-default" data-testid="greeting">
+      <h2 class="font-serif text-3xl font-semibold text-highlighted" data-testid="greeting">
         Zdravo, {{ session.user?.name }}
       </h2>
-      <p class="mt-1 text-sm text-muted">
+      <p class="mt-2 text-sm text-muted">
         Prijavljeni ste kao
         <span class="font-medium text-default">{{ session.user?.email }}</span>
       </p>
@@ -77,13 +77,15 @@ const stats = computed(() => {
       :description="toDisplayMessage(error)"
     />
 
-    <div v-else class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <div v-else class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       <UCard v-for="stat in stats" :key="stat.label" :ui="{ body: 'sm:p-4' }">
         <div class="flex items-center gap-3">
           <UIcon :name="stat.icon" class="size-5 shrink-0 text-muted" />
           <div>
-            <USkeleton v-if="isLoading && !users" class="h-7 w-10" />
-            <p v-else class="text-xl font-semibold text-default">{{ stat.value }}</p>
+            <USkeleton v-if="isLoading && !users" class="h-8 w-10" />
+            <p v-else class="font-serif text-2xl font-semibold text-highlighted">
+              {{ stat.value }}
+            </p>
             <p class="text-xs text-muted">{{ stat.label }}</p>
           </div>
         </div>

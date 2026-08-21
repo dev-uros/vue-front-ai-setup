@@ -19,7 +19,8 @@ const items = computed(() => mainNavigation(String(route.name ?? '')))
     :default-size="18"
     :max-size="26"
     :ui="{
-      root: 'transition-[width] duration-200 ease-out motion-reduce:transition-none data-[dragging=true]:transition-none',
+      root: 'bg-muted/60 transition-[width] duration-200 ease-out motion-reduce:transition-none data-[dragging=true]:transition-none',
+      content: 'bg-muted',
       footer: 'border-t border-default',
     }"
   >
@@ -33,7 +34,7 @@ const items = computed(() => mainNavigation(String(route.name ?? '')))
           <UAvatar icon="i-lucide-gem" size="lg" class="shrink-0 bg-primary/10 text-primary" />
 
           <div class="min-w-0 flex-1">
-            <p class="truncate text-sm font-semibold text-default">Fifth Guild</p>
+            <p class="truncate font-serif text-base font-semibold text-highlighted">Fifth Guild</p>
             <p class="truncate text-xs text-muted">Administracija</p>
           </div>
         </template>

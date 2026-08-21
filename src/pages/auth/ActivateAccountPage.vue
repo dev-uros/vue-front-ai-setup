@@ -12,7 +12,7 @@ const { link, submit, isLoading, feedback, isLinkRejected } = useSetPasswordFlow
 </script>
 
 <template>
-  <UCard>
+  <UCard class="shadow-lg">
     <template #header>
       <div class="flex flex-col items-center gap-3 text-center">
         <UAvatar
@@ -21,10 +21,10 @@ const { link, submit, isLoading, feedback, isLinkRejected } = useSetPasswordFlow
           class="bg-primary/10 text-primary"
         />
         <div>
-          <h1 class="text-lg font-semibold text-default">
+          <h1 class="font-serif text-2xl font-semibold text-highlighted">
             {{ link ? 'Aktivirajte nalog' : 'Link nije ispravan' }}
           </h1>
-          <p class="mt-1 text-sm text-muted">
+          <p class="mt-2 text-sm text-muted">
             {{
               link
                 ? `Postavite lozinku za ${link.email} i nalog je spreman.`

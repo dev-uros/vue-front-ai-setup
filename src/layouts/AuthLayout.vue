@@ -1,5 +1,6 @@
 <template>
-  <div class="flex min-h-dvh items-center justify-center bg-elevated/40 p-4 sm:p-6">
+  <div class="flex min-h-dvh items-center justify-center p-4 sm:p-6">
+    <!-- No background of its own: the card sits on the warm page colour from `main.css`. -->
     <div class="w-full max-w-sm">
       <RouterView v-slot="{ Component, route }">
         <Transition name="page" mode="out-in">

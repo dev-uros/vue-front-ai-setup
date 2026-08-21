@@ -1,0 +1,107 @@
+- generic [active]:
+  - generic:
+    - generic [ref=f39e54]:
+      - generic [ref=f39e55]:
+        - generic [ref=f39e57]:
+          - generic [ref=f39e63]:
+            - paragraph [ref=f39e64]: Fifth Guild
+            - paragraph [ref=f39e65]: Administracija
+          - button "Collapse sidebar" [ref=f39e66]
+        - generic [ref=f39e71]:
+          - separator [ref=f39e72]
+          - navigation [ref=f39e74]:
+            - list [ref=f39e75]:
+              - listitem [ref=f39e76]:
+                - link "Početna" [ref=f39e77] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=f39e83]:
+                - link "Korisnici" [ref=f39e84] [cursor=pointer]:
+                  - /url: /users
+            - list [ref=f39e91]:
+              - listitem [ref=f39e92]:
+                - button "Podešavanja" [expanded] [ref=f39e93]
+                - region "Podešavanja" [ref=f39e102]:
+                  - list [ref=f39e103]:
+                    - listitem [ref=f39e104]:
+                      - link "Moj nalog" [ref=f39e105] [cursor=pointer]:
+                        - /url: /settings/profile
+                    - listitem [ref=f39e111]:
+                      - link "Izgled" [ref=f39e112] [cursor=pointer]:
+                        - /url: /settings/appearance
+        - button "Meni naloga za Uroš Minić" [ref=f39e122]:
+          - img "Uroš Minić" [ref=f39e124]
+          - generic [ref=f39e125]:
+            - generic [ref=f39e126]: Uroš Minić
+            - generic [ref=f39e127]: uros.minic@fifthguild.com
+      - separator
+      - generic [ref=f39e133]:
+        - heading "Početna" [level=1] [ref=f39e136]
+        - generic [ref=f39e138]:
+          - generic [ref=f39e139]:
+            - heading "Zdravo, Uroš" [level=2] [ref=f39e140]
+            - paragraph [ref=f39e141]: Prijavljeni ste kao uros.minic@fifthguild.com
+          - generic [ref=f39e142]:
+            - generic [ref=f39e144]:
+              - generic [ref=f39e145]:
+                - heading "Prečice" [level=3] [ref=f39e146]
+                - paragraph [ref=f39e147]: Stranice na koje se najčešće vraćate.
+              - button "Obriši prečice" [ref=f39e148]
+            - generic [ref=f39e153]:
+              - generic [ref=f39e155]:
+                - generic [ref=f39e163]:
+                  - generic [ref=f39e164]: Korisnici
+                  - generic [ref=f39e165]: 31 poseta
+                - link "Korisnici":
+                  - /url: /users
+                  - generic [ref=f39e166] [cursor=pointer]
+              - generic [ref=f39e168]:
+                - generic [ref=f39e179]:
+                  - generic [ref=f39e180]: Izgled
+                  - generic [ref=f39e181]: 6 poseta
+                - link "Izgled":
+                  - /url: /settings/appearance
+                  - generic [ref=f39e182] [cursor=pointer]
+              - generic [ref=f39e184]:
+                - generic [ref=f39e192]:
+                  - generic [ref=f39e193]: Uroš Minić
+                  - generic [ref=f39e194]: 2 posete
+                - link "Uroš Minić":
+                  - /url: /users/1
+                  - generic [ref=f39e195] [cursor=pointer]
+              - generic [ref=f39e197]:
+                - generic [ref=f39e206]:
+                  - generic [ref=f39e207]: Moj nalog
+                  - generic [ref=f39e208]: 2 posete
+                - link "Moj nalog":
+                  - /url: /settings/profile
+                  - generic [ref=f39e209] [cursor=pointer]
+              - generic [ref=f39e211]:
+                - generic [ref=f39e219]:
+                  - generic [ref=f39e220]: Ana Nikolić
+                  - generic [ref=f39e221]: 1 poseta
+                - link "Ana Nikolić":
+                  - /url: /users/4
+                  - generic [ref=f39e222] [cursor=pointer]
+          - generic [ref=f39e223]:
+            - generic [ref=f39e231]:
+              - paragraph [ref=f39e232]: "8"
+              - paragraph [ref=f39e233]: Ukupno naloga
+            - generic [ref=f39e239]:
+              - paragraph [ref=f39e240]: "3"
+              - paragraph [ref=f39e241]: Administratori
+            - generic [ref=f39e249]:
+              - paragraph [ref=f39e250]: "1"
+              - paragraph [ref=f39e251]: Nisu aktivirani
+            - generic [ref=f39e259]:
+              - paragraph [ref=f39e260]: "1"
+              - paragraph [ref=f39e261]: Isključeni
+    - alert [ref=f39e262]: Notification Uspešno ste prijavljeni.
+  - generic [ref=f39e42]:
+    - generic "Toggle devtools panel" [ref=f39e43] [cursor=pointer]
+    - generic "Toggle Component Inspector" [ref=f39e49] [cursor=pointer]
+  - region "Notifications (F8)":
+    - list [ref=f39e264]:
+      - listitem [ref=f39e265]:
+        - generic [ref=f39e270]: Uspešno ste prijavljeni.
+        - button "Close" [ref=f39e273]
+        - progressbar "87%" [ref=f39e277]

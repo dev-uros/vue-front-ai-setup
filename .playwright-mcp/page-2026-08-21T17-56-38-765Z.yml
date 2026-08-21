@@ -1,0 +1,4 @@
+- generic [active]:
+  - generic "Toggle devtools panel" [ref=f34e2] [cursor=pointer]
+  - region "Notifications (F8)":
+    - list

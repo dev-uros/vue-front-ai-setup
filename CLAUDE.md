@@ -200,7 +200,14 @@ These are project decisions that no skill covers — follow them exactly.
 - `U*` components are auto-imported. Do not add manual imports for them.
 - Theming is CSS-first in `src/assets/css/main.css` (`@import "tailwindcss"; @import "@nuxt/ui";`).
   There is **no** `tailwind.config.*` and none should be created. `app.config.ts` is Nuxt-only and
-  does not apply here.
+  does not apply here — which palette each semantic colour maps to lives in the `ui()` plugin
+  options in `vite.config.ts` instead.
+- The app runs the **Warm Editorial** theme from `design-systems/warm-editorial.md`. Every token —
+  the `terracotta` brand ramp, the type scale, radii, shadows and the `--ui-*` surface colours for
+  both modes — is declared in `main.css`, and components reach them only through Nuxt UI's semantic
+  classes. Add a colour there, never in a component. `font-serif` (Source Serif 4) is reserved for
+  editorial headings; everything else is `font-sans` (DM Sans). Both load from Google Fonts in
+  `index.html`.
 - Reach for a Nuxt UI component before writing a custom one; hand-roll only when nothing fits.
 - Nuxt UI's Vue build stubs Nuxt-only composables. `useCookie` is a **no-op**, so any component
   defaulting to cookie persistence must be switched to local storage — `UDashboardGroup` in

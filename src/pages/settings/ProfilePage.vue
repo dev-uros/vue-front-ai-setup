@@ -29,17 +29,17 @@ const isFormOpen = shallowRef(false)
 </script>
 
 <template>
-  <div v-if="user" class="space-y-6">
+  <div v-if="user" class="space-y-8">
     <UCard>
       <template #header>
         <div class="flex flex-wrap items-center justify-between gap-3">
-          <h3 class="text-sm font-medium text-default">Podaci naloga</h3>
+          <h3 class="text-base font-semibold text-highlighted">Podaci naloga</h3>
           <UButton
             v-if="session.isAdmin"
             label="Izmeni"
             icon="i-lucide-pencil"
             color="neutral"
-            variant="outline"
+            variant="subtle"
             size="sm"
             data-testid="edit-profile"
             @click="isFormOpen = true"

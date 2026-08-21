@@ -1,0 +1,25 @@
+- generic [active] [ref=f39e1]:
+  - generic [ref=f39e5]:
+    - generic [ref=f39e13]:
+      - heading "Dobrodošli nazad" [level=1] [ref=f39e14]
+      - paragraph [ref=f39e15]: Prijavite se na svoj Fifth Guild nalog.
+    - generic [ref=f39e17]:
+      - generic [ref=f39e18]:
+        - generic [ref=f39e19]: Email*
+        - textbox "Email*" [ref=f39e24]:
+          - /placeholder: ime.prezime@primer.com
+      - generic [ref=f39e25]:
+        - generic [ref=f39e27]:
+          - generic [ref=f39e28]: Lozinka*
+          - link "Zaboravili ste lozinku?" [ref=f39e30] [cursor=pointer]:
+            - /url: /auth/forgot-password
+        - generic [ref=f39e32]:
+          - textbox "Lozinka*" [ref=f39e33]:
+            - /placeholder: ••••••••
+          - button "Prikaži lozinku" [ref=f39e35]
+      - button "Prijavi se" [ref=f39e40]
+  - generic [ref=f39e42]:
+    - generic "Toggle devtools panel" [ref=f39e43] [cursor=pointer]
+    - generic "Toggle Component Inspector" [ref=f39e49] [cursor=pointer]
+  - region "Notifications (F8)":
+    - list

@@ -84,27 +84,33 @@ function actionsFor(user: User) {
 </script>
 
 <template>
-  <div class="space-y-4">
-    <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
-      <UInput
-        v-model="search"
-        icon="i-lucide-search"
-        placeholder="Pretraga po imenu ili email adresi"
-        class="sm:max-w-xs"
-        data-testid="users-search"
-      />
+  <!--
+    Filters and rows share one surface: the table is the page's content, and a card is what
+    separates content from the warm page colour everywhere else in the app.
+  -->
+  <UCard :ui="{ body: 'p-0 sm:p-0' }">
+    <template #header>
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+        <UInput
+          v-model="search"
+          icon="i-lucide-search"
+          placeholder="Pretraga po imenu ili email adresi"
+          class="sm:max-w-xs"
+          data-testid="users-search"
+        />
 
-      <USelect
-        v-model="statusFilter"
-        :items="statusItems"
-        class="sm:w-48"
-        data-testid="users-status-filter"
-      />
+        <USelect
+          v-model="statusFilter"
+          :items="statusItems"
+          class="sm:w-48"
+          data-testid="users-status-filter"
+        />
 
-      <p class="text-sm text-muted sm:ms-auto" data-testid="users-count">
-        {{ rows.length }} od {{ props.users.length }}
-      </p>
-    </div>
+        <p class="text-sm text-muted sm:ms-auto" data-testid="users-count">
+          {{ rows.length }} od {{ props.users.length }}
+        </p>
+      </div>
+    </template>
 
     <UTable
       :data="rows"
@@ -155,5 +161,5 @@ function actionsFor(user: User) {
         </UDropdownMenu>
       </template>
     </UTable>
-  </div>
+  </UCard>
 </template>

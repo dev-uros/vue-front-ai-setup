@@ -26,7 +26,8 @@ const back = computed(() => route.meta.back)
     <UDashboardPanel>
       <template #header>
         <!-- The collapse control lives in the sidebar itself; see AppSidebar. -->
-        <UDashboardNavbar :title="title">
+        <!-- The page title is the one piece of chrome set in the editorial serif. -->
+        <UDashboardNavbar :title="title" :ui="{ title: 'font-serif text-xl' }">
           <!-- `leading` renders after the sidebar toggle and before the title, not instead of them. -->
           <template v-if="back" #leading>
             <UButton

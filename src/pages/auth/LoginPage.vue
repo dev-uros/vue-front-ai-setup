@@ -6,13 +6,13 @@ const { submit, isLoading, feedback } = useLoginFlow()
 </script>
 
 <template>
-  <UCard>
+  <UCard class="shadow-lg">
     <template #header>
       <div class="flex flex-col items-center gap-3 text-center">
         <UAvatar icon="i-lucide-gem" size="lg" class="bg-primary/10 text-primary" />
         <div>
-          <h1 class="text-lg font-semibold text-default">Dobrodošli nazad</h1>
-          <p class="mt-1 text-sm text-muted">Prijavite se na svoj Fifth Guild nalog.</p>
+          <h1 class="font-serif text-2xl font-semibold text-highlighted">Dobrodošli nazad</h1>
+          <p class="mt-2 text-sm text-muted">Prijavite se na svoj Fifth Guild nalog.</p>
         </div>
       </div>
     </template>
