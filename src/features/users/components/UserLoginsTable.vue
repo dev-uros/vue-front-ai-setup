@@ -54,7 +54,7 @@ function outcomeBadge(attempt: LoginAttempt) {
 </script>
 
 <template>
-  <div class="space-y-4">
+  <div>
     <UAlert
       v-if="error"
       color="error"
@@ -62,6 +62,7 @@ function outcomeBadge(attempt: LoginAttempt) {
       icon="i-lucide-circle-alert"
       :description="toDisplayMessage(error)"
       data-testid="logins-error"
+      class="m-4 w-auto"
     />
 
     <UTable
@@ -106,7 +107,7 @@ function outcomeBadge(attempt: LoginAttempt) {
       </template>
     </UTable>
 
-    <div v-if="total > PER_PAGE" class="flex justify-end">
+    <div v-if="total > PER_PAGE" class="flex justify-end border-t border-default p-4">
       <UPagination v-model:page="page" :total="total" :items-per-page="PER_PAGE" />
     </div>
   </div>

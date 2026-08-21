@@ -1,6 +1,159 @@
 @import 'tailwindcss';
 @import '@nuxt/ui';
 
+/* ==========================================================================
+ * Business Navy — design tokens
+ *
+ * Everything below is theme, not layout. Nuxt UI reads it through two layers:
+ * `@theme` feeds Tailwind's own variables (palette, type scale, shadows), and the
+ * `--ui-*` variables map those onto the semantic names components actually use
+ * (`bg-default`, `text-muted`, `ring-default`, …).
+ *
+ * The `--ui-*` blocks sit outside `@layer` on purpose: Nuxt UI ships its defaults
+ * inside `@layer theme`, and unlayered declarations win over layered ones no matter
+ * the order the two stylesheets end up in.
+ * ========================================================================== */
+
+/*
+ * The brand ramp. Anchored on the three navies the theme names — Primary #173B63 at
+ * 500, Primary Dark #0F2742 at 700 and Primary Light #EAF1F8 at 50 — with the rest
+ * interpolated at a constant hue in OKLCH so the steps read evenly.
+ *
+ * A brand this dark puts 500 far lower on the lightness ladder than a Tailwind hue
+ * does, which is exactly what makes it work as a solid fill: white on 500 is 11.4:1.
+ * The flip side is that 400 is too dark to sit on a dark canvas, so dark mode reaches
+ * for 300 instead — see `.dark` below.
+ *
+ * `static` is required: nothing references `--color-navy-*` in the source, so Tailwind
+ * would otherwise drop the whole ramp before Nuxt UI can point `primary` at it.
+ */
+@theme static {
+  --color-navy-50: #eaf1f8;
+  --color-navy-100: #d7e2f0;
+  --color-navy-200: #b5c9e1;
+  --color-navy-300: #89a6c8;
+  --color-navy-400: #4a6e99;
+  --color-navy-500: #173b63;
+  --color-navy-600: #123153;
+  --color-navy-700: #0f2742;
+  --color-navy-800: #0a1e34;
+  --color-navy-900: #071628;
+  --color-navy-950: #030c18;
+}
+
+@theme {
+  --font-sans:
+    'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+
+  /*
+   * The heading steps. Body copy needs none of these: the theme's Body 14/20, Body
+   * Large 16/24 and Small 12/16 are already Tailwind's `text-sm`, `text-base` and
+   * `text-xs` to the pixel.
+   */
+  --text-h1: 1.75rem;
+  --text-h1--line-height: 2.25rem;
+  --text-h1--letter-spacing: -0.02em;
+
+  --text-h2: 1.375rem;
+  --text-h2--line-height: 1.875rem;
+  --text-h2--letter-spacing: -0.01em;
+
+  --text-h3: 1.125rem;
+  --text-h3--line-height: 1.625rem;
+
+  /*
+   * A restrained elevation scale, tinted with the ink colour rather than pure black so
+   * shadows read as cool rather than grey. Cards use none of it — only dropdowns,
+   * popovers, modals and toasts float.
+   */
+  --shadow-xs: 0 1px 2px 0 rgb(15 23 42 / 0.04);
+  --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.05), 0 1px 3px 0 rgb(15 23 42 / 0.06);
+  --shadow-md: 0 2px 4px -1px rgb(15 23 42 / 0.06), 0 4px 8px -2px rgb(15 23 42 / 0.08);
+  --shadow-lg: 0 4px 8px -2px rgb(15 23 42 / 0.08), 0 12px 24px -4px rgb(15 23 42 / 0.1);
+  --shadow-xl: 0 8px 16px -4px rgb(15 23 42 / 0.08), 0 20px 40px -8px rgb(15 23 42 / 0.12);
+}
+
+:root {
+  /*
+   * 6 / 8 / 10 / 12px, default 8. Nuxt UI derives every `rounded-*` step from this one
+   * value: inputs, buttons and badges are `rounded-md` (1.5×) and land on 8px, cards,
+   * alerts and modals are `rounded-lg` (2×) and land on ~10.7px.
+   */
+  --ui-radius: 0.334rem;
+
+  /* Ink. Text #0F172A, Text Secondary #64748B, Text Muted #94A3B8. */
+  --ui-text-highlighted: var(--ui-color-neutral-900);
+  --ui-text: var(--ui-color-neutral-900);
+  --ui-text-toned: var(--ui-color-neutral-600);
+  --ui-text-muted: var(--ui-color-neutral-500);
+  --ui-text-dimmed: var(--ui-color-neutral-400);
+
+  /*
+   * Surface #FFFFFF is `bg-default` — cards, sidebar, navbar, menus. Background
+   * #F8FAFC is `bg-muted`, which nothing in Nuxt UI claims, so the theme uses it for
+   * the app canvas behind the cards. Surface Muted #F1F5F9 stays `bg-elevated`.
+   */
+  --ui-bg: #ffffff;
+  --ui-bg-muted: var(--ui-color-neutral-50);
+  --ui-bg-elevated: var(--ui-color-neutral-100);
+  --ui-bg-accented: var(--ui-color-neutral-200);
+
+  /* Border #E2E8F0 — one hairline everywhere, one step darker for accents. */
+  --ui-border: var(--ui-color-neutral-200);
+  --ui-border-muted: var(--ui-color-neutral-200);
+  --ui-border-accented: var(--ui-color-neutral-300);
+
+  /*
+   * Success #16A34A, Warning #D97706, Error #DC2626, Info #2563EB — Tailwind's 600
+   * shades. Nuxt UI reaches for 500 by default, which is a step lighter than the theme
+   * asks for and a step short on contrast.
+   */
+  --ui-success: var(--ui-color-success-600);
+  --ui-warning: var(--ui-color-warning-600);
+  --ui-error: var(--ui-color-error-600);
+  --ui-info: var(--ui-color-info-600);
+  --ui-secondary: var(--ui-color-secondary-600);
+}
+
+/*
+ * Every token the block above touches has to be answered here, including the ones dark mode
+ * would otherwise be happy with. Nuxt UI's dark values live inside `@layer theme`, and an
+ * unlayered `:root` outranks a layered `.dark` no matter how specific the selector is — so a
+ * token set above and left out here would keep its light value in dark mode.
+ */
+.dark {
+  --ui-text-highlighted: #ffffff;
+  --ui-text: var(--ui-color-neutral-200);
+  --ui-text-toned: var(--ui-color-neutral-300);
+  --ui-text-muted: var(--ui-color-neutral-400);
+  --ui-text-dimmed: var(--ui-color-neutral-500);
+
+  /*
+   * The canvas is a step darker than the surfaces sitting on it, so cards read as raised in
+   * both modes.
+   */
+  --ui-bg: var(--ui-color-neutral-900);
+  --ui-bg-muted: var(--ui-color-neutral-950);
+  --ui-bg-elevated: var(--ui-color-neutral-800);
+  --ui-bg-accented: var(--ui-color-neutral-700);
+
+  --ui-border: var(--ui-color-neutral-800);
+  --ui-border-muted: var(--ui-color-neutral-700);
+  --ui-border-accented: var(--ui-color-neutral-700);
+
+  /*
+   * Shade 400 on the dark canvas, which is where Nuxt UI puts its semantic colours anyway.
+   * `primary` is the exception: navy 400 only manages 3.4:1 there, where 300 gets to 7.1:1.
+   */
+  --ui-primary: var(--ui-color-primary-300);
+  --ui-success: var(--ui-color-success-400);
+  --ui-warning: var(--ui-color-warning-400);
+  --ui-error: var(--ui-color-error-400);
+  --ui-info: var(--ui-color-info-400);
+  --ui-secondary: var(--ui-color-secondary-400);
+}
+
 /*
  * Route transition, used by the `<Transition name="page">` wrappers in src/layouts/.
  * Leave is quicker than enter so `mode="out-in"` still feels immediate rather than staged.

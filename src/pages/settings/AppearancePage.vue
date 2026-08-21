@@ -14,7 +14,7 @@ const options: { label: string; value: ThemePreference; icon: string }[] = [
   <UCard>
     <div class="space-y-4">
       <div>
-        <h3 class="text-sm font-medium text-default">Tema</h3>
+        <h3 class="text-h3 font-semibold text-highlighted">Tema</h3>
         <p class="text-xs text-muted">
           Trenutno je uključena {{ resolved === 'dark' ? 'tamna' : 'svetla' }} tema.
         </p>

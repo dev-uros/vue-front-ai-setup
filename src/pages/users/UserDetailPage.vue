@@ -62,7 +62,7 @@ const canSeeHistory = computed(() => session.isAdmin)
           <UserAvatarField :user="user" size="xl" />
 
           <div class="min-w-0 flex-1">
-            <h2 class="text-xl font-semibold text-default">{{ userFullName(user) }}</h2>
+            <h2 class="text-h2 font-semibold text-highlighted">{{ userFullName(user) }}</h2>
             <p class="text-sm text-muted">{{ user.email }}</p>
             <div class="mt-2 flex flex-wrap gap-2">
               <UserRoleBadge :role="user.role" />
@@ -75,7 +75,7 @@ const canSeeHistory = computed(() => session.isAdmin)
             <UButton
               label="Izmeni"
               icon="i-lucide-pencil"
-              color="neutral"
+              color="primary"
               variant="outline"
               data-testid="edit-user"
               @click="isFormOpen = true"
@@ -86,7 +86,7 @@ const canSeeHistory = computed(() => session.isAdmin)
               v-if="!isSelf"
               label="Promeni ulogu"
               icon="i-lucide-shield"
-              color="neutral"
+              color="primary"
               variant="outline"
               data-testid="change-role"
               @click="isRoleOpen = true"
@@ -96,7 +96,7 @@ const canSeeHistory = computed(() => session.isAdmin)
               v-if="user.email_verified_at === null && user.deactivated_at === null"
               label="Pošalji aktivacioni link"
               icon="i-lucide-mail"
-              color="neutral"
+              color="primary"
               variant="outline"
               :loading="isActing"
               data-testid="resend-activation"
@@ -147,17 +147,17 @@ const canSeeHistory = computed(() => session.isAdmin)
         </template>
       </UCard>
 
-      <UCard v-if="canSeeHistory">
+      <UCard v-if="canSeeHistory" :ui="{ body: 'p-0 sm:p-0' }">
         <template #header>
-          <h3 class="text-sm font-medium text-default">Istorija izmena</h3>
+          <h3 class="text-h3 font-semibold text-highlighted">Istorija izmena</h3>
         </template>
 
         <UserLogsTable :user-id="user.id" :enabled="canSeeHistory" />
       </UCard>
 
-      <UCard v-if="canSeeHistory">
+      <UCard v-if="canSeeHistory" :ui="{ body: 'p-0 sm:p-0' }">
         <template #header>
-          <h3 class="text-sm font-medium text-default">Istorija prijava</h3>
+          <h3 class="text-h3 font-semibold text-highlighted">Istorija prijava</h3>
         </template>
 
         <UserLoginsTable :user-id="user.id" :enabled="canSeeHistory" />

@@ -33,12 +33,12 @@ const isFormOpen = shallowRef(false)
     <UCard>
       <template #header>
         <div class="flex flex-wrap items-center justify-between gap-3">
-          <h3 class="text-sm font-medium text-default">Podaci naloga</h3>
+          <h3 class="text-h3 font-semibold text-highlighted">Podaci naloga</h3>
           <UButton
             v-if="session.isAdmin"
             label="Izmeni"
             icon="i-lucide-pencil"
-            color="neutral"
+            color="primary"
             variant="outline"
             size="sm"
             data-testid="edit-profile"

@@ -16,7 +16,7 @@ const { link, submit, isLoading, feedback, isLinkRejected } = useSetPasswordFlow
           class="bg-primary/10 text-primary"
         />
         <div>
-          <h1 class="text-lg font-semibold text-default">
+          <h1 class="text-h2 font-semibold text-highlighted">
             {{ link ? 'Nova lozinka' : 'Link nije ispravan' }}
           </h1>
           <p class="mt-1 text-sm text-muted">
@@ -51,7 +51,6 @@ const { link, submit, isLoading, feedback, isLinkRejected } = useSetPasswordFlow
       size="lg"
       block
       :variant="link ? 'outline' : 'solid'"
-      :color="link ? 'neutral' : 'primary'"
       :class="link ? 'mt-4' : ''"
       data-testid="request-new-link"
     />

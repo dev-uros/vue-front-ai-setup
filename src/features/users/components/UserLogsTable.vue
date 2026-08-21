@@ -62,7 +62,7 @@ function display(value: unknown): string {
 </script>
 
 <template>
-  <div class="space-y-4">
+  <div>
     <UAlert
       v-if="error"
       color="error"
@@ -70,6 +70,7 @@ function display(value: unknown): string {
       icon="i-lucide-circle-alert"
       :description="toDisplayMessage(error)"
       data-testid="logs-error"
+      class="m-4 w-auto"
     />
 
     <UTable
@@ -117,7 +118,7 @@ function display(value: unknown): string {
       </template>
     </UTable>
 
-    <div v-if="total > PER_PAGE" class="flex justify-end">
+    <div v-if="total > PER_PAGE" class="flex justify-end border-t border-default p-4">
       <UPagination v-model:page="page" :total="total" :items-per-page="PER_PAGE" />
     </div>
   </div>

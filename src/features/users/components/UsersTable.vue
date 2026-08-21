@@ -84,8 +84,12 @@ function actionsFor(user: User) {
 </script>
 
 <template>
-  <div class="space-y-4">
-    <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+  <!--
+    Toolbar and table share one bordered white surface: the filters describe the rows below
+    them, so they read as one control rather than two stacked blocks on the canvas.
+  -->
+  <div class="overflow-hidden rounded-lg bg-default ring ring-default">
+    <div class="flex flex-col gap-3 border-b border-default p-4 sm:flex-row sm:items-center">
       <UInput
         v-model="search"
         icon="i-lucide-search"
@@ -120,7 +124,7 @@ function actionsFor(user: User) {
           <div class="min-w-0">
             <RouterLink
               :to="{ name: 'users-detail', params: { id: row.original.id } }"
-              class="block truncate text-sm font-medium text-default hover:text-primary"
+              class="block truncate text-sm font-medium text-highlighted hover:text-primary"
             >
               {{ userFullName(row.original) }}
             </RouterLink>

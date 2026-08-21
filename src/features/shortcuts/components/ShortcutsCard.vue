@@ -34,7 +34,7 @@ function visitLabel(visits: number): string {
     <template #header>
       <div class="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h3 class="text-sm font-medium text-default">Prečice</h3>
+          <h3 class="text-h3 font-semibold text-highlighted">Prečice</h3>
           <p class="mt-1 text-xs text-muted">Stranice na koje se najčešće vraćate.</p>
         </div>
 

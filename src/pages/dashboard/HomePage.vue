@@ -58,7 +58,7 @@ const stats = computed(() => {
 <template>
   <div class="space-y-6">
     <div>
-      <h2 class="text-xl font-semibold text-default" data-testid="greeting">
+      <h2 class="text-h2 font-semibold text-highlighted" data-testid="greeting">
         Zdravo, {{ session.user?.name }}
       </h2>
       <p class="mt-1 text-sm text-muted">
@@ -78,12 +78,16 @@ const stats = computed(() => {
     />
 
     <div v-else class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ body: 'sm:p-4' }">
+      <UCard v-for="stat in stats" :key="stat.label" :ui="{ body: 'p-4 sm:p-4' }">
         <div class="flex items-center gap-3">
-          <UIcon :name="stat.icon" class="size-5 shrink-0 text-muted" />
-          <div>
-            <USkeleton v-if="isLoading && !users" class="h-7 w-10" />
-            <p v-else class="text-xl font-semibold text-default">{{ stat.value }}</p>
+          <span
+            class="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary"
+          >
+            <UIcon :name="stat.icon" class="size-4" />
+          </span>
+          <div class="min-w-0">
+            <USkeleton v-if="isLoading && !users" class="h-7 w-12" />
+            <p v-else class="text-h2 font-semibold text-highlighted">{{ stat.value }}</p>
             <p class="text-xs text-muted">{{ stat.label }}</p>
           </div>
         </div>

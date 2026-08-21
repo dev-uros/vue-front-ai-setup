@@ -201,6 +201,14 @@ These are project decisions that no skill covers — follow them exactly.
 - Theming is CSS-first in `src/assets/css/main.css` (`@import "tailwindcss"; @import "@nuxt/ui";`).
   There is **no** `tailwind.config.*` and none should be created. `app.config.ts` is Nuxt-only and
   does not apply here.
+- The design system is **Business Navy** (`design-systems/business-navy.md` + `_base.md`) and lives
+  in exactly two files. `main.css` holds the tokens: the `navy` ramp, the type and shadow scales,
+  and the `--ui-*` variables. `vite.config.ts` holds the runtime half under `ui({ ui: … })` — which
+  palette each semantic colour draws from, plus the component defaults (40px controls, compact
+  tables, navy active states). Change a colour, radius or size there, not in a component.
+- The `--ui-*` blocks in `main.css` sit outside `@layer` deliberately, and unlayered declarations
+  beat layered ones regardless of selector. A token set in `:root` therefore has to be answered in
+  `.dark` too, or it keeps its light value in dark mode.
 - Reach for a Nuxt UI component before writing a custom one; hand-roll only when nothing fits.
 - Nuxt UI's Vue build stubs Nuxt-only composables. `useCookie` is a **no-op**, so any component
   defaulting to cookie persistence must be switched to local storage — `UDashboardGroup` in

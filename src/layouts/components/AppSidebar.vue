@@ -24,7 +24,7 @@ const items = computed(() => mainNavigation(String(route.name ?? '')))
     }"
   >
     <template #header="{ collapsed }">
-      <div class="flex w-full items-center gap-2.5">
+      <div class="flex w-full items-center gap-3">
         <!--
           The header has a fixed height, so the collapsed rail shows the expand control on its
           own — stacking it under the avatar would clip both. Branding returns on expand.
