@@ -98,7 +98,7 @@ describe('response errors', () => {
     )
   })
 
-  it('carries the request id, which is how a 500 gets traced in the backend logs', () => {
+  it('falls back to the echoed request id when the failure carries no request config', () => {
     const error = failWith(500, { message: 'Greška na serveru.' }, { 'x-request-id': 'req_123' })
 
     expect(error.requestId).toBe('req_123')
@@ -139,5 +139,62 @@ describe('response errors', () => {
 
     expect((thrown as ApiError).status).toBe(0)
     expect((thrown as ApiError).message).toBe('Server trenutno nije dostupan. Pokušajte ponovo.')
+  })
+})
+
+/**
+ * The id is made here and sent, rather than read out of the response, because the failures
+ * worth tracing are the ones with no response to read: a timeout, a dropped connection, a
+ * proxy that died mid-call.
+ */
+describe('request id', () => {
+  async function sentId(): Promise<unknown> {
+    return (await runRequest()).headers.get('X-Request-Id')
+  }
+
+  it('goes out with every call', async () => {
+    expect(await sentId()).toEqual(expect.any(String))
+  })
+
+  it('is new for each call, so one line in the log is one request', async () => {
+    expect(await sentId()).not.toBe(await sentId())
+  })
+
+  it('survives a call the server never answered', () => {
+    const config = {
+      headers: new AxiosHeaders({ 'X-Request-Id': 'sent-1' }),
+    } as InternalAxiosRequestConfig
+    let thrown: unknown
+
+    try {
+      responseRejection(new AxiosError('Network Error', undefined, config))
+    } catch (error) {
+      thrown = error
+    }
+
+    expect((thrown as ApiError).status).toBe(0)
+    expect((thrown as ApiError).requestId).toBe('sent-1')
+  })
+
+  it('prefers the id it sent over the one echoed back, which is the same value anyway', () => {
+    const config = {
+      headers: new AxiosHeaders({ 'X-Request-Id': 'sent-1' }),
+    } as InternalAxiosRequestConfig
+    const error = new AxiosError('Request failed', undefined, config, undefined, {
+      status: 500,
+      data: { message: 'Greška na serveru.' },
+      headers: { 'x-request-id': 'echoed-2' },
+      statusText: '',
+      config,
+    })
+    let thrown: unknown
+
+    try {
+      responseRejection(error)
+    } catch (caught) {
+      thrown = caught
+    }
+
+    expect((thrown as ApiError).requestId).toBe('sent-1')
   })
 })

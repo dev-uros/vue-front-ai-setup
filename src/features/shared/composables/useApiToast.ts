@@ -19,10 +19,11 @@ export function useApiToast() {
   function error(cause: unknown) {
     toast.add({
       title: toDisplayMessage(cause),
-      // A 500 is the one case where the message cannot say anything useful, so the request id
-      // goes with it — that is what the backend team needs to find the request in Grafana.
+      // A 5xx has no useful message to give, and a call that never reached the server has no
+      // message from it at all. Those are the two the backend team traces in Grafana, so the
+      // request id goes with them — status 0 included, which is why the client generates it.
       description:
-        isApiError(cause) && cause.status >= 500 && cause.requestId
+        isApiError(cause) && (cause.status >= 500 || cause.status === 0) && cause.requestId
           ? `ID zahteva: ${cause.requestId}`
           : undefined,
       color: 'error',
