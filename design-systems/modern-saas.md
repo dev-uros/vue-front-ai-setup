@@ -14,7 +14,7 @@ Warning: #F59E0B Error: #EF4444 Info: #3B82F6
 
 ## Typography
 
-Font: Inter. Weights 400, 500, 600, 700.
+Font: Plus Jakarta Sans. Weights 400, 500, 600, 700.
 
 H1 32/40, H2 24/32, H3 18/26, Body 15/22, Small 13/18.
 

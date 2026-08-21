@@ -17,16 +17,19 @@ Text Secondary: #78716C Text Muted: #A8A29E Border: #E7E0D8 Success:
 
 ## Typography
 
-Primary font: Inter.
+Primary font: DM Sans. Weights 400, 500, 600, 700.
+Editorial heading font: Source Serif 4. Weights 400, 500, 600.
 
 If a serif font already exists in the project, it may be used
 selectively for editorial headings. Do not add a new dependency only for
 decoration.
 
-Weights: 400, 500, 600, 700.
-
 H1 32/40, H2 26/34, H3 20/28, Body 16/25, Secondary 14/21, Small 12/17.
 
+Use Source Serif 4 selectively for major editorial headings,
+hero headings, quotes, or featured content.
+Use DM Sans for navigation, controls, labels, buttons, forms,
+and other interface elements.
 ## Spacing
 
 4, 8, 12, 16, 24, 32, 48, 64px.

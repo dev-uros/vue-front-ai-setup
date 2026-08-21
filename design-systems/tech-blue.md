@@ -14,7 +14,7 @@ Background: #F8FAFC Surface: #FFFFFF Text: #0F172A Text Secondary:
 
 ## Typography
 
-Font: Inter. Weights 400, 500, 600, 700.
+Font: IBM Plex Sans. Weights 400, 500, 600, 700.
 
 H1 28/36, H2 22/30, H3 18/26, Body 14/20, Small 12/16.
 

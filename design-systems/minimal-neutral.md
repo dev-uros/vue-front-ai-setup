@@ -14,7 +14,7 @@ Border: #E4E4E7 Success: #16A34A Warning: #D97706 Error: #DC2626 Info:
 
 ## Typography
 
-Font: Inter. Weights 400, 500, 600, 700.
+Font: Geist. Weights 400, 500, 600, 700.
 
 H1 30/38, H2 24/32, H3 18/26, Body 15/22, Small 13/18.
 
