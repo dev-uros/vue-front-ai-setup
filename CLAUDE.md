@@ -200,7 +200,13 @@ These are project decisions that no skill covers — follow them exactly.
 - `U*` components are auto-imported. Do not add manual imports for them.
 - Theming is CSS-first in `src/assets/css/main.css` (`@import "tailwindcss"; @import "@nuxt/ui";`).
   There is **no** `tailwind.config.*` and none should be created. `app.config.ts` is Nuxt-only and
-  does not apply here.
+  does not apply here — what it would hold (palette assignment, global component slots/variants)
+  goes in the `ui({ ui: … })` options in `vite.config.ts` instead. That object is serialized to
+  JSON on its way into the app, so the function form of a slot override (`slot: () => '…'`) is
+  dropped in transit; write classes that merge onto the defaults there, or use the `:ui` prop.
+- The active design system is `design-systems/tech-blue.md` (with `design-systems/_base.md` as
+  the implementation rules). Tokens live in those two files and nowhere else — a color, radius or
+  type size hard-coded in a component is a bug.
 - Reach for a Nuxt UI component before writing a custom one; hand-roll only when nothing fits.
 - Nuxt UI's Vue build stubs Nuxt-only composables. `useCookie` is a **no-op**, so any component
   defaulting to cookie persistence must be switched to local storage — `UDashboardGroup` in

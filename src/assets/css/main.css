@@ -2,6 +2,72 @@
 @import '@nuxt/ui';
 
 /*
+ * Design system: Tech Blue (design-systems/tech-blue.md).
+ *
+ * Palettes are assigned in `vite.config.ts` (primary → blue, neutral → slate, …); this file
+ * holds the tokens that are CSS-only: which shade each semantic color resolves to, the radius
+ * base, the type scale and the font.
+ */
+
+@theme {
+  /* Weights 400/500/600/700 are loaded in index.html. */
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /*
+   * Headings. Body (14/20) and small (12/16) already exist as `text-sm` and `text-xs`, and the
+   * spacing steps (4–48px) are Tailwind's own, so only the heading scale is new here.
+   */
+  --text-h1: 1.75rem;
+  --text-h1--line-height: 2.25rem;
+  --text-h2: 1.375rem;
+  --text-h2--line-height: 1.875rem;
+  --text-h3: 1.125rem;
+  --text-h3--line-height: 1.625rem;
+}
+
+:root {
+  /*
+   * `rounded-md` (buttons, inputs, selects) is 1.5× this and `rounded-lg` (cards, modals,
+   * alerts) is 2×, which lands on the 8px controls / 10px cards the theme asks for.
+   */
+  --ui-radius: 0.3125rem;
+
+  /* #2563EB, #16A34A, #DC2626 — one shade darker than Nuxt UI's default 500. */
+  --ui-primary: var(--ui-color-primary-600);
+  --ui-success: var(--ui-color-success-600);
+  --ui-error: var(--ui-color-error-600);
+
+  /*
+   * Body text sits at slate-800 rather than the theme's #0F172A so that `text-highlighted`
+   * (slate-900, the exact value) still reads as a step above it on headings and table headers.
+   * Secondary (#64748B) and muted (#94A3B8) are Nuxt UI's defaults for slate already.
+   */
+  --ui-text: var(--ui-color-neutral-800);
+
+  /*
+   * The theme separates page background (#F8FAFC) from surface (#FFFFFF), which Nuxt UI does
+   * not: `bg-default` is both. So surfaces keep `bg-default` and the shell paints the canvas
+   * with this token — see MainLayout and AuthLayout.
+   */
+  --app-bg-canvas: var(--ui-color-neutral-50);
+}
+
+.dark {
+  /*
+   * Every token set above has to be restored here, not only the ones that differ: those rules
+   * sit outside `@layer`, and unlayered declarations beat Nuxt UI's own — which keeps its dark
+   * values inside `@layer theme`. Without this the light values leak into dark mode.
+   */
+  --ui-primary: var(--ui-color-primary-400);
+  --ui-success: var(--ui-color-success-400);
+  --ui-error: var(--ui-color-error-400);
+  --ui-text: var(--ui-color-neutral-200);
+
+  /* Inverted: the canvas is darker than the surfaces sitting on it. */
+  --app-bg-canvas: var(--ui-color-neutral-950);
+}
+
+/*
  * Route transition, used by the `<Transition name="page">` wrappers in src/layouts/.
  * Leave is quicker than enter so `mode="out-in"` still feels immediate rather than staged.
  */

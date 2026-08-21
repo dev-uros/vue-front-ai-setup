@@ -57,7 +57,7 @@ function openDeactivate(user: User) {
   <div class="space-y-6">
     <div class="flex flex-wrap items-start justify-between gap-3">
       <div>
-        <h2 class="text-xl font-semibold text-default">Korisnici</h2>
+        <h2 class="text-h2 font-semibold text-highlighted">Korisnici</h2>
         <p class="mt-1 text-sm text-muted">
           Svi nalozi u sistemu, uključujući isključene i one koji još nisu aktivirani.
         </p>
@@ -76,7 +76,7 @@ function openDeactivate(user: User) {
       />
     </div>
 
-    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       <UCard
         v-for="stat in [
           { label: 'Ukupno naloga', value: counts.total, icon: 'i-lucide-users' },
@@ -85,15 +85,13 @@ function openDeactivate(user: User) {
           { label: 'Isključeni', value: counts.deactivated, icon: 'i-lucide-circle-slash' },
         ]"
         :key="stat.label"
-        :ui="{ body: 'sm:p-4' }"
+        :ui="{ body: 'p-4 sm:p-4' }"
       >
-        <div class="flex items-center gap-3">
-          <UIcon :name="stat.icon" class="size-5 shrink-0 text-muted" />
-          <div>
-            <p class="text-xl font-semibold text-default">{{ stat.value }}</p>
-            <p class="text-xs text-muted">{{ stat.label }}</p>
-          </div>
+        <div class="flex items-start justify-between gap-3">
+          <p class="text-xs font-medium text-muted">{{ stat.label }}</p>
+          <UIcon :name="stat.icon" class="size-4 shrink-0 text-dimmed" />
         </div>
+        <p class="mt-2 text-h1 font-semibold tabular-nums text-highlighted">{{ stat.value }}</p>
       </UCard>
     </div>
 

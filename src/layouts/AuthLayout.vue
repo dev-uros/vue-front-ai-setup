@@ -1,5 +1,5 @@
 <template>
-  <div class="flex min-h-dvh items-center justify-center bg-elevated/40 p-4 sm:p-6">
+  <div class="flex min-h-dvh items-center justify-center bg-(--app-bg-canvas) p-4 sm:p-6">
     <div class="w-full max-w-sm">
       <RouterView v-slot="{ Component, route }">
         <Transition name="page" mode="out-in">

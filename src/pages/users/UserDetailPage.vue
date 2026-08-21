@@ -62,7 +62,7 @@ const canSeeHistory = computed(() => session.isAdmin)
           <UserAvatarField :user="user" size="xl" />
 
           <div class="min-w-0 flex-1">
-            <h2 class="text-xl font-semibold text-default">{{ userFullName(user) }}</h2>
+            <h2 class="text-h2 font-semibold text-highlighted">{{ userFullName(user) }}</h2>
             <p class="text-sm text-muted">{{ user.email }}</p>
             <div class="mt-2 flex flex-wrap gap-2">
               <UserRoleBadge :role="user.role" />
@@ -129,19 +129,27 @@ const canSeeHistory = computed(() => session.isAdmin)
           <dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div>
               <dt class="text-xs text-muted">Nalog kreiran</dt>
-              <dd class="text-sm text-default">{{ formatDateTime(user.created_at) }}</dd>
+              <dd class="text-sm tabular-nums text-default">
+                {{ formatDateTime(user.created_at) }}
+              </dd>
             </div>
             <div>
               <dt class="text-xs text-muted">Aktiviran</dt>
-              <dd class="text-sm text-default">{{ formatDateTime(user.email_verified_at) }}</dd>
+              <dd class="text-sm tabular-nums text-default">
+                {{ formatDateTime(user.email_verified_at) }}
+              </dd>
             </div>
             <div>
               <dt class="text-xs text-muted">Isključen</dt>
-              <dd class="text-sm text-default">{{ formatDateTime(user.deactivated_at) }}</dd>
+              <dd class="text-sm tabular-nums text-default">
+                {{ formatDateTime(user.deactivated_at) }}
+              </dd>
             </div>
             <div>
               <dt class="text-xs text-muted">Poslednja izmena</dt>
-              <dd class="text-sm text-default">{{ formatDateTime(user.updated_at) }}</dd>
+              <dd class="text-sm tabular-nums text-default">
+                {{ formatDateTime(user.updated_at) }}
+              </dd>
             </div>
           </dl>
         </template>
@@ -149,7 +157,7 @@ const canSeeHistory = computed(() => session.isAdmin)
 
       <UCard v-if="canSeeHistory">
         <template #header>
-          <h3 class="text-sm font-medium text-default">Istorija izmena</h3>
+          <h3 class="text-h3 font-semibold text-highlighted">Istorija izmena</h3>
         </template>
 
         <UserLogsTable :user-id="user.id" :enabled="canSeeHistory" />
@@ -157,7 +165,7 @@ const canSeeHistory = computed(() => session.isAdmin)
 
       <UCard v-if="canSeeHistory">
         <template #header>
-          <h3 class="text-sm font-medium text-default">Istorija prijava</h3>
+          <h3 class="text-h3 font-semibold text-highlighted">Istorija prijava</h3>
         </template>
 
         <UserLoginsTable :user-id="user.id" :enabled="canSeeHistory" />

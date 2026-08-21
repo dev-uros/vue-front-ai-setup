@@ -33,7 +33,7 @@ const isFormOpen = shallowRef(false)
     <UCard>
       <template #header>
         <div class="flex flex-wrap items-center justify-between gap-3">
-          <h3 class="text-sm font-medium text-default">Podaci naloga</h3>
+          <h3 class="text-h3 font-semibold text-highlighted">Podaci naloga</h3>
           <UButton
             v-if="session.isAdmin"
             label="Izmeni"
@@ -72,11 +72,11 @@ const isFormOpen = shallowRef(false)
           </div>
           <div>
             <dt class="text-xs text-muted">Nalog kreiran</dt>
-            <dd class="text-sm text-default">{{ formatDateTime(user.created_at) }}</dd>
+            <dd class="text-sm tabular-nums text-default">{{ formatDateTime(user.created_at) }}</dd>
           </div>
           <div>
             <dt class="text-xs text-muted">Poslednja izmena</dt>
-            <dd class="text-sm text-default">{{ formatDateTime(user.updated_at) }}</dd>
+            <dd class="text-sm tabular-nums text-default">{{ formatDateTime(user.updated_at) }}</dd>
           </div>
         </dl>
       </div>

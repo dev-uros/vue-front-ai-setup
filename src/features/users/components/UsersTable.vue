@@ -84,8 +84,9 @@ function actionsFor(user: User) {
 </script>
 
 <template>
-  <div class="space-y-4">
-    <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+  <!-- Toolbar and table share one surface, so the filters read as controls on the data. -->
+  <div class="overflow-hidden rounded-lg bg-default shadow-xs ring ring-default">
+    <div class="flex flex-col gap-2 border-b border-default p-3 sm:flex-row sm:items-center">
       <UInput
         v-model="search"
         icon="i-lucide-search"
@@ -101,7 +102,7 @@ function actionsFor(user: User) {
         data-testid="users-status-filter"
       />
 
-      <p class="text-sm text-muted sm:ms-auto" data-testid="users-count">
+      <p class="text-sm tabular-nums text-muted sm:ms-auto" data-testid="users-count">
         {{ rows.length }} od {{ props.users.length }}
       </p>
     </div>
@@ -138,7 +139,9 @@ function actionsFor(user: User) {
       </template>
 
       <template #created_at-cell="{ row }">
-        <span class="text-sm text-muted">{{ formatDate(row.original.created_at) }}</span>
+        <span class="text-sm tabular-nums text-muted">{{
+          formatDate(row.original.created_at)
+        }}</span>
       </template>
 
       <template #actions-cell="{ row }">
