@@ -20,7 +20,7 @@ const role = computed(() => ROLES[props.role])
     :color="role.color"
     :icon="role.icon"
     variant="subtle"
-    size="sm"
+    size="md"
     :data-role="props.role"
   />
 </template>

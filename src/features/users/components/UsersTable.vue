@@ -101,7 +101,7 @@ function actionsFor(user: User) {
         data-testid="users-status-filter"
       />
 
-      <p class="text-sm text-muted sm:ms-auto" data-testid="users-count">
+      <p class="font-mono text-sm text-muted sm:ms-auto" data-testid="users-count">
         {{ rows.length }} od {{ props.users.length }}
       </p>
     </div>
@@ -116,7 +116,7 @@ function actionsFor(user: User) {
     >
       <template #name-cell="{ row }">
         <div class="flex items-center gap-3">
-          <UserAvatar :user="row.original" size="sm" />
+          <UserAvatar :user="row.original" size="xs" />
           <div class="min-w-0">
             <RouterLink
               :to="{ name: 'users-detail', params: { id: row.original.id } }"
@@ -137,8 +137,11 @@ function actionsFor(user: User) {
         <UserStatusBadge :user="row.original" />
       </template>
 
+      <!-- Timestamps are machine-generated, so they are mono — see the theme's typography rules. -->
       <template #created_at-cell="{ row }">
-        <span class="text-sm text-muted">{{ formatDate(row.original.created_at) }}</span>
+        <span class="font-mono text-xs whitespace-nowrap text-muted">
+          {{ formatDate(row.original.created_at) }}
+        </span>
       </template>
 
       <template #actions-cell="{ row }">

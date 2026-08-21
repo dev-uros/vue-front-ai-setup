@@ -1,5 +1,147 @@
+/*
+ * Theme: Dark Console — design-systems/dark-console.md, under design-systems/_base.md.
+ *
+ * This file is the whole token layer. Component-level colour, radius, shadow and type
+ * decisions all resolve back to a variable declared here; nothing in src/ names a colour.
+ *
+ * Fonts are self-hosted: @fontsource ships the woff2 files inside node_modules, Vite emits
+ * them into dist/assets and rewrites the urls, so a page load makes no request to Google.
+ * `wght.css` is the upright variable axis across every subset — each @font-face carries a
+ * unicode-range, so a Serbian page fetches latin + latin-ext and nothing else.
+ */
+@import '@fontsource-variable/inter/wght.css';
+@import '@fontsource-variable/jetbrains-mono/wght.css';
 @import 'tailwindcss';
 @import '@nuxt/ui';
+
+@theme {
+  /* Sans for prose, labels and buttons. Mono for anything the machine produced. */
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', monospace;
+
+  /*
+   * Type scale: H1 22/30, H2 18/26, H3 15/22, body 13/20, small 11/16.
+   *
+   * Retargeting Tailwind's steps rather than rewriting class names is what makes the theme
+   * reach every component: `text-sm` is already the body size in 40 places, and it now means
+   * 13/20 instead of 14/20. The 4px spacing scale is untouched — Tailwind's default already
+   * is 4/8/12/16/24/32.
+   */
+  --text-xs: 11px;
+  --text-xs--line-height: 16px;
+  --text-sm: 13px;
+  --text-sm--line-height: 20px;
+  --text-base: 13px;
+  --text-base--line-height: 20px;
+  --text-lg: 15px;
+  --text-lg--line-height: 22px;
+  --text-xl: 18px;
+  --text-xl--line-height: 26px;
+  --text-2xl: 22px;
+  --text-2xl--line-height: 30px;
+
+  /*
+   * Radius: 0, 4, 6 and nothing else. Nuxt UI derives `rounded-*` from `--ui-radius`, which
+   * would give 2/4/6/8/12/16/24 — pinning the steps instead collapses everything above 6px.
+   * Buttons, inputs and badges land on `rounded-md` (4px), cards on `rounded-lg` (6px).
+   */
+  --radius-xs: 0px;
+  --radius-sm: 4px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 6px;
+  --radius-2xl: 6px;
+  --radius-3xl: 6px;
+
+  /*
+   * Two shadow levels: none, and the one overlay shadow. On these surfaces a shadow reads as
+   * dirt rather than as height — elevation is carried by surface lightness instead.
+   */
+  --shadow-2xs: none;
+  --shadow-xs: none;
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: 0 8px 24px rgb(0 0 0 / 0.5);
+  --shadow-xl: 0 8px 24px rgb(0 0 0 / 0.5);
+  --shadow-2xl: 0 8px 24px rgb(0 0 0 / 0.5);
+
+  /* The palette, verbatim from the theme file. Every other token points at one of these. */
+  --color-console-bg: #0b0f14;
+  --color-console-surface: #12171f;
+  --color-console-surface-muted: #1a212b;
+  --color-console-surface-raised: #212a36;
+  --color-console-row-hover: #161c24;
+  --color-console-border: #232c38;
+  --color-console-border-strong: #313d4c;
+  --color-console-text: #e6edf3;
+  --color-console-text-secondary: #96a3b2;
+  --color-console-text-muted: #5f6c7b;
+  --color-console-primary: #4d9fff;
+  --color-console-primary-dark: #2e7fdd;
+  --color-console-primary-tint: #1a2c42;
+  --color-console-success: #3fb950;
+  --color-console-warning: #d29922;
+  --color-console-error: #f85149;
+  --color-console-info: #58a6ff;
+}
+
+/*
+ * Dark Console is dark-only, so the palette is pinned once and applies in every colour mode
+ * — `.dark` is not treated as a separate case. These declarations sit outside every cascade
+ * layer on purpose: Nuxt UI ships its light/dark tokens inside `@layer theme`, and unlayered
+ * rules outrank layered ones whatever their specificity, so this wins over both `:root` and
+ * `.dark` without an `!important` anywhere.
+ *
+ * `color-scheme` is pinned on `body` too, because Nuxt UI's base layer sets `scheme-light`
+ * there — without this, native scrollbars and date pickers would come back light.
+ */
+:root,
+body {
+  color-scheme: dark;
+}
+
+:root {
+  --ui-radius: 4px;
+  /* Topbar 44px. The same variable also sizes the sidebar header, which is what we want. */
+  --ui-header-height: 44px;
+
+  /* Background -> Surface -> Surface Raised is the whole elevation system. */
+  --ui-bg: var(--color-console-bg);
+  --ui-bg-muted: var(--color-console-surface);
+  --ui-bg-elevated: var(--color-console-surface-muted);
+  --ui-bg-accented: var(--color-console-surface-raised);
+  --ui-bg-inverted: var(--color-console-text);
+
+  /*
+   * The theme names three text colours where Nuxt UI has five slots, so `toned` follows
+   * `muted` and `highlighted` follows the body colour: headings separate themselves by size
+   * and weight here, not by being brighter than the paragraph under them.
+   */
+  --ui-text-dimmed: var(--color-console-text-muted);
+  --ui-text-muted: var(--color-console-text-secondary);
+  --ui-text-toned: var(--color-console-text-secondary);
+  --ui-text: var(--color-console-text);
+  --ui-text-highlighted: var(--color-console-text);
+  --ui-text-inverted: var(--color-console-bg);
+
+  /* Borders do the work a shadow would do elsewhere. */
+  --ui-border: var(--color-console-border);
+  --ui-border-muted: var(--color-console-border);
+  --ui-border-accented: var(--color-console-border-strong);
+  --ui-border-inverted: var(--color-console-text);
+
+  /*
+   * Semantic colours resolve straight to the theme's hexes. Nuxt UI's `soft`/`subtle`
+   * variants build their fills and rings as alpha over these, which is exactly the theme's
+   * "text or 1px border on a soft background, never a large filled block".
+   */
+  --ui-primary: var(--color-console-primary);
+  --ui-secondary: var(--color-console-info);
+  --ui-success: var(--color-console-success);
+  --ui-warning: var(--color-console-warning);
+  --ui-error: var(--color-console-error);
+  --ui-info: var(--color-console-info);
+}
 
 /*
  * Route transition, used by the `<Transition name="page">` wrappers in src/layouts/.

@@ -21,7 +21,7 @@ const { link, submit, isLoading, feedback, isLinkRejected } = useSetPasswordFlow
           class="bg-primary/10 text-primary"
         />
         <div>
-          <h1 class="text-lg font-semibold text-default">
+          <h1 class="text-xl font-semibold text-default">
             {{ link ? 'Aktivirajte nalog' : 'Link nije ispravan' }}
           </h1>
           <p class="mt-1 text-sm text-muted">

@@ -81,7 +81,7 @@ function display(value: unknown): string {
       data-testid="user-logs"
     >
       <template #created_at-cell="{ row }">
-        <span class="whitespace-nowrap text-sm text-muted">
+        <span class="font-mono text-xs whitespace-nowrap text-muted">
           {{ formatDateTime(row.original.created_at) }}
         </span>
       </template>
@@ -92,8 +92,12 @@ function display(value: unknown): string {
         </span>
       </template>
 
+      <!--
+        The diff is raw column contents, so it is set as output: mono throughout, column name
+        included. That is also what keeps the before/after values vertically comparable.
+      -->
       <template #changes-cell="{ row }">
-        <ul v-if="changedFields(row.original).length" class="space-y-0.5 text-xs">
+        <ul v-if="changedFields(row.original).length" class="space-y-0.5 font-mono text-xs">
           <li
             v-for="change in changedFields(row.original)"
             :key="change.field"
@@ -105,7 +109,7 @@ function display(value: unknown): string {
             <span class="text-default">{{ display(change.to) }}</span>
           </li>
         </ul>
-        <span v-else class="text-xs text-dimmed">—</span>
+        <span v-else class="font-mono text-xs text-dimmed">—</span>
       </template>
 
       <template #actor-cell="{ row }">

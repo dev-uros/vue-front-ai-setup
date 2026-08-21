@@ -72,8 +72,9 @@ function outcomeBadge(attempt: LoginAttempt) {
       empty="Nema zabeleženih prijava."
       data-testid="user-logins"
     >
+      <!-- Every column here is machine record — timestamp, address, IP, user agent — so all mono. -->
       <template #created_at-cell="{ row }">
-        <span class="whitespace-nowrap text-sm text-muted">
+        <span class="font-mono text-xs whitespace-nowrap text-muted">
           {{ formatDateTime(row.original.created_at) }}
         </span>
       </template>
@@ -82,23 +83,24 @@ function outcomeBadge(attempt: LoginAttempt) {
         <UBadge
           v-bind="outcomeBadge(row.original)"
           variant="subtle"
-          size="sm"
+          size="md"
+          class="font-mono"
           :data-outcome="row.original.outcome"
         />
       </template>
 
       <template #email-cell="{ row }">
         <!-- What was typed, not necessarily this account's current address. -->
-        <span class="text-sm text-default">{{ row.original.email }}</span>
+        <span class="font-mono text-xs text-default">{{ row.original.email }}</span>
       </template>
 
       <template #ip_address-cell="{ row }">
-        <span class="text-sm text-muted">{{ row.original.ip_address ?? '—' }}</span>
+        <span class="font-mono text-xs text-muted">{{ row.original.ip_address ?? '—' }}</span>
       </template>
 
       <template #user_agent-cell="{ row }">
         <span
-          class="block max-w-xs truncate text-xs text-muted"
+          class="block max-w-xs truncate font-mono text-xs text-dimmed"
           :title="row.original.user_agent ?? ''"
         >
           {{ row.original.user_agent ?? '—' }}

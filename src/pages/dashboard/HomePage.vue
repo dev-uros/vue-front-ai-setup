@@ -63,7 +63,7 @@ const stats = computed(() => {
       </h2>
       <p class="mt-1 text-sm text-muted">
         Prijavljeni ste kao
-        <span class="font-medium text-default">{{ session.user?.email }}</span>
+        <span class="font-mono text-default">{{ session.user?.email }}</span>
       </p>
     </div>
 
@@ -82,8 +82,8 @@ const stats = computed(() => {
         <div class="flex items-center gap-3">
           <UIcon :name="stat.icon" class="size-5 shrink-0 text-muted" />
           <div>
-            <USkeleton v-if="isLoading && !users" class="h-7 w-10" />
-            <p v-else class="text-xl font-semibold text-default">{{ stat.value }}</p>
+            <USkeleton v-if="isLoading && !users" class="h-6 w-10" />
+            <p v-else class="font-mono text-xl font-semibold text-default">{{ stat.value }}</p>
             <p class="text-xs text-muted">{{ stat.label }}</p>
           </div>
         </div>

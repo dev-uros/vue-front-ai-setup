@@ -63,7 +63,7 @@ const canSeeHistory = computed(() => session.isAdmin)
 
           <div class="min-w-0 flex-1">
             <h2 class="text-xl font-semibold text-default">{{ userFullName(user) }}</h2>
-            <p class="text-sm text-muted">{{ user.email }}</p>
+            <p class="font-mono text-xs text-muted">{{ user.email }}</p>
             <div class="mt-2 flex flex-wrap gap-2">
               <UserRoleBadge :role="user.role" />
               <UserStatusBadge :user="user" />
@@ -126,22 +126,31 @@ const canSeeHistory = computed(() => session.isAdmin)
         </div>
 
         <template #footer>
+          <!-- Labels are prose, the four timestamps under them are machine output. -->
           <dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div>
-              <dt class="text-xs text-muted">Nalog kreiran</dt>
-              <dd class="text-sm text-default">{{ formatDateTime(user.created_at) }}</dd>
+              <dt class="text-xs uppercase tracking-wide text-dimmed">Nalog kreiran</dt>
+              <dd class="mt-0.5 font-mono text-xs text-default">
+                {{ formatDateTime(user.created_at) }}
+              </dd>
             </div>
             <div>
-              <dt class="text-xs text-muted">Aktiviran</dt>
-              <dd class="text-sm text-default">{{ formatDateTime(user.email_verified_at) }}</dd>
+              <dt class="text-xs uppercase tracking-wide text-dimmed">Aktiviran</dt>
+              <dd class="mt-0.5 font-mono text-xs text-default">
+                {{ formatDateTime(user.email_verified_at) }}
+              </dd>
             </div>
             <div>
-              <dt class="text-xs text-muted">Isključen</dt>
-              <dd class="text-sm text-default">{{ formatDateTime(user.deactivated_at) }}</dd>
+              <dt class="text-xs uppercase tracking-wide text-dimmed">Isključen</dt>
+              <dd class="mt-0.5 font-mono text-xs text-default">
+                {{ formatDateTime(user.deactivated_at) }}
+              </dd>
             </div>
             <div>
-              <dt class="text-xs text-muted">Poslednja izmena</dt>
-              <dd class="text-sm text-default">{{ formatDateTime(user.updated_at) }}</dd>
+              <dt class="text-xs uppercase tracking-wide text-dimmed">Poslednja izmena</dt>
+              <dd class="mt-0.5 font-mono text-xs text-default">
+                {{ formatDateTime(user.updated_at) }}
+              </dd>
             </div>
           </dl>
         </template>

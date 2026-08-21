@@ -20,12 +20,17 @@ const state = computed(() => STATES[userStatus(props.user)])
 </script>
 
 <template>
+  <!--
+    `subtle` is the theme's status treatment: soft fill, 1px matching border, coloured text —
+    never a large filled block. Mono at 11px is what marks it as machine state rather than prose.
+  -->
   <UBadge
     :label="state.label"
     :color="state.color"
     :icon="state.icon"
     variant="subtle"
-    size="sm"
+    size="md"
+    class="font-mono"
     :data-status="userStatus(props.user)"
   />
 </template>

@@ -15,7 +15,7 @@ const { submit, isLoading, feedback, confirmation, submittedEmail } = useForgotP
           class="bg-primary/10 text-primary"
         />
         <div>
-          <h1 class="text-lg font-semibold text-default">
+          <h1 class="text-xl font-semibold text-default">
             {{ confirmation ? 'Proverite poštu' : 'Zaboravljena lozinka' }}
           </h1>
           <p class="mt-1 text-sm text-muted">

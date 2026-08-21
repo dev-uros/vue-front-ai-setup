@@ -50,33 +50,41 @@ const isFormOpen = shallowRef(false)
       <div class="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
         <UserAvatarField :user="user" size="3xl" />
 
+        <!--
+          Names are prose and stay sans; address and timestamps are stored values and are set
+          as such. The labels take the same 11px uppercase treatment as a table header.
+        -->
         <dl class="grid flex-1 gap-4 sm:grid-cols-2">
           <div>
-            <dt class="text-xs text-muted">Ime</dt>
-            <dd class="text-sm text-default">{{ user.name }}</dd>
+            <dt class="text-xs uppercase tracking-wide text-dimmed">Ime</dt>
+            <dd class="mt-0.5 text-sm text-default">{{ user.name }}</dd>
           </div>
           <div>
-            <dt class="text-xs text-muted">Prezime</dt>
-            <dd class="text-sm text-default">{{ user.surname }}</dd>
+            <dt class="text-xs uppercase tracking-wide text-dimmed">Prezime</dt>
+            <dd class="mt-0.5 text-sm text-default">{{ user.surname }}</dd>
           </div>
           <div>
-            <dt class="text-xs text-muted">Email</dt>
-            <dd class="text-sm text-default">{{ user.email }}</dd>
+            <dt class="text-xs uppercase tracking-wide text-dimmed">Email</dt>
+            <dd class="mt-0.5 font-mono text-xs text-default">{{ user.email }}</dd>
           </div>
           <div>
-            <dt class="text-xs text-muted">Uloga</dt>
+            <dt class="text-xs uppercase tracking-wide text-dimmed">Uloga</dt>
             <dd class="mt-1 flex gap-2">
               <UserRoleBadge :role="user.role" />
               <UserStatusBadge :user="user" />
             </dd>
           </div>
           <div>
-            <dt class="text-xs text-muted">Nalog kreiran</dt>
-            <dd class="text-sm text-default">{{ formatDateTime(user.created_at) }}</dd>
+            <dt class="text-xs uppercase tracking-wide text-dimmed">Nalog kreiran</dt>
+            <dd class="mt-0.5 font-mono text-xs text-default">
+              {{ formatDateTime(user.created_at) }}
+            </dd>
           </div>
           <div>
-            <dt class="text-xs text-muted">Poslednja izmena</dt>
-            <dd class="text-sm text-default">{{ formatDateTime(user.updated_at) }}</dd>
+            <dt class="text-xs uppercase tracking-wide text-dimmed">Poslednja izmena</dt>
+            <dd class="mt-0.5 font-mono text-xs text-default">
+              {{ formatDateTime(user.updated_at) }}
+            </dd>
           </div>
         </dl>
       </div>

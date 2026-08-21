@@ -19,8 +19,12 @@ const back = computed(() => route.meta.back)
   <!--
     `storage="local"` is required outside Nuxt: Nuxt UI's Vue build stubs `useCookie` with a
     no-op, so the default cookie storage would silently drop sidebar collapse state.
+
+    `unit="px"` puts the sidebar on the theme's pixel sizes instead of a share of the viewport.
+    The storage key moves with it: a browser holding the old percentage would restore a 18px
+    sidebar the first time it read `18` as pixels.
   -->
-  <UDashboardGroup storage="local" storage-key="app-dashboard">
+  <UDashboardGroup unit="px" storage="local" storage-key="app-dashboard-console">
     <AppSidebar />
 
     <UDashboardPanel>
