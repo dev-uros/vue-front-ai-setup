@@ -16,6 +16,11 @@ import UserFormModal from '@/features/users/components/UserFormModal.vue'
  *
  * The profile picture is the exception, and the reason this page matters to a plain user at
  * all: anyone may set or remove their own.
+ *
+ * Passwords are not here at all. There is no "change password while signed in" endpoint, and
+ * the page that requests a reset link is `guestOnly` — a signed-in visitor is sent home by the
+ * auth guard — so a button pointing at it from here could only ever look broken. Changing a
+ * password starts from the sign-in form, signed out.
  */
 const session = useSessionStore()
 
@@ -75,31 +80,6 @@ const isFormOpen = shallowRef(false)
           </div>
         </dl>
       </div>
-    </UCard>
-
-    <UCard>
-      <template #header>
-        <h3 class="text-sm font-medium text-default">Lozinka</h3>
-      </template>
-
-      <!--
-        There is no "change password while signed in" endpoint. The only way to a new password
-        is the emailed reset link, which is also what revokes the tokens issued before it.
-      -->
-      <p class="text-sm text-muted">
-        Lozinka se menja preko linka koji stiže na email. Odjavite se i izaberite „Zaboravili ste
-        lozinku?“ na formi za prijavu.
-      </p>
-
-      <template #footer>
-        <UButton
-          :to="{ name: 'auth-forgot-password' }"
-          label="Zatražite link za promenu lozinke"
-          icon="i-lucide-key-round"
-          color="neutral"
-          variant="outline"
-        />
-      </template>
     </UCard>
 
     <UserFormModal v-model:open="isFormOpen" :user="user" />
