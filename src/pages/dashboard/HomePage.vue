@@ -83,7 +83,9 @@ const stats = computed(() => {
           <UIcon :name="stat.icon" class="size-5 shrink-0 text-muted" />
           <div>
             <USkeleton v-if="isLoading && !users" class="h-7 w-10" />
-            <p v-else class="text-xl font-semibold text-default">{{ stat.value }}</p>
+            <p v-else class="font-mono text-xl font-semibold tabular-nums text-default">
+              {{ stat.value }}
+            </p>
             <p class="text-xs text-muted">{{ stat.label }}</p>
           </div>
         </div>

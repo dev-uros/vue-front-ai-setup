@@ -11,15 +11,24 @@ const items = computed(() => mainNavigation(String(route.name ?? '')))
 </script>
 
 <template>
+  <!--
+    Shell variant `solid-dark`: `app-shell-sidebar` (main.css) repoints the semantic tokens for
+    this subtree, so the chrome inside it needs no colour classes of its own. It goes on the
+    mobile slideover too — that renders the same slots into a different element, and without it
+    the menu would open in light chrome.
+
+    Width is fixed at 240px rather than resizable, so the theme's `w-(--width)` is overridden
+    here; `data-[collapsed=true]` falls back to the 64px rail the theme's `min-w-16` describes.
+  -->
   <UDashboardSidebar
     id="main"
     collapsible
-    resizable
-    :min-size="14"
-    :default-size="18"
-    :max-size="26"
     :ui="{
-      root: 'transition-[width] duration-200 ease-out motion-reduce:transition-none data-[dragging=true]:transition-none',
+      root: [
+        'app-shell-sidebar w-60 data-[collapsed=true]:w-16 border-e-0',
+        'transition-[width] duration-200 ease-out motion-reduce:transition-none',
+      ],
+      content: 'app-shell-sidebar',
       footer: 'border-t border-default',
     }"
   >

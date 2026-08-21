@@ -101,7 +101,7 @@ function actionsFor(user: User) {
         data-testid="users-status-filter"
       />
 
-      <p class="text-sm text-muted sm:ms-auto" data-testid="users-count">
+      <p class="text-sm tabular-nums text-muted sm:ms-auto" data-testid="users-count">
         {{ rows.length }} od {{ props.users.length }}
       </p>
     </div>
@@ -138,7 +138,9 @@ function actionsFor(user: User) {
       </template>
 
       <template #created_at-cell="{ row }">
-        <span class="text-sm text-muted">{{ formatDate(row.original.created_at) }}</span>
+        <span class="font-mono text-sm tabular-nums text-muted">
+          {{ formatDate(row.original.created_at) }}
+        </span>
       </template>
 
       <template #actions-cell="{ row }">

@@ -90,7 +90,9 @@ function openDeactivate(user: User) {
         <div class="flex items-center gap-3">
           <UIcon :name="stat.icon" class="size-5 shrink-0 text-muted" />
           <div>
-            <p class="text-xl font-semibold text-default">{{ stat.value }}</p>
+            <p class="font-mono text-xl font-semibold tabular-nums text-default">
+              {{ stat.value }}
+            </p>
             <p class="text-xs text-muted">{{ stat.label }}</p>
           </div>
         </div>

@@ -69,7 +69,7 @@ function visitLabel(visits: number): string {
           :description="visitLabel(shortcut.visits)"
           variant="subtle"
           class="h-full"
-          :ui="{ container: 'p-4 sm:p-4', title: 'text-sm', description: 'text-xs' }"
+          :ui="{ container: 'p-4 sm:p-4', title: 'text-sm', description: 'text-xs tabular-nums' }"
         />
       </div>
     </div>

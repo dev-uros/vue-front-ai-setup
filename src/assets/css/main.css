@@ -2,6 +2,185 @@
 @import '@nuxt/ui';
 
 /*
+ * IBM Plex, self-hosted. `@nuxt/fonts` is a Nuxt module and the Vite plugin does not accept it
+ * (`NuxtUIOptions` omits `fonts`), so the faces are pulled from `@fontsource` instead. Each file
+ * ships every subset behind a `unicode-range`, so `latin-ext` — the č/ć/š/ž/đ the Serbian UI
+ * needs — is fetched only when it is actually used.
+ */
+@import '@fontsource/ibm-plex-sans/400.css';
+@import '@fontsource/ibm-plex-sans/500.css';
+@import '@fontsource/ibm-plex-sans/600.css';
+@import '@fontsource/ibm-plex-sans/700.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+
+/*
+ * Business Navy — see design-systems/business-navy.md.
+ *
+ * `static` because Nuxt UI reaches these shades through `var(--color-navy-*)` in generated CSS
+ * rather than through a utility class, and a non-static `@theme` would tree-shake the ones no
+ * class happens to name.
+ *
+ * The three shades the theme file fixes by hand are 50 (Primary Light), 700 (Primary) and
+ * 900 (Primary Dark); the rest interpolate between them.
+ */
+@theme static {
+  --color-navy-50: #eaf1f8;
+  --color-navy-100: #d6e3f0;
+  --color-navy-200: #b0c7de;
+  --color-navy-300: #85a6c7;
+  --color-navy-400: #5a83ab;
+  --color-navy-500: #38618a;
+  --color-navy-600: #274e75;
+  --color-navy-700: #173b63;
+  --color-navy-800: #12314f;
+  --color-navy-900: #0f2742;
+  --color-navy-950: #0a1b2e;
+}
+
+@theme {
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /*
+   * H1 26/34, H2 20/28, H3 17/24, Body 14/20, Small 12/16. `sm` and `xs` already match Body and
+   * Small; only the two heading steps need moving off the Tailwind defaults.
+   */
+  --text-lg: 1.0625rem;
+  --text-lg--line-height: 1.5rem;
+  --text-2xl: 1.625rem;
+  --text-2xl--line-height: 2.125rem;
+
+  /*
+   * Radius 2 / 4 / 6, and nothing above 6 — sharp corners are part of the identity.
+   *
+   * Nuxt UI derives its whole scale from `--ui-radius` (`lg` = 2x, `xl` = 3x, `2xl` = 4x), which
+   * would put cards at 8px and modals higher still. Pinning the steps here caps every component
+   * at once instead of overriding `rounded-*` on each one: inputs and buttons (`rounded-md`)
+   * land on 4, cards and modals (`rounded-lg`) on 6. `rounded-full` is untouched, so avatars
+   * and pill badges keep their shape.
+   */
+  --radius-xs: 0.125rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.375rem;
+  --radius-xl: 0.375rem;
+  --radius-2xl: 0.375rem;
+  --radius-3xl: 0.375rem;
+
+  /*
+   * The theme's spacing scale — 4, 8, 12, 16, 24, 32, 40, 48 — is Tailwind's own 4px grid
+   * (`--spacing` = 0.25rem) at steps 1, 2, 3, 4, 6, 8, 10, 12, so there is nothing to redefine.
+   */
+
+  /* Navy-tinted and deliberately shallow: floating surfaces only, never cards. */
+  --shadow-2xs: 0 1px 2px 0 rgb(15 39 66 / 0.04);
+  --shadow-xs: 0 1px 2px 0 rgb(15 39 66 / 0.06);
+  --shadow-sm: 0 1px 2px 0 rgb(15 39 66 / 0.06), 0 1px 3px 0 rgb(15 39 66 / 0.06);
+  --shadow-md: 0 2px 4px -1px rgb(15 39 66 / 0.06), 0 4px 8px -2px rgb(15 39 66 / 0.08);
+  --shadow-lg: 0 4px 8px -2px rgb(15 39 66 / 0.08), 0 8px 16px -4px rgb(15 39 66 / 0.1);
+  --shadow-xl: 0 8px 16px -4px rgb(15 39 66 / 0.1), 0 16px 32px -8px rgb(15 39 66 / 0.12);
+
+  /* Shell tokens — required of every theme by design-systems/_base.md. Variant: solid-dark. */
+  --color-shell-bg: #eef2f6;
+  --color-shell-body: #f8fafc;
+  --color-sidebar-bg: var(--color-navy-900);
+  --color-sidebar-text: #b9c7d6;
+  --color-sidebar-text-muted: #7a8ca3;
+  --color-sidebar-active-bg: var(--color-navy-700);
+  --color-sidebar-active-text: #ffffff;
+  /* The theme declares no sidebar border; this is only for dividers *inside* the dark block. */
+  --color-sidebar-border: var(--color-navy-800);
+  --color-topbar-bg: #ffffff;
+  --color-topbar-border: var(--color-slate-200);
+}
+
+/*
+ * Nuxt UI picks shade 500 for every semantic color. The theme names the 600s (#173B63 is the
+ * navy ramp's 700), so each alias is repointed rather than the palettes being redefined.
+ */
+:root {
+  --ui-radius: 0.25rem;
+
+  --ui-primary: var(--ui-color-primary-700);
+  --ui-secondary: var(--ui-color-secondary-600);
+  --ui-success: var(--ui-color-success-600);
+  --ui-info: var(--ui-color-info-600);
+  --ui-warning: var(--ui-color-warning-600);
+  --ui-error: var(--ui-color-error-600);
+}
+
+/*
+ * business-navy.md specifies a light palette only. Dark mode is a shipped feature here (the user
+ * menu and Settings → Izgled both switch it), so the dark side is derived from the same two
+ * ramps: slate for the surfaces, and the navy lifted to 300 so it still reads as the brand
+ * against a dark background instead of disappearing into it.
+ */
+.dark {
+  /*
+   * The shell keeps its navy block in both modes — that is what `solid-dark` means — but the
+   * content surfaces drop below the cards so a card still reads as raised rather than sunken.
+   */
+  --color-shell-bg: var(--color-slate-950);
+  --color-shell-body: var(--color-slate-950);
+  --color-topbar-bg: var(--color-slate-900);
+  --color-topbar-border: var(--color-slate-800);
+
+  --ui-primary: var(--ui-color-primary-300);
+  --ui-secondary: var(--ui-color-secondary-400);
+  --ui-success: var(--ui-color-success-400);
+  --ui-info: var(--ui-color-info-400);
+  --ui-warning: var(--ui-color-warning-400);
+  --ui-error: var(--ui-color-error-400);
+}
+
+/*
+ * The shell covers the viewport on every route that has a layout, but `NotFoundPage` renders
+ * bare — without this it would sit on the browser's white default in dark mode.
+ */
+@layer base {
+  body {
+    background-color: var(--color-shell-body);
+    color: var(--ui-text);
+  }
+}
+
+/*
+ * Shell variant: solid-dark. The sidebar is a saturated navy block and the content stays light.
+ *
+ * The chrome components inside it (UNavigationMenu, the account UButton, USeparator) are written
+ * against the semantic aliases, so the block is produced by repointing those aliases for the
+ * subtree rather than by colouring each element — which is also why no component under
+ * `layouts/` carries a colour class of its own.
+ *
+ * `AppSidebar` puts this class on both the docked sidebar and the mobile slideover, so the two
+ * cannot drift apart.
+ */
+.app-shell-sidebar {
+  --ui-bg: var(--color-sidebar-bg);
+  --ui-bg-muted: var(--color-navy-800);
+  /* Active navigation pill: UNavigationMenu paints it with `before:bg-elevated`. */
+  --ui-bg-elevated: var(--color-sidebar-active-bg);
+  --ui-bg-accented: var(--color-navy-700);
+
+  --ui-text-highlighted: var(--color-sidebar-active-text);
+  --ui-text: var(--color-sidebar-text);
+  --ui-text-toned: var(--color-sidebar-text);
+  --ui-text-muted: var(--color-sidebar-text);
+  --ui-text-dimmed: var(--color-sidebar-text-muted);
+
+  --ui-border: var(--color-sidebar-border);
+  --ui-border-muted: var(--color-sidebar-border);
+  --ui-border-accented: var(--color-navy-700);
+
+  /* The active entry is `text-primary`; on navy that has to be the light end of the ramp. */
+  --ui-primary: var(--color-sidebar-active-text);
+
+  background-color: var(--color-sidebar-bg);
+  color: var(--color-sidebar-text);
+}
+
+/*
  * Route transition, used by the `<Transition name="page">` wrappers in src/layouts/.
  * Leave is quicker than enter so `mode="out-in"` still feels immediate rather than staged.
  */

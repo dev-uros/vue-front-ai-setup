@@ -129,19 +129,27 @@ const canSeeHistory = computed(() => session.isAdmin)
           <dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div>
               <dt class="text-xs text-muted">Nalog kreiran</dt>
-              <dd class="text-sm text-default">{{ formatDateTime(user.created_at) }}</dd>
+              <dd class="font-mono text-sm tabular-nums text-default">
+                {{ formatDateTime(user.created_at) }}
+              </dd>
             </div>
             <div>
               <dt class="text-xs text-muted">Aktiviran</dt>
-              <dd class="text-sm text-default">{{ formatDateTime(user.email_verified_at) }}</dd>
+              <dd class="font-mono text-sm tabular-nums text-default">
+                {{ formatDateTime(user.email_verified_at) }}
+              </dd>
             </div>
             <div>
               <dt class="text-xs text-muted">Isključen</dt>
-              <dd class="text-sm text-default">{{ formatDateTime(user.deactivated_at) }}</dd>
+              <dd class="font-mono text-sm tabular-nums text-default">
+                {{ formatDateTime(user.deactivated_at) }}
+              </dd>
             </div>
             <div>
               <dt class="text-xs text-muted">Poslednja izmena</dt>
-              <dd class="text-sm text-default">{{ formatDateTime(user.updated_at) }}</dd>
+              <dd class="font-mono text-sm tabular-nums text-default">
+                {{ formatDateTime(user.updated_at) }}
+              </dd>
             </div>
           </dl>
         </template>

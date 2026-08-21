@@ -81,7 +81,7 @@ function display(value: unknown): string {
       data-testid="user-logs"
     >
       <template #created_at-cell="{ row }">
-        <span class="whitespace-nowrap text-sm text-muted">
+        <span class="whitespace-nowrap font-mono text-sm tabular-nums text-muted">
           {{ formatDateTime(row.original.created_at) }}
         </span>
       </template>

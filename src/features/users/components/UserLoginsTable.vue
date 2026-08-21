@@ -73,7 +73,7 @@ function outcomeBadge(attempt: LoginAttempt) {
       data-testid="user-logins"
     >
       <template #created_at-cell="{ row }">
-        <span class="whitespace-nowrap text-sm text-muted">
+        <span class="whitespace-nowrap font-mono text-sm tabular-nums text-muted">
           {{ formatDateTime(row.original.created_at) }}
         </span>
       </template>
@@ -93,7 +93,9 @@ function outcomeBadge(attempt: LoginAttempt) {
       </template>
 
       <template #ip_address-cell="{ row }">
-        <span class="text-sm text-muted">{{ row.original.ip_address ?? '—' }}</span>
+        <span class="font-mono text-sm tabular-nums text-muted">{{
+          row.original.ip_address ?? '—'
+        }}</span>
       </template>
 
       <template #user_agent-cell="{ row }">

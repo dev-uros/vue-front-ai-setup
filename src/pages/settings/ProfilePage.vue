@@ -72,11 +72,15 @@ const isFormOpen = shallowRef(false)
           </div>
           <div>
             <dt class="text-xs text-muted">Nalog kreiran</dt>
-            <dd class="text-sm text-default">{{ formatDateTime(user.created_at) }}</dd>
+            <dd class="font-mono text-sm tabular-nums text-default">
+              {{ formatDateTime(user.created_at) }}
+            </dd>
           </div>
           <div>
             <dt class="text-xs text-muted">Poslednja izmena</dt>
-            <dd class="text-sm text-default">{{ formatDateTime(user.updated_at) }}</dd>
+            <dd class="font-mono text-sm tabular-nums text-default">
+              {{ formatDateTime(user.updated_at) }}
+            </dd>
           </div>
         </dl>
       </div>
