@@ -200,7 +200,16 @@ These are project decisions that no skill covers — follow them exactly.
 - `U*` components are auto-imported. Do not add manual imports for them.
 - Theming is CSS-first in `src/assets/css/main.css` (`@import "tailwindcss"; @import "@nuxt/ui";`).
   There is **no** `tailwind.config.*` and none should be created. `app.config.ts` is Nuxt-only and
-  does not apply here.
+  does not apply here — the option object it would hold is the `ui()` plugin's in `vite.config.ts`,
+  which is where each semantic colour is pointed at a Tailwind palette. Everything else about the
+  theme — radius, type scale, per-mode shades, the page canvas — is a token in `main.css`.
+- The applied design system is **Minimal Neutral** (`design-systems/minimal-neutral.md`, with the
+  shared rules in `design-systems/_base.md`). Two things about it are easy to get wrong:
+  - Variables set in an unlayered `:root` outrank Nuxt UI's own `.dark` values, which live in
+    `@layer theme`. Every variable the light block sets has to be answered in the `.dark` block,
+    or it keeps its light value in the dark.
+  - `primary` is near-black in light and near-white in dark, so `text-primary` alone no longer
+    reads as a link. Links carry an underline as well.
 - Reach for a Nuxt UI component before writing a custom one; hand-roll only when nothing fits.
 - Nuxt UI's Vue build stubs Nuxt-only composables. `useCookie` is a **no-op**, so any component
   defaulting to cookie persistence must be switched to local storage — `UDashboardGroup` in

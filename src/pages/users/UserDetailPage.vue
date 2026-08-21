@@ -62,12 +62,13 @@ const canSeeHistory = computed(() => session.isAdmin)
           <UserAvatarField :user="user" size="xl" />
 
           <div class="min-w-0 flex-1">
-            <h2 class="text-xl font-semibold text-default">{{ userFullName(user) }}</h2>
+            <h2 class="text-2xl font-semibold text-highlighted">{{ userFullName(user) }}</h2>
             <p class="text-sm text-muted">{{ user.email }}</p>
             <div class="mt-2 flex flex-wrap gap-2">
               <UserRoleBadge :role="user.role" />
               <UserStatusBadge :user="user" />
-              <UBadge v-if="isSelf" label="Vi" color="info" variant="subtle" size="sm" />
+              <!-- Not a state, so it stays neutral: the semantic colours are reserved for status. -->
+              <UBadge v-if="isSelf" label="Vi" color="neutral" variant="subtle" size="sm" />
             </div>
           </div>
 

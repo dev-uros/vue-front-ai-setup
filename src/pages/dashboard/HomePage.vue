@@ -58,7 +58,7 @@ const stats = computed(() => {
 <template>
   <div class="space-y-6">
     <div>
-      <h2 class="text-xl font-semibold text-default" data-testid="greeting">
+      <h2 class="text-2xl font-semibold text-highlighted" data-testid="greeting">
         Zdravo, {{ session.user?.name }}
       </h2>
       <p class="mt-1 text-sm text-muted">

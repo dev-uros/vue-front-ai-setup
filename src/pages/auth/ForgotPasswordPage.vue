@@ -9,13 +9,9 @@ const { submit, isLoading, feedback, confirmation, submittedEmail } = useForgotP
   <UCard>
     <template #header>
       <div class="flex flex-col items-center gap-3 text-center">
-        <UAvatar
-          :icon="confirmation ? 'i-lucide-mail-check' : 'i-lucide-key-round'"
-          size="lg"
-          class="bg-primary/10 text-primary"
-        />
+        <UAvatar :icon="confirmation ? 'i-lucide-mail-check' : 'i-lucide-key-round'" size="lg" />
         <div>
-          <h1 class="text-lg font-semibold text-default">
+          <h1 class="text-lg font-semibold text-highlighted">
             {{ confirmation ? 'Proverite poštu' : 'Zaboravljena lozinka' }}
           </h1>
           <p class="mt-1 text-sm text-muted">
@@ -44,7 +40,10 @@ const { submit, isLoading, feedback, confirmation, submittedEmail } = useForgotP
     <ForgotPasswordForm v-else :loading="isLoading" :feedback="feedback" @submit="submit" />
 
     <template #footer>
-      <ULink :to="{ name: 'auth-login' }" class="text-sm font-medium text-primary">
+      <ULink
+        :to="{ name: 'auth-login' }"
+        class="text-sm font-medium text-primary underline underline-offset-4"
+      >
         Nazad na prijavu
       </ULink>
     </template>

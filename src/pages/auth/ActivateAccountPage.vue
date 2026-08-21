@@ -15,13 +15,9 @@ const { link, submit, isLoading, feedback, isLinkRejected } = useSetPasswordFlow
   <UCard>
     <template #header>
       <div class="flex flex-col items-center gap-3 text-center">
-        <UAvatar
-          :icon="link ? 'i-lucide-user-check' : 'i-lucide-link-2-off'"
-          size="lg"
-          class="bg-primary/10 text-primary"
-        />
+        <UAvatar :icon="link ? 'i-lucide-user-check' : 'i-lucide-link-2-off'" size="lg" />
         <div>
-          <h1 class="text-lg font-semibold text-default">
+          <h1 class="text-lg font-semibold text-highlighted">
             {{ link ? 'Aktivirajte nalog' : 'Link nije ispravan' }}
           </h1>
           <p class="mt-1 text-sm text-muted">
@@ -60,7 +56,10 @@ const { link, submit, isLoading, feedback, isLinkRejected } = useSetPasswordFlow
     />
 
     <template #footer>
-      <ULink :to="{ name: 'auth-login' }" class="text-sm font-medium text-primary">
+      <ULink
+        :to="{ name: 'auth-login' }"
+        class="text-sm font-medium text-primary underline underline-offset-4"
+      >
         Nazad na prijavu
       </ULink>
     </template>

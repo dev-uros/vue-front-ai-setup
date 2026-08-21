@@ -1,5 +1,101 @@
+/* Geist, self-hosted — the design system's typeface. The variable file covers 400–700. */
+@import '@fontsource-variable/geist';
 @import 'tailwindcss';
 @import '@nuxt/ui';
+
+/*
+ * Minimal Neutral — see design-systems/minimal-neutral.md.
+ *
+ * The palette is Tailwind's `zinc`, which is the design system's neutral ramp shade for shade
+ * (900 #18181B, 500 #71717A, 400 #A1A1AA, 200 #E4E4E7, 100 #F4F4F5, 50 #FAFAFA), so almost
+ * everything here is a mapping rather than a hand-written colour. Which palette answers to
+ * `primary`, `neutral` and the semantic names is set in `vite.config.ts`.
+ */
+
+@theme {
+  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+
+  /*
+   * The type scale of the design system, mapped onto the Tailwind steps this app actually
+   * uses: `xs` is Small (13/18), `sm` is Body (15/22) — Nuxt UI's own default for table
+   * cells, inputs and menu items — then H3, H2, H1.
+   */
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: calc(18 / 13);
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: calc(22 / 15);
+  --text-lg: 1.125rem;
+  --text-lg--line-height: calc(26 / 18);
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: calc(32 / 24);
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: calc(38 / 30);
+}
+
+:root {
+  /*
+   * Nuxt UI derives every `rounded-*` step from this one number: `sm` is the radius itself,
+   * `md` ×1.5 (buttons and inputs, ~9px), `lg` ×2 (cards, 12px), `xl` ×3 (large surfaces).
+   * Setting it here is what keeps the whole app on a single radius scale.
+   */
+  --ui-radius: 0.375rem;
+}
+
+:root,
+.light {
+  /* Near-black actions on white. `text-inverted` is already white, so solid buttons follow. */
+  --ui-primary: var(--ui-color-primary-900);
+
+  /* Text: #18181B body and headings, #71717A secondary, #A1A1AA muted. */
+  --ui-text: var(--ui-color-neutral-900);
+  --ui-text-highlighted: var(--ui-color-neutral-900);
+  --ui-text-toned: var(--ui-color-neutral-600);
+
+  /*
+   * Semantic states keep their colour, one step darker than Nuxt UI's default 500 so they
+   * land on the design system's values and hold contrast against white.
+   */
+  --ui-success: var(--ui-color-success-600);
+  --ui-warning: var(--ui-color-warning-600);
+  --ui-error: var(--ui-color-error-600);
+  --ui-info: var(--ui-color-info-600);
+}
+
+/*
+ * Dark mode mirrors the light relationships rather than inventing a second design: the canvas
+ * is the darkest surface, panels sit above it, and the primary action flips to near-white
+ * (`text-inverted` is near-black there, so solid buttons follow again).
+ *
+ * Every variable set above has to be answered here. Nuxt UI ships its own `.dark` values
+ * inside `@layer theme`, and the unlayered block above outranks a layered one whatever the
+ * selector — so a variable left out here would keep its light value in the dark.
+ */
+.dark {
+  --ui-primary: var(--ui-color-primary-50);
+
+  --ui-text: var(--ui-color-neutral-200);
+  --ui-text-highlighted: #fff;
+  --ui-text-toned: var(--ui-color-neutral-300);
+
+  /* The lighter step on a dark ground, which is Nuxt UI's own default for dark mode. */
+  --ui-success: var(--ui-color-success-400);
+  --ui-warning: var(--ui-color-warning-400);
+  --ui-error: var(--ui-color-error-400);
+  --ui-info: var(--ui-color-info-400);
+
+  --ui-bg-muted: var(--ui-color-neutral-950);
+}
+
+@layer base {
+  /*
+   * The canvas is #FAFAFA and surfaces are #FFFFFF — `bg-default` is the surface, so the page
+   * itself takes the muted step. Nuxt UI's base layer sets `bg-default` on the body; this
+   * replaces it. Panels and the sidebar draw no background of their own, so they show through.
+   */
+  body {
+    @apply bg-muted;
+  }
+}
 
 /*
  * Route transition, used by the `<Transition name="page">` wrappers in src/layouts/.

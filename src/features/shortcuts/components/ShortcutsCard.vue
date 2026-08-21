@@ -67,7 +67,7 @@ function visitLabel(visits: number): string {
           :icon="shortcut.icon"
           :title="shortcut.label"
           :description="visitLabel(shortcut.visits)"
-          variant="subtle"
+          variant="outline"
           class="h-full"
           :ui="{ container: 'p-4 sm:p-4', title: 'text-sm', description: 'text-xs' }"
         />

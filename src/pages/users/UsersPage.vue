@@ -57,7 +57,7 @@ function openDeactivate(user: User) {
   <div class="space-y-6">
     <div class="flex flex-wrap items-start justify-between gap-3">
       <div>
-        <h2 class="text-xl font-semibold text-default">Korisnici</h2>
+        <h2 class="text-2xl font-semibold text-highlighted">Korisnici</h2>
         <p class="mt-1 text-sm text-muted">
           Svi nalozi u sistemu, uključujući isključene i one koji još nisu aktivirani.
         </p>

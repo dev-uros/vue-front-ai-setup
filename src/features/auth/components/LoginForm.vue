@@ -59,7 +59,10 @@ function onSubmit(event: FormSubmitEvent<Credentials>) {
 
     <UFormField name="password" label="Lozinka" required>
       <template #hint>
-        <ULink :to="{ name: 'auth-forgot-password' }" class="text-xs font-medium text-primary">
+        <ULink
+          :to="{ name: 'auth-forgot-password' }"
+          class="text-xs font-medium text-primary underline underline-offset-4"
+        >
           Zaboravili ste lozinku?
         </ULink>
       </template>

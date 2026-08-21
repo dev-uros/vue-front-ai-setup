@@ -106,54 +106,57 @@ function actionsFor(user: User) {
       </p>
     </div>
 
-    <UTable
-      :data="rows"
-      :columns="columns"
-      :loading="props.loading"
-      empty="Nema korisnika koji odgovaraju filteru."
-      data-testid="users-table"
-      :ui="{ base: 'min-w-full' }"
-    >
-      <template #name-cell="{ row }">
-        <div class="flex items-center gap-3">
-          <UserAvatar :user="row.original" size="sm" />
-          <div class="min-w-0">
-            <RouterLink
-              :to="{ name: 'users-detail', params: { id: row.original.id } }"
-              class="block truncate text-sm font-medium text-default hover:text-primary"
-            >
-              {{ userFullName(row.original) }}
-            </RouterLink>
-            <span class="block truncate text-xs text-muted">{{ row.original.email }}</span>
+    <!-- The table is the page's data surface: white on the canvas, one border, no padding. -->
+    <UCard :ui="{ body: 'p-0 sm:p-0' }">
+      <UTable
+        :data="rows"
+        :columns="columns"
+        :loading="props.loading"
+        empty="Nema korisnika koji odgovaraju filteru."
+        data-testid="users-table"
+        :ui="{ base: 'min-w-full' }"
+      >
+        <template #name-cell="{ row }">
+          <div class="flex items-center gap-3">
+            <UserAvatar :user="row.original" size="sm" />
+            <div class="min-w-0">
+              <RouterLink
+                :to="{ name: 'users-detail', params: { id: row.original.id } }"
+                class="block truncate text-sm font-medium text-highlighted underline-offset-4 hover:underline"
+              >
+                {{ userFullName(row.original) }}
+              </RouterLink>
+              <span class="block truncate text-xs text-muted">{{ row.original.email }}</span>
+            </div>
           </div>
-        </div>
-      </template>
+        </template>
 
-      <template #role-cell="{ row }">
-        <UserRoleBadge :role="row.original.role" />
-      </template>
+        <template #role-cell="{ row }">
+          <UserRoleBadge :role="row.original.role" />
+        </template>
 
-      <template #status-cell="{ row }">
-        <UserStatusBadge :user="row.original" />
-      </template>
+        <template #status-cell="{ row }">
+          <UserStatusBadge :user="row.original" />
+        </template>
 
-      <template #created_at-cell="{ row }">
-        <span class="text-sm text-muted">{{ formatDate(row.original.created_at) }}</span>
-      </template>
+        <template #created_at-cell="{ row }">
+          <span class="text-sm text-muted">{{ formatDate(row.original.created_at) }}</span>
+        </template>
 
-      <template #actions-cell="{ row }">
-        <UDropdownMenu :items="actionsFor(row.original)" :content="{ align: 'end' }">
-          <UButton
-            icon="i-lucide-ellipsis-vertical"
-            color="neutral"
-            variant="ghost"
-            size="sm"
-            :loading="isActing"
-            :aria-label="`Radnje za ${userFullName(row.original)}`"
-            :data-testid="`user-actions-${row.original.id}`"
-          />
-        </UDropdownMenu>
-      </template>
-    </UTable>
+        <template #actions-cell="{ row }">
+          <UDropdownMenu :items="actionsFor(row.original)" :content="{ align: 'end' }">
+            <UButton
+              icon="i-lucide-ellipsis-vertical"
+              color="neutral"
+              variant="ghost"
+              size="sm"
+              :loading="isActing"
+              :aria-label="`Radnje za ${userFullName(row.original)}`"
+              :data-testid="`user-actions-${row.original.id}`"
+            />
+          </UDropdownMenu>
+        </template>
+      </UTable>
+    </UCard>
   </div>
 </template>
