@@ -2,6 +2,119 @@
 @import '@nuxt/ui';
 
 /*
+ * Design system: "Modern SaaS" — design-systems/modern-saas.md, implemented under the rules in
+ * design-systems/_base.md.
+ *
+ * Everything visual starts here. Colours are declared as a Tailwind palette and bound to Nuxt UI's
+ * semantic names (`primary`, `success`, …) in `vite.config.ts`; components then only ever use the
+ * semantic utilities (`text-muted`, `bg-elevated`, `ring-default`), never a raw shade.
+ */
+
+/*
+ * The brand ramp. The three shades the theme names by hand are pinned to it: 500 is Primary
+ * (#6D5DFB), 700 is Primary Dark (#5145CD) and 100 is Primary Light (#EEECFF); the rest interpolate.
+ *
+ * Nuxt UI picks shade 500 for light mode and 400 for dark, which is why 400 is a legible violet on
+ * a near-black surface rather than a lighter version of 500.
+ */
+@theme static {
+  --color-brand-50: #f6f5ff;
+  --color-brand-100: #eeecff;
+  --color-brand-200: #dfdbfe;
+  --color-brand-300: #c7bffd;
+  --color-brand-400: #a79afc;
+  --color-brand-500: #6d5dfb;
+  --color-brand-600: #5b48f0;
+  --color-brand-700: #5145cd;
+  --color-brand-800: #4438a5;
+  --color-brand-900: #3a3183;
+  --color-brand-950: #221c4c;
+}
+
+@theme {
+  --font-sans:
+    'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /*
+   * The type ramp, mapped onto the Tailwind sizes the app already uses: Small 13/18 is `text-xs`,
+   * Body 15/22 is `text-sm`, H3 18/26 is `text-lg`, H2 24/32 is `text-2xl` and H1 32/40 is
+   * `text-3xl`. `text-base` and `text-xl` already sit on the ramp and are left alone.
+   */
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.125rem;
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: 1.375rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.625rem;
+  --text-3xl: 2rem;
+  --text-3xl--line-height: 2.5rem;
+
+  /*
+   * The radius scale, replacing Nuxt UI's `calc(--ui-radius * n)` steps so the theme's values land
+   * exactly. `rounded-md` (10px) is what buttons and inputs use, `rounded-xl` (16px) what cards use,
+   * `rounded-2xl` (20px) featured cards and `rounded-3xl` (24px) large surfaces.
+   */
+  --radius-xs: 0.375rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.5rem;
+
+  /* The whole shadow system: one resting elevation, one floating. Both deliberately soft. */
+  --shadow-card: 0 4px 20px rgb(0 0 0 / 0.05);
+  --shadow-floating: 0 8px 30px rgb(0 0 0 / 0.08);
+}
+
+:root {
+  /* Components that round off `--ui-radius` directly rather than through a `rounded-*` utility. */
+  --ui-radius: 0.625rem;
+
+  /*
+   * Background (#FAFAFF) and Surface (#FFFFFF) are two different things in this theme: the shell is
+   * tinted, cards sit on it in white. `--ui-bg` is the surface, so the page tint needs its own
+   * token — see the `body` rule below.
+   */
+  --app-bg: #fafaff;
+
+  /* Text #18181B. Secondary (#71717A) and Muted (#A1A1AA) are already Nuxt UI's defaults on zinc. */
+  --ui-text: var(--ui-color-neutral-900);
+}
+
+.dark {
+  /* Cards stay on `--ui-bg` (zinc-900) so they read as raised against a deeper page. */
+  --app-bg: var(--ui-color-neutral-950);
+
+  /*
+   * Restating Nuxt UI's own dark value, not changing it. Its `.dark` block lives inside
+   * `@layer theme` while the `:root` above does not, so an unlayered `--ui-text` would otherwise
+   * win in both modes and paint dark mode's body text near-black.
+   */
+  --ui-text: var(--ui-color-neutral-200);
+}
+
+body {
+  background-color: var(--app-bg);
+}
+
+/*
+ * One focus colour across the app instead of one per component colour, so the brand accent is what
+ * marks the keyboard position everywhere. Declared outside `@layer` on purpose: it has to win over
+ * the per-colour outlines the component themes set.
+ */
+*,
+::before,
+::after {
+  @apply outline-primary/25;
+}
+
+*:focus-visible,
+*:has(> a:focus-visible) {
+  --tw-ring-color: var(--ui-primary);
+}
+
+/*
  * Route transition, used by the `<Transition name="page">` wrappers in src/layouts/.
  * Leave is quicker than enter so `mode="out-in"` still feels immediate rather than staged.
  */

@@ -34,7 +34,7 @@ function visitLabel(visits: number): string {
     <template #header>
       <div class="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h3 class="text-sm font-medium text-default">Prečice</h3>
+          <h3 class="text-sm font-semibold text-highlighted">Prečice</h3>
           <p class="mt-1 text-xs text-muted">Stranice na koje se najčešće vraćate.</p>
         </div>
 
@@ -51,10 +51,19 @@ function visitLabel(visits: number): string {
       </div>
     </template>
 
-    <p v-if="props.shortcuts.length === 0" class="text-sm text-muted" data-testid="shortcuts-empty">
-      Ovde se same skupljaju stranice koje najčešće otvarate — koristite aplikaciju i prečice će se
-      pojaviti.
-    </p>
+    <div
+      v-if="props.shortcuts.length === 0"
+      class="flex flex-col items-center gap-3 px-4 py-6 text-center"
+      data-testid="shortcuts-empty"
+    >
+      <span class="flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+        <UIcon name="i-lucide-compass" class="size-6" />
+      </span>
+      <p class="max-w-md text-sm text-muted">
+        Ovde se same skupljaju stranice koje najčešće otvarate — koristite aplikaciju i prečice će
+        se pojaviti.
+      </p>
+    </div>
 
     <div v-else class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
       <!--

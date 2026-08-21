@@ -6,16 +6,17 @@ const { submit, isLoading, feedback, confirmation, submittedEmail } = useForgotP
 </script>
 
 <template>
-  <UCard>
+  <UCard class="shadow-floating">
     <template #header>
       <div class="flex flex-col items-center gap-3 text-center">
         <UAvatar
           :icon="confirmation ? 'i-lucide-mail-check' : 'i-lucide-key-round'"
           size="lg"
-          class="bg-primary/10 text-primary"
+          color="primary"
+          class="rounded-xl"
         />
         <div>
-          <h1 class="text-lg font-semibold text-default">
+          <h1 class="text-xl font-semibold text-highlighted">
             {{ confirmation ? 'Proverite poštu' : 'Zaboravljena lozinka' }}
           </h1>
           <p class="mt-1 text-sm text-muted">

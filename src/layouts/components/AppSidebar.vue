@@ -30,10 +30,15 @@ const items = computed(() => mainNavigation(String(route.name ?? '')))
           own — stacking it under the avatar would clip both. Branding returns on expand.
         -->
         <template v-if="!collapsed">
-          <UAvatar icon="i-lucide-gem" size="lg" class="shrink-0 bg-primary/10 text-primary" />
+          <UAvatar
+            icon="i-lucide-gem"
+            size="lg"
+            class="shrink-0 rounded-xl bg-primary"
+            :ui="{ icon: 'text-inverted' }"
+          />
 
           <div class="min-w-0 flex-1">
-            <p class="truncate text-sm font-semibold text-default">Fifth Guild</p>
+            <p class="truncate text-sm font-semibold text-highlighted">Fifth Guild</p>
             <p class="truncate text-xs text-muted">Administracija</p>
           </div>
         </template>

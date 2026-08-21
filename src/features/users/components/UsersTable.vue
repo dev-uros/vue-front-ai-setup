@@ -84,27 +84,30 @@ function actionsFor(user: User) {
 </script>
 
 <template>
-  <div class="space-y-4">
-    <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
-      <UInput
-        v-model="search"
-        icon="i-lucide-search"
-        placeholder="Pretraga po imenu ili email adresi"
-        class="sm:max-w-xs"
-        data-testid="users-search"
-      />
+  <!-- Toolbar and table are one surface: the filters belong to the list they narrow. -->
+  <UCard :ui="{ header: 'p-4 sm:p-5', body: 'p-0 sm:p-0' }">
+    <template #header>
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+        <UInput
+          v-model="search"
+          icon="i-lucide-search"
+          placeholder="Pretraga po imenu ili email adresi"
+          class="sm:max-w-xs"
+          data-testid="users-search"
+        />
 
-      <USelect
-        v-model="statusFilter"
-        :items="statusItems"
-        class="sm:w-48"
-        data-testid="users-status-filter"
-      />
+        <USelect
+          v-model="statusFilter"
+          :items="statusItems"
+          class="sm:w-48"
+          data-testid="users-status-filter"
+        />
 
-      <p class="text-sm text-muted sm:ms-auto" data-testid="users-count">
-        {{ rows.length }} od {{ props.users.length }}
-      </p>
-    </div>
+        <p class="text-sm text-muted sm:ms-auto" data-testid="users-count">
+          {{ rows.length }} od {{ props.users.length }}
+        </p>
+      </div>
+    </template>
 
     <UTable
       :data="rows"
@@ -112,8 +115,15 @@ function actionsFor(user: User) {
       :loading="props.loading"
       empty="Nema korisnika koji odgovaraju filteru."
       data-testid="users-table"
-      :ui="{ base: 'min-w-full' }"
+      :ui="{ base: 'min-w-full', th: 'text-xs font-medium text-muted' }"
     >
+      <template #empty>
+        <div class="flex flex-col items-center gap-2 py-6 text-center">
+          <UIcon name="i-lucide-user-search" class="size-8 text-dimmed" />
+          <p class="text-sm text-muted">Nema korisnika koji odgovaraju filteru.</p>
+        </div>
+      </template>
+
       <template #name-cell="{ row }">
         <div class="flex items-center gap-3">
           <UserAvatar :user="row.original" size="sm" />
@@ -155,5 +165,5 @@ function actionsFor(user: User) {
         </UDropdownMenu>
       </template>
     </UTable>
-  </div>
+  </UCard>
 </template>

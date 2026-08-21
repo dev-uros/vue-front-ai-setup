@@ -62,7 +62,7 @@ const canSeeHistory = computed(() => session.isAdmin)
           <UserAvatarField :user="user" size="xl" />
 
           <div class="min-w-0 flex-1">
-            <h2 class="text-xl font-semibold text-default">{{ userFullName(user) }}</h2>
+            <h2 class="text-2xl font-semibold text-highlighted">{{ userFullName(user) }}</h2>
             <p class="text-sm text-muted">{{ user.email }}</p>
             <div class="mt-2 flex flex-wrap gap-2">
               <UserRoleBadge :role="user.role" />
@@ -149,7 +149,7 @@ const canSeeHistory = computed(() => session.isAdmin)
 
       <UCard v-if="canSeeHistory">
         <template #header>
-          <h3 class="text-sm font-medium text-default">Istorija izmena</h3>
+          <h3 class="text-sm font-semibold text-highlighted">Istorija izmena</h3>
         </template>
 
         <UserLogsTable :user-id="user.id" :enabled="canSeeHistory" />
@@ -157,7 +157,7 @@ const canSeeHistory = computed(() => session.isAdmin)
 
       <UCard v-if="canSeeHistory">
         <template #header>
-          <h3 class="text-sm font-medium text-default">Istorija prijava</h3>
+          <h3 class="text-sm font-semibold text-highlighted">Istorija prijava</h3>
         </template>
 
         <UserLoginsTable :user-id="user.id" :enabled="canSeeHistory" />

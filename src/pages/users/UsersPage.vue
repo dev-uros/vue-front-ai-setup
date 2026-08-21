@@ -21,15 +21,37 @@ const isFormOpen = shallowRef(false)
 const isRoleOpen = shallowRef(false)
 const isDeactivateOpen = shallowRef(false)
 
-const counts = computed(() => {
+/** Same tile tints as the home page: the colour a counter carries is the one its badge carries. */
+const TILE_TONES = {
+  primary: 'bg-primary/10 text-primary',
+  warning: 'bg-warning/10 text-warning',
+  error: 'bg-error/10 text-error',
+} as const
+
+const stats = computed(() => {
   const all = users.value ?? []
 
-  return {
-    total: all.length,
-    admins: all.filter((user) => user.role === 'admin').length,
-    pending: all.filter((user) => user.email_verified_at === null).length,
-    deactivated: all.filter((user) => user.deactivated_at !== null).length,
-  }
+  return [
+    { label: 'Ukupno naloga', value: all.length, icon: 'i-lucide-users', tone: TILE_TONES.primary },
+    {
+      label: 'Administratori',
+      value: all.filter((user) => user.role === 'admin').length,
+      icon: 'i-lucide-shield',
+      tone: TILE_TONES.primary,
+    },
+    {
+      label: 'Nisu aktivirani',
+      value: all.filter((user) => user.email_verified_at === null).length,
+      icon: 'i-lucide-clock',
+      tone: TILE_TONES.warning,
+    },
+    {
+      label: 'Isključeni',
+      value: all.filter((user) => user.deactivated_at !== null).length,
+      icon: 'i-lucide-circle-slash',
+      tone: TILE_TONES.error,
+    },
+  ]
 })
 
 function openCreate() {
@@ -57,7 +79,7 @@ function openDeactivate(user: User) {
   <div class="space-y-6">
     <div class="flex flex-wrap items-start justify-between gap-3">
       <div>
-        <h2 class="text-xl font-semibold text-default">Korisnici</h2>
+        <h2 class="text-2xl font-semibold text-highlighted">Korisnici</h2>
         <p class="mt-1 text-sm text-muted">
           Svi nalozi u sistemu, uključujući isključene i one koji još nisu aktivirani.
         </p>
@@ -76,23 +98,20 @@ function openDeactivate(user: User) {
       />
     </div>
 
-    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-      <UCard
-        v-for="stat in [
-          { label: 'Ukupno naloga', value: counts.total, icon: 'i-lucide-users' },
-          { label: 'Administratori', value: counts.admins, icon: 'i-lucide-shield' },
-          { label: 'Nisu aktivirani', value: counts.pending, icon: 'i-lucide-clock' },
-          { label: 'Isključeni', value: counts.deactivated, icon: 'i-lucide-circle-slash' },
-        ]"
-        :key="stat.label"
-        :ui="{ body: 'sm:p-4' }"
-      >
-        <div class="flex items-center gap-3">
-          <UIcon :name="stat.icon" class="size-5 shrink-0 text-muted" />
-          <div>
-            <p class="text-xl font-semibold text-default">{{ stat.value }}</p>
-            <p class="text-xs text-muted">{{ stat.label }}</p>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <UCard v-for="stat in stats" :key="stat.label" :ui="{ body: 'p-4 sm:p-5' }">
+        <div class="flex items-start justify-between gap-3">
+          <div class="min-w-0">
+            <p class="text-xs font-medium text-muted">{{ stat.label }}</p>
+            <p class="mt-1 text-2xl font-semibold text-highlighted">{{ stat.value }}</p>
           </div>
+
+          <span
+            class="flex size-10 shrink-0 items-center justify-center rounded-xl"
+            :class="stat.tone"
+          >
+            <UIcon :name="stat.icon" class="size-5" />
+          </span>
         </div>
       </UCard>
     </div>
