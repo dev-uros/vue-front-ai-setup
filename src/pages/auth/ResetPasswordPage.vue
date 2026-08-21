@@ -7,7 +7,7 @@ const { link, submit, isLoading, feedback, isLinkRejected } = useSetPasswordFlow
 </script>
 
 <template>
-  <UCard>
+  <UCard class="shadow-sm">
     <template #header>
       <div class="flex flex-col items-center gap-3 text-center">
         <UAvatar
@@ -16,7 +16,7 @@ const { link, submit, isLoading, feedback, isLinkRejected } = useSetPasswordFlow
           class="bg-primary/10 text-primary"
         />
         <div>
-          <h1 class="text-lg font-semibold text-default">
+          <h1 class="text-xl font-semibold text-highlighted">
             {{ link ? 'Nova lozinka' : 'Link nije ispravan' }}
           </h1>
           <p class="mt-1 text-sm text-muted">

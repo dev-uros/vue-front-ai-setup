@@ -77,9 +77,15 @@ function display(value: unknown): string {
       :data="data?.data ?? []"
       :columns="columns"
       :loading="isLoading"
-      empty="Nema zabeleženih izmena."
       data-testid="user-logs"
     >
+      <template #empty>
+        <div class="flex flex-col items-center gap-2 py-6">
+          <UIcon name="i-lucide-history" class="size-8 text-dimmed" />
+          <p class="text-sm text-muted">Nema zabeleženih izmena.</p>
+        </div>
+      </template>
+
       <template #created_at-cell="{ row }">
         <span class="whitespace-nowrap text-sm text-muted">
           {{ formatDateTime(row.original.created_at) }}

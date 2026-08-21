@@ -36,7 +36,7 @@ function onSubmit(event: FormSubmitEvent<Credentials>) {
 </script>
 
 <template>
-  <UForm ref="form" :schema="credentialsSchema" :state="state" class="space-y-5" @submit="onSubmit">
+  <UForm ref="form" :schema="credentialsSchema" :state="state" class="space-y-6" @submit="onSubmit">
     <UAlert
       v-if="props.feedback.message"
       color="error"

@@ -44,7 +44,7 @@ function onSubmit(event: FormSubmitEvent<SetPasswordForm>) {
 </script>
 
 <template>
-  <UForm ref="form" :schema="setPasswordSchema" :state="state" class="space-y-5" @submit="onSubmit">
+  <UForm ref="form" :schema="setPasswordSchema" :state="state" class="space-y-6" @submit="onSubmit">
     <UAlert
       v-if="props.feedback.message"
       color="error"

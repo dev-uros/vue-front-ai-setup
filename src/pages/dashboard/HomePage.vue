@@ -58,12 +58,12 @@ const stats = computed(() => {
 <template>
   <div class="space-y-6">
     <div>
-      <h2 class="text-xl font-semibold text-default" data-testid="greeting">
+      <h2 class="text-2xl font-bold text-highlighted" data-testid="greeting">
         Zdravo, {{ session.user?.name }}
       </h2>
       <p class="mt-1 text-sm text-muted">
         Prijavljeni ste kao
-        <span class="font-medium text-default">{{ session.user?.email }}</span>
+        <span class="font-medium text-highlighted">{{ session.user?.email }}</span>
       </p>
     </div>
 
@@ -77,14 +77,28 @@ const stats = computed(() => {
       :description="toDisplayMessage(error)"
     />
 
-    <div v-else class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ body: 'sm:p-4' }">
-        <div class="flex items-center gap-3">
-          <UIcon :name="stat.icon" class="size-5 shrink-0 text-muted" />
-          <div>
-            <USkeleton v-if="isLoading && !users" class="h-7 w-10" />
-            <p v-else class="text-xl font-semibold text-default">{{ stat.value }}</p>
-            <p class="text-xs text-muted">{{ stat.label }}</p>
+    <!--
+      The counters are the closest thing this screen has to a score, so they get the design
+      system's featured-card treatment: 20px radius, a tinted icon tile and the number carrying
+      the hierarchy rather than the label.
+    -->
+    <div v-else class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <UCard
+        v-for="stat in stats"
+        :key="stat.label"
+        class="rounded-feature"
+        :ui="{ body: 'sm:p-4' }"
+      >
+        <div class="flex items-center gap-4">
+          <span
+            class="flex size-10 shrink-0 items-center justify-center rounded-card bg-primary/10 text-primary"
+          >
+            <UIcon :name="stat.icon" class="size-5" />
+          </span>
+          <div class="min-w-0">
+            <USkeleton v-if="isLoading && !users" class="h-8 w-10" />
+            <p v-else class="text-2xl font-bold text-highlighted">{{ stat.value }}</p>
+            <p class="truncate text-sm text-muted">{{ stat.label }}</p>
           </div>
         </div>
       </UCard>

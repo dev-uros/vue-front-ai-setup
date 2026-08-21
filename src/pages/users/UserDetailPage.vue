@@ -57,14 +57,14 @@ const canSeeHistory = computed(() => session.isAdmin)
     <USkeleton v-else-if="isLoading && !user" class="h-40 w-full" />
 
     <template v-else-if="user">
-      <UCard>
-        <div class="flex flex-wrap items-start gap-4">
+      <UCard class="rounded-feature">
+        <div class="flex flex-wrap items-start gap-6">
           <UserAvatarField :user="user" size="xl" />
 
           <div class="min-w-0 flex-1">
-            <h2 class="text-xl font-semibold text-default">{{ userFullName(user) }}</h2>
-            <p class="text-sm text-muted">{{ user.email }}</p>
-            <div class="mt-2 flex flex-wrap gap-2">
+            <h2 class="text-2xl font-bold text-highlighted">{{ userFullName(user) }}</h2>
+            <p class="mt-1 text-sm text-muted">{{ user.email }}</p>
+            <div class="mt-4 flex flex-wrap gap-2">
               <UserRoleBadge :role="user.role" />
               <UserStatusBadge :user="user" />
               <UBadge v-if="isSelf" label="Vi" color="info" variant="subtle" size="sm" />
@@ -75,8 +75,7 @@ const canSeeHistory = computed(() => session.isAdmin)
             <UButton
               label="Izmeni"
               icon="i-lucide-pencil"
-              color="neutral"
-              variant="outline"
+              variant="soft"
               data-testid="edit-user"
               @click="isFormOpen = true"
             />
@@ -86,8 +85,7 @@ const canSeeHistory = computed(() => session.isAdmin)
               v-if="!isSelf"
               label="Promeni ulogu"
               icon="i-lucide-shield"
-              color="neutral"
-              variant="outline"
+              variant="soft"
               data-testid="change-role"
               @click="isRoleOpen = true"
             />
@@ -96,8 +94,7 @@ const canSeeHistory = computed(() => session.isAdmin)
               v-if="user.email_verified_at === null && user.deactivated_at === null"
               label="Pošalji aktivacioni link"
               icon="i-lucide-mail"
-              color="neutral"
-              variant="outline"
+              variant="soft"
               :loading="isActing"
               data-testid="resend-activation"
               @click="resendActivation(user.id)"
@@ -108,7 +105,7 @@ const canSeeHistory = computed(() => session.isAdmin)
               label="Uključi nalog"
               icon="i-lucide-circle-check"
               color="success"
-              variant="outline"
+              variant="soft"
               :loading="isActing"
               data-testid="reactivate-user"
               @click="reactivate(user.id)"
@@ -118,7 +115,7 @@ const canSeeHistory = computed(() => session.isAdmin)
               label="Isključi nalog"
               icon="i-lucide-circle-slash"
               color="error"
-              variant="outline"
+              variant="soft"
               data-testid="deactivate-user"
               @click="isDeactivateOpen = true"
             />
@@ -128,20 +125,20 @@ const canSeeHistory = computed(() => session.isAdmin)
         <template #footer>
           <dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div>
-              <dt class="text-xs text-muted">Nalog kreiran</dt>
-              <dd class="text-sm text-default">{{ formatDateTime(user.created_at) }}</dd>
+              <dt class="text-xs font-medium text-muted">Nalog kreiran</dt>
+              <dd class="mt-1 text-sm text-highlighted">{{ formatDateTime(user.created_at) }}</dd>
             </div>
             <div>
-              <dt class="text-xs text-muted">Aktiviran</dt>
-              <dd class="text-sm text-default">{{ formatDateTime(user.email_verified_at) }}</dd>
+              <dt class="text-xs font-medium text-muted">Aktiviran</dt>
+              <dd class="mt-1 text-sm text-highlighted">{{ formatDateTime(user.email_verified_at) }}</dd>
             </div>
             <div>
-              <dt class="text-xs text-muted">Isključen</dt>
-              <dd class="text-sm text-default">{{ formatDateTime(user.deactivated_at) }}</dd>
+              <dt class="text-xs font-medium text-muted">Isključen</dt>
+              <dd class="mt-1 text-sm text-highlighted">{{ formatDateTime(user.deactivated_at) }}</dd>
             </div>
             <div>
-              <dt class="text-xs text-muted">Poslednja izmena</dt>
-              <dd class="text-sm text-default">{{ formatDateTime(user.updated_at) }}</dd>
+              <dt class="text-xs font-medium text-muted">Poslednja izmena</dt>
+              <dd class="mt-1 text-sm text-highlighted">{{ formatDateTime(user.updated_at) }}</dd>
             </div>
           </dl>
         </template>
@@ -149,7 +146,7 @@ const canSeeHistory = computed(() => session.isAdmin)
 
       <UCard v-if="canSeeHistory">
         <template #header>
-          <h3 class="text-sm font-medium text-default">Istorija izmena</h3>
+          <h3 class="text-base font-semibold text-highlighted">Istorija izmena</h3>
         </template>
 
         <UserLogsTable :user-id="user.id" :enabled="canSeeHistory" />
@@ -157,7 +154,7 @@ const canSeeHistory = computed(() => session.isAdmin)
 
       <UCard v-if="canSeeHistory">
         <template #header>
-          <h3 class="text-sm font-medium text-default">Istorija prijava</h3>
+          <h3 class="text-base font-semibold text-highlighted">Istorija prijava</h3>
         </template>
 
         <UserLoginsTable :user-id="user.id" :enabled="canSeeHistory" />

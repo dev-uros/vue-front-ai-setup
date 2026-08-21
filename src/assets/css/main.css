@@ -2,6 +2,189 @@
 @import '@nuxt/ui';
 
 /*
+ * Eco Gamification design system — see design-systems/_base.md and
+ * design-systems/eco-gamification.md.
+ *
+ * Everything visual starts here: the palettes below are the only place a raw hex appears, and
+ * the `--ui-*` overrides underneath turn them into the semantic tokens (`text-muted`,
+ * `bg-elevated`, `border-default`, …) that components use.
+ */
+
+/*
+ * Palettes. Nuxt UI needs 11 shades per semantic color, so each scale is interpolated in OKLCH
+ * around the shades the design system pins: 500 is the named color and 100 its soft variant.
+ * `static` keeps every shade emitted, since the shades are referenced through `--ui-color-*`
+ * rather than through utility classes Tailwind could scan for.
+ */
+@theme static {
+  /* primary — #0E5A54, with #E7EFEE as primary-light and #062623 as primary-dark */
+  --color-evergreen-50: #f2f7f6;
+  --color-evergreen-100: #e7efee;
+  --color-evergreen-200: #cbdedb;
+  --color-evergreen-300: #a7c5c1;
+  --color-evergreen-400: #76a6a0;
+  --color-evergreen-500: #0e5a54;
+  --color-evergreen-600: #064d48;
+  --color-evergreen-700: #01403b;
+  --color-evergreen-800: #04332f;
+  --color-evergreen-900: #062623;
+  --color-evergreen-950: #031816;
+
+  /* success — #34C759, soft #D4F4D9 */
+  --color-sprout-50: #eefbef;
+  --color-sprout-100: #d4f4d9;
+  --color-sprout-200: #b8eabd;
+  --color-sprout-300: #98e1a1;
+  --color-sprout-400: #6ed57f;
+  --color-sprout-500: #34c759;
+  --color-sprout-600: #26ae4a;
+  --color-sprout-700: #21903d;
+  --color-sprout-800: #1f7634;
+  --color-sprout-900: #1b612a;
+  --color-sprout-950: #0f3d19;
+
+  /* warning — #FF8D28, soft #FFE8D4 */
+  --color-apricot-50: #fff5ed;
+  --color-apricot-100: #ffe8d4;
+  --color-apricot-200: #ffd6b9;
+  --color-apricot-300: #ffc194;
+  --color-apricot-400: #ffa865;
+  --color-apricot-500: #ff8d28;
+  --color-apricot-600: #e27810;
+  --color-apricot-700: #ba630f;
+  --color-apricot-800: #985110;
+  --color-apricot-900: #7c4313;
+  --color-apricot-950: #512a09;
+
+  /* error — #FF383C, soft #FFD7D8 */
+  --color-poppy-50: #fff2f0;
+  --color-poppy-100: #ffd7d8;
+  --color-poppy-200: #ffc2bb;
+  --color-poppy-300: #ffa39a;
+  --color-poppy-400: #ff7870;
+  --color-poppy-500: #ff383c;
+  --color-poppy-600: #e3262e;
+  --color-poppy-700: #bb1f25;
+  --color-poppy-800: #991c1f;
+  --color-poppy-900: #7d1c1c;
+  --color-poppy-950: #520f0f;
+
+  /* info — #6155F5, soft #E7E5FF */
+  --color-periwinkle-50: #f3f5ff;
+  --color-periwinkle-100: #e7e5ff;
+  --color-periwinkle-200: #d0d6ff;
+  --color-periwinkle-300: #b6beff;
+  --color-periwinkle-400: #8a8fff;
+  --color-periwinkle-500: #6155f5;
+  --color-periwinkle-600: #5447da;
+  --color-periwinkle-700: #453cb6;
+  --color-periwinkle-800: #393294;
+  --color-periwinkle-900: #2f2b79;
+  --color-periwinkle-950: #1d1b50;
+
+  /* neutral — border #E1E4EA, text-muted #9CA3AF, text-secondary #757575, text #1E1E1E */
+  --color-graphite-50: #f7f8fb;
+  --color-graphite-100: #f0f2f7;
+  --color-graphite-200: #e1e4ea;
+  --color-graphite-300: #c6cbd4;
+  --color-graphite-400: #9ca3af;
+  --color-graphite-500: #757575;
+  --color-graphite-600: #595b5e;
+  --color-graphite-700: #444548;
+  --color-graphite-800: #323335;
+  --color-graphite-900: #1e1e1e;
+  --color-graphite-950: #0f0f11;
+}
+
+@theme {
+  --font-sans:
+    'Figtree', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+
+  /*
+   * Radius scale: 8 / 12 / 16 / 24 comes out of `--ui-radius` below (see `:root`), which is what
+   * every Nuxt UI component reads. These two are the named steps the ramp has no slot for.
+   */
+  --radius-card: 1rem;
+  --radius-feature: 1.25rem;
+
+  /*
+   * One shadow family, deliberately shallow — the design system asks for borders first and
+   * shadows only where something genuinely floats (menus, dialogs, toasts).
+   */
+  --shadow-2xs: 0 1px 2px rgb(70 70 70 / 0.06);
+  --shadow-xs: 0 1px 2px rgb(70 70 70 / 0.08);
+  --shadow-sm: 0 2px 4px rgb(70 70 70 / 0.1);
+  --shadow-md: 0 2px 6px rgb(70 70 70 / 0.1);
+  --shadow-lg: 0 4px 10px rgb(70 70 70 / 0.12);
+  --shadow-xl: 0 8px 20px rgb(70 70 70 / 0.14);
+  --shadow-2xl: 0 12px 28px rgb(70 70 70 / 0.16);
+  /* The green-tinted lift the design system reserves for buttons. */
+  --shadow-button: 0 2px 4px rgb(10 64 60 / 0.1);
+}
+
+:root {
+  /*
+   * 0.5rem is the base of Nuxt UI's radius ramp, so the steps land on the design system's
+   * scale: sm 8px, md 12px (buttons, inputs — the default), lg 16px (cards), xl 24px.
+   */
+  --ui-radius: 0.5rem;
+
+  /*
+   * The neutral ramp. `vite.config.ts` can only name one of Nuxt UI's own gray scales, so the
+   * graphite values are substituted here instead — this is what `--color-neutral-*` and every
+   * `--ui-text-*` / `--ui-bg-*` / `--ui-border-*` token below resolve through.
+   */
+  --ui-color-neutral-50: var(--color-graphite-50);
+  --ui-color-neutral-100: var(--color-graphite-100);
+  --ui-color-neutral-200: var(--color-graphite-200);
+  --ui-color-neutral-300: var(--color-graphite-300);
+  --ui-color-neutral-400: var(--color-graphite-400);
+  --ui-color-neutral-500: var(--color-graphite-500);
+  --ui-color-neutral-600: var(--color-graphite-600);
+  --ui-color-neutral-700: var(--color-graphite-700);
+  --ui-color-neutral-800: var(--color-graphite-800);
+  --ui-color-neutral-900: var(--color-graphite-900);
+  --ui-color-neutral-950: var(--color-graphite-950);
+
+  /* Body copy is #1E1E1E; headings take the one step darker the scale still has. */
+  --ui-text: var(--ui-color-neutral-900);
+  --ui-text-highlighted: var(--ui-color-neutral-950);
+}
+
+.dark {
+  /*
+   * The light palette has one background and borders doing the separating; dark mode has no
+   * borders to speak of, so the surfaces have to carry it — hence a rung between the page and
+   * the raised surfaces rather than Nuxt UI's default of reusing neutral-800 for both.
+   */
+  --ui-bg: var(--ui-color-neutral-950);
+  --ui-bg-muted: var(--ui-color-neutral-900);
+  --ui-bg-elevated: var(--ui-color-neutral-800);
+  --ui-bg-accented: var(--ui-color-neutral-700);
+  --ui-border: var(--ui-color-neutral-800);
+  --ui-border-muted: var(--ui-color-neutral-800);
+  --ui-text: var(--ui-color-neutral-200);
+  --ui-text-highlighted: #fff;
+}
+
+/*
+ * The application background — the one gradient the design system allows, kept to a few
+ * percent of tint so cards still read as white sitting on top of it.
+ */
+.app-canvas {
+  background-image: linear-gradient(194deg, #ffffff 0%, #e7efee 100%);
+}
+
+.dark .app-canvas {
+  background-image: linear-gradient(
+    194deg,
+    var(--color-graphite-950) 0%,
+    var(--color-evergreen-950) 100%
+  );
+}
+
+/*
  * Route transition, used by the `<Transition name="page">` wrappers in src/layouts/.
  * Leave is quicker than enter so `mode="out-in"` still feels immediate rather than staged.
  */

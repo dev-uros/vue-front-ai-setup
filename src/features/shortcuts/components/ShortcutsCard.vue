@@ -32,10 +32,10 @@ function visitLabel(visits: number): string {
 <template>
   <UCard data-testid="shortcuts">
     <template #header>
-      <div class="flex flex-wrap items-start justify-between gap-3">
+      <div class="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h3 class="text-sm font-medium text-default">Prečice</h3>
-          <p class="mt-1 text-xs text-muted">Stranice na koje se najčešće vraćate.</p>
+          <h3 class="text-base font-semibold text-highlighted">Prečice</h3>
+          <p class="mt-1 text-sm text-muted">Stranice na koje se najčešće vraćate.</p>
         </div>
 
         <UButton
@@ -56,7 +56,7 @@ function visitLabel(visits: number): string {
       pojaviti.
     </p>
 
-    <div v-else class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <div v-else class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       <!--
         The wrapper carries the test hook on purpose: `UPageCard` binds attributes onto the
         overlay link it lays over the card, which holds no text of its own.
@@ -68,7 +68,7 @@ function visitLabel(visits: number): string {
           :title="shortcut.label"
           :description="visitLabel(shortcut.visits)"
           variant="subtle"
-          class="h-full"
+          class="h-full rounded-card transition-colors hover:bg-primary/5"
           :ui="{ container: 'p-4 sm:p-4', title: 'text-sm', description: 'text-xs' }"
         />
       </div>

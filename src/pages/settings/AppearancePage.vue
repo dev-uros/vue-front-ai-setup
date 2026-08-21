@@ -14,8 +14,8 @@ const options: { label: string; value: ThemePreference; icon: string }[] = [
   <UCard>
     <div class="space-y-4">
       <div>
-        <h3 class="text-sm font-medium text-default">Tema</h3>
-        <p class="text-xs text-muted">
+        <h3 class="text-base font-semibold text-highlighted">Tema</h3>
+        <p class="mt-1 text-sm text-muted">
           Trenutno je uključena {{ resolved === 'dark' ? 'tamna' : 'svetla' }} tema.
         </p>
       </div>
@@ -28,6 +28,7 @@ const options: { label: string; value: ThemePreference; icon: string }[] = [
           :label="option.label"
           :color="preference === option.value ? 'primary' : 'neutral'"
           :variant="preference === option.value ? 'solid' : 'outline'"
+          :aria-pressed="preference === option.value"
           @click="preference = option.value"
         />
       </div>

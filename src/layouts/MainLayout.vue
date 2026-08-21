@@ -23,7 +23,8 @@ const back = computed(() => route.meta.back)
   <UDashboardGroup storage="local" storage-key="app-dashboard">
     <AppSidebar />
 
-    <UDashboardPanel>
+    <!-- `app-canvas` is the design system's application gradient; see main.css. -->
+    <UDashboardPanel :ui="{ body: 'app-canvas' }">
       <template #header>
         <!-- The collapse control lives in the sidebar itself; see AppSidebar. -->
         <UDashboardNavbar :title="title">

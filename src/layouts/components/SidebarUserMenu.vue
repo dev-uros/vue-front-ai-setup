@@ -81,14 +81,14 @@ const items = computed<DropdownMenuItem[][]>(() => [
       block
       data-testid="user-menu"
       :square="props.collapsed"
-      :class="props.collapsed ? 'p-1.5' : 'gap-2.5 p-2'"
+      :class="props.collapsed ? 'p-1.5' : 'gap-2 p-2'"
       :aria-label="`Meni naloga za ${userFullName(user)}`"
     >
       <UserAvatar :user="user" size="sm" class="shrink-0" />
 
       <template v-if="!props.collapsed">
         <span class="min-w-0 flex-1 text-left">
-          <span class="block truncate text-sm font-medium text-default">
+          <span class="block truncate text-sm font-medium text-highlighted">
             {{ userFullName(user) }}
           </span>
           <span class="block truncate text-xs font-normal text-muted">{{ user.email }}</span>

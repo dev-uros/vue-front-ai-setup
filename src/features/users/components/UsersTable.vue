@@ -106,21 +106,21 @@ function actionsFor(user: User) {
       </p>
     </div>
 
-    <UTable
-      :data="rows"
-      :columns="columns"
-      :loading="props.loading"
-      empty="Nema korisnika koji odgovaraju filteru."
-      data-testid="users-table"
-      :ui="{ base: 'min-w-full' }"
-    >
+    <UTable :data="rows" :columns="columns" :loading="props.loading" data-testid="users-table">
+      <template #empty>
+        <div class="flex flex-col items-center gap-2 py-6">
+          <UIcon name="i-lucide-users" class="size-8 text-dimmed" />
+          <p class="text-sm text-muted">Nema korisnika koji odgovaraju filteru.</p>
+        </div>
+      </template>
+
       <template #name-cell="{ row }">
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-4">
           <UserAvatar :user="row.original" size="sm" />
           <div class="min-w-0">
             <RouterLink
               :to="{ name: 'users-detail', params: { id: row.original.id } }"
-              class="block truncate text-sm font-medium text-default hover:text-primary"
+              class="block truncate text-sm font-medium text-highlighted hover:text-primary"
             >
               {{ userFullName(row.original) }}
             </RouterLink>

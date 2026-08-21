@@ -34,7 +34,7 @@ function onSubmit(event: FormSubmitEvent<ForgotPasswordRequest>) {
     ref="form"
     :schema="forgotPasswordSchema"
     :state="state"
-    class="space-y-5"
+    class="space-y-6"
     @submit="onSubmit"
   >
     <UAlert

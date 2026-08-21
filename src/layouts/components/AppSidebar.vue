@@ -19,21 +19,26 @@ const items = computed(() => mainNavigation(String(route.name ?? '')))
     :default-size="18"
     :max-size="26"
     :ui="{
-      root: 'transition-[width] duration-200 ease-out motion-reduce:transition-none data-[dragging=true]:transition-none',
+      root: 'bg-default transition-[width] duration-200 ease-out motion-reduce:transition-none data-[dragging=true]:transition-none',
       footer: 'border-t border-default',
     }"
   >
     <template #header="{ collapsed }">
-      <div class="flex w-full items-center gap-2.5">
+      <div class="flex w-full items-center gap-2">
         <!--
           The header has a fixed height, so the collapsed rail shows the expand control on its
           own — stacking it under the avatar would clip both. Branding returns on expand.
         -->
         <template v-if="!collapsed">
-          <UAvatar icon="i-lucide-gem" size="lg" class="shrink-0 bg-primary/10 text-primary" />
+          <UAvatar
+            icon="i-lucide-gem"
+            size="lg"
+            class="shrink-0 bg-primary/10 text-primary"
+            :ui="{ root: 'rounded-card' }"
+          />
 
           <div class="min-w-0 flex-1">
-            <p class="truncate text-sm font-semibold text-default">Fifth Guild</p>
+            <p class="truncate text-sm font-semibold text-highlighted">Fifth Guild</p>
             <p class="truncate text-xs text-muted">Administracija</p>
           </div>
         </template>
