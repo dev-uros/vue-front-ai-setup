@@ -39,11 +39,22 @@ rules, auth, data models, or any business logic. Class and style
 changes only. If a visual change appears to require a logic change,
 stop and ask.
 
-PHASE 3 — VERIFY
+PHASE 3 — VERIFY (static only)
 
-Run typecheck and build. Then report:
-- files changed, grouped by layer
-- any component you could not convert and why
-- confirmation that no logic file was modified
+Run exactly these two commands, nothing else:
+npx nuxi typecheck
+npm run build
 
-Commit in separate commits per layer, on branch theme/eco-gamification.
+Do NOT run: e2e tests, Playwright, Cypress, unit tests, the dev server,
+or any browser automation. Do NOT take screenshots. Do NOT open a
+preview. If a check would require running the app, skip it and say so
+instead.
+
+Then prove logic was untouched:
+git diff main --stat
+Report any changed file under composables/, stores/, server/,
+middleware/, plugins/ or utils/. There should be none.
+
+Report files changed grouped by layer, and anything you could not
+convert.
+
