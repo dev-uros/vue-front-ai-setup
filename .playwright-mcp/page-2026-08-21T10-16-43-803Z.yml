@@ -1,0 +1,64 @@
+- generic [active]:
+  - generic [ref=f8e1]:
+    - generic [ref=f8e2]:
+      - generic [ref=f8e4]:
+        - generic [ref=f8e7]:
+          - paragraph [ref=f8e8]: Fifth Guild
+          - paragraph [ref=f8e9]: Administracija
+        - button "Collapse sidebar" [ref=f8e10]
+      - generic [ref=f8e12]:
+        - separator [ref=f8e13]
+        - navigation [ref=f8e15]:
+          - list [ref=f8e16]:
+            - listitem [ref=f8e17]:
+              - link "Početna" [ref=f8e18] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=f8e21]:
+              - link "Korisnici" [ref=f8e22] [cursor=pointer]:
+                - /url: /users
+          - list [ref=f8e26]:
+            - listitem [ref=f8e27]:
+              - button "Podešavanja" [expanded] [ref=f8e28]
+              - region "Podešavanja" [ref=f8e33]:
+                - list [ref=f8e34]:
+                  - listitem [ref=f8e35]:
+                    - link "Moj nalog" [ref=f8e36] [cursor=pointer]:
+                      - /url: /settings/profile
+                  - listitem [ref=f8e39]:
+                    - link "Izgled" [ref=f8e40] [cursor=pointer]:
+                      - /url: /settings/appearance
+      - button "Meni naloga za Uroš Minić" [ref=f8e44]:
+        - img "Uroš Minić" [ref=f8e46]
+        - generic [ref=f8e47]:
+          - generic [ref=f8e48]: Uroš Minić
+          - generic [ref=f8e49]: uros.minic@fifthguild.com
+    - separator
+    - generic [ref=f8e51]:
+      - heading "Početna" [level=1] [ref=f8e54]
+      - generic [ref=f8e56]:
+        - generic [ref=f8e57]:
+          - heading "Zdravo, Uroš" [level=2] [ref=f8e58]
+          - paragraph [ref=f8e59]: Prijavljeni ste kao uros.minic@fifthguild.com
+        - generic [ref=f8e60]:
+          - generic [ref=f8e63]:
+            - heading "Prečice" [level=3] [ref=f8e64]
+            - paragraph [ref=f8e65]: Stranice na koje se najčešće vraćate.
+          - paragraph [ref=f8e67]: Ovde se same skupljaju stranice koje najčešće otvarate — koristite aplikaciju i prečice će se pojaviti.
+        - generic [ref=f8e68]:
+          - generic [ref=f8e73]:
+            - alert "loading" [ref=f8e74]
+            - paragraph [ref=f8e75]: Ukupno naloga
+          - generic [ref=f8e80]:
+            - alert "loading" [ref=f8e81]
+            - paragraph [ref=f8e82]: Administratori
+          - generic [ref=f8e87]:
+            - alert "loading" [ref=f8e88]
+            - paragraph [ref=f8e89]: Nisu aktivirani
+          - generic [ref=f8e94]:
+            - alert "loading" [ref=f8e95]
+            - paragraph [ref=f8e96]: Isključeni
+  - generic [ref=f8e97]:
+    - generic "Toggle devtools panel" [ref=f8e98] [cursor=pointer]
+    - generic "Toggle Component Inspector" [ref=f8e104] [cursor=pointer]
+  - region "Notifications (F8)":
+    - list

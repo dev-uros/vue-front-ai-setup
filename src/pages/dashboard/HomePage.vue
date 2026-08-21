@@ -1,13 +1,35 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useSessionStore } from '@/features/shared/stores/session'
-import { formatDateTime } from '@/features/shared/utils/format'
+import { userFullName } from '@/features/shared/schemas/user'
 import { toDisplayMessage } from '@/features/shared/utils/apiErrors'
+import { useShortcuts } from '@/features/shortcuts/composables/useShortcuts'
+import type { ShortcutVisit } from '@/features/shortcuts/schemas/shortcut'
+import ShortcutsCard from '@/features/shortcuts/components/ShortcutsCard.vue'
 import { useUsersQuery } from '@/features/users/query/useUsersQuery'
-import UserRoleBadge from '@/features/users/components/UserRoleBadge.vue'
 
 const session = useSessionStore()
 const { data: users, isLoading, error } = useUsersQuery()
+
+/**
+ * The shortcuts feature stores routes, not records, so a link to `users-detail` arrives as an
+ * id and nothing else. Naming the person is knowledge only the users feature has, and this
+ * page is where the two meet — the list is already loaded here for the counters below.
+ *
+ * An id with no match (an account that has since gone) falls through to the route's own
+ * title, so the shortcut still works and reads "Detalji korisnika".
+ */
+function resolveLabel(visit: ShortcutVisit): string | undefined {
+  if (visit.name !== 'users-detail') {
+    return undefined
+  }
+
+  const user = users.value?.find((candidate) => String(candidate.id) === visit.params.id)
+
+  return user ? userFullName(user) : undefined
+}
+
+const { shortcuts, clear: clearShortcuts } = useShortcuts({ resolveLabel })
 
 const stats = computed(() => {
   const all = users.value ?? []
@@ -45,6 +67,8 @@ const stats = computed(() => {
       </p>
     </div>
 
+    <ShortcutsCard :shortcuts="shortcuts" @clear="clearShortcuts" />
+
     <UAlert
       v-if="error"
       color="error"
@@ -65,39 +89,5 @@ const stats = computed(() => {
         </div>
       </UCard>
     </div>
-
-    <UCard v-if="session.user">
-      <template #header>
-        <h3 class="text-sm font-medium text-default">Vaš nalog</h3>
-      </template>
-
-      <dl class="grid gap-4 sm:grid-cols-3">
-        <div>
-          <dt class="text-xs text-muted">Uloga</dt>
-          <dd class="mt-1"><UserRoleBadge :role="session.user.role" /></dd>
-        </div>
-        <div>
-          <dt class="text-xs text-muted">Nalog aktiviran</dt>
-          <dd class="text-sm text-default">
-            {{ formatDateTime(session.user.email_verified_at) }}
-          </dd>
-        </div>
-        <div>
-          <dt class="text-xs text-muted">Poslednja izmena</dt>
-          <dd class="text-sm text-default">{{ formatDateTime(session.user.updated_at) }}</dd>
-        </div>
-      </dl>
-
-      <template #footer>
-        <UButton
-          :to="{ name: 'users-list' }"
-          label="Otvori korisnike"
-          icon="i-lucide-arrow-right"
-          trailing
-          color="neutral"
-          variant="outline"
-        />
-      </template>
-    </UCard>
   </div>
 </template>

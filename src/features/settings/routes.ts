@@ -5,12 +5,12 @@ export const settingsRoutes: RouteRecordRaw[] = [
     path: 'settings/profile',
     name: 'settings-profile',
     component: () => import('@/pages/settings/ProfilePage.vue'),
-    meta: { title: 'Moj nalog' },
+    meta: { title: 'Moj nalog', icon: 'i-lucide-user-cog' },
   },
   {
     path: 'settings/appearance',
     name: 'settings-appearance',
     component: () => import('@/pages/settings/AppearancePage.vue'),
-    meta: { title: 'Izgled' },
+    meta: { title: 'Izgled', icon: 'i-lucide-palette' },
   },
 ]

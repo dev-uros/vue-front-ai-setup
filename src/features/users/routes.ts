@@ -13,7 +13,7 @@ export const usersRoutes: RouteRecordRaw[] = [
     path: 'users',
     name: 'users-list',
     component: () => import('@/pages/users/UsersPage.vue'),
-    meta: { title: 'Korisnici' },
+    meta: { title: 'Korisnici', icon: 'i-lucide-users' },
   },
   {
     // The API answers 404 for a non-numeric id before the request enters the app, so the
@@ -21,6 +21,6 @@ export const usersRoutes: RouteRecordRaw[] = [
     path: 'users/:id(\\d+)',
     name: 'users-detail',
     component: () => import('@/pages/users/UserDetailPage.vue'),
-    meta: { title: 'Detalji korisnika', back: { name: 'users-list' } },
+    meta: { title: 'Detalji korisnika', icon: 'i-lucide-user', back: { name: 'users-list' } },
   },
 ]

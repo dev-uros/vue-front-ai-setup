@@ -1,6 +1,13 @@
 import 'vue-router'
 import type { RouteLocationRaw } from 'vue-router'
 
+/**
+ * NOTE: under Vue Router 5 this augmentation no longer reaches `route.meta`. The shipped
+ * `.d.ts` declares `RouteMeta` in an internal chunk and re-exports it from `vue-router`, so
+ * merging into `vue-router` leaves `RouteLocation.meta` as `Record<PropertyKey, unknown>` and
+ * every read comes back `unknown`. The fields below still describe the contract every route
+ * here follows — code that needs a `string` has to narrow (see `useShortcuts`).
+ */
 declare module 'vue-router' {
   interface RouteMeta {
     /**
@@ -15,6 +22,11 @@ declare module 'vue-router' {
     guestOnly?: boolean
     /** Rendered as the page title in the dashboard navbar. */
     title?: string
+    /**
+     * Icon standing for this page wherever it is listed outside the sidebar — the shortcuts
+     * on the home page today. Declared on the route so the list needs no table of its own.
+     */
+    icon?: string
     /**
      * Where "up" is from this route. Set it on a route the sidebar cannot reach — a detail
      * page, a nested step — and the dashboard navbar grows a back button pointing here.

@@ -3,6 +3,7 @@ import { authRoutes } from '@/features/auth/routes'
 import { dashboardRoutes } from '@/features/dashboard/routes'
 import { settingsRoutes } from '@/features/settings/routes'
 import { usersRoutes } from '@/features/users/routes'
+import { useShortcutsStore } from '@/features/shortcuts/stores/shortcuts'
 import { authGuard } from '@/router/guards'
 
 /**
@@ -33,5 +34,15 @@ const router = createRouter({
 })
 
 router.beforeEach(authGuard)
+
+/**
+ * Every page anyone lands on feeds the shortcuts on the home page. `afterEach` and not a
+ * guard: only a navigation that actually happened counts, and nothing here may delay one.
+ *
+ * The store decides what is worth remembering — this hook has no business knowing the rules.
+ */
+router.afterEach((to) => {
+  useShortcutsStore().record(to)
+})
 
 export default router
