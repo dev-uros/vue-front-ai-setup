@@ -13,19 +13,20 @@ Background: #F8FAFC Surface: #FFFFFF Text: #0F172A Text Secondary:
 #F59E0B Error: #DC2626 Info: #0EA5E9
 
 ## Typography
+Font: Inter. Mono: JetBrains Mono for all numeric/technical values.
+Tabular numerals mandatory in tables.
 
-Font: IBM Plex Sans. Weights 400, 500, 600, 700.
 
-H1 28/36, H2 22/30, H3 18/26, Body 14/20, Small 12/16.
+## Radius
+4, 6, 8px. Default 6px. Cards 6px. Pills 9999px for status badges only.
 
-Use tabular or monospaced numerals where appropriate for IDs,
-timestamps, metrics and technical values.
-
-## Spacing and radius
-
-Spacing: 4, 8, 12, 16, 24, 32, 40, 48px.
-
-Default radius 8px. Cards 10px. Inputs/buttons 8px. Pills 9999px.
+## Shell — solid-dark
+shell-bg: #F1F5F9
+sidebar-bg: #0F172A
+sidebar-text: #94A3B8
+sidebar-active-bg: #1E293B
+sidebar-active-text: #60A5FA
+topbar-bg: #FFFFFF
 
 ## Components
 
@@ -53,3 +54,10 @@ UAlert, UPopover, UModal, UDropdownMenu, UTabs and UProgress.
 
 Modern technical SaaS dashboard. Make large amounts of information easy
 to scan.
+
+
+Sidebar width 220px, items 32px, 13px labels. Collapsible to 56px icon rail.
+
+## Tables
+Header row background #F8FAFC, 12px uppercase labels.
+Rows 40px. Zebra striping off; hover #F8FAFC.

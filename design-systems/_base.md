@@ -86,3 +86,34 @@ arbitrary spacing.
 Check typography, spacing, radius, button hierarchy, inputs, cards,
 badges, empty/loading/error states, navigation, mobile and desktop
 layouts, and dark mode if supported.
+
+## Shell tokens
+
+Every theme MUST define:
+
+- shell-bg
+- sidebar-bg
+- sidebar-text
+- sidebar-text-muted
+- sidebar-active-bg
+- sidebar-active-text
+- sidebar-border
+- topbar-bg
+- topbar-border
+
+## Shell variants
+
+Each theme declares exactly one:
+
+- `solid-dark` — sidebar is a dark saturated block, content stays light
+- `solid-tinted` — sidebar uses a soft brand tint, not white
+- `floating` — sidebar is a detached rounded panel with margin around it
+- `flat` — sidebar shares the page background, separated only by a hairline
+
+Do not default to a white sidebar. If a theme wants white, it must say so
+explicitly and compensate with a tinted page background.
+
+## Required per theme
+
+font-family (+ optional mono), full radius scale, shell variant,
+all shell tokens, semantic + soft semantic colors, density (comfortable | compact).

@@ -16,20 +16,12 @@ Text Secondary: #78716C Text Muted: #A8A29E Border: #E7E0D8 Success:
 #3F8F5A Warning: #C47A22 Error: #C94A4A Info: #5277A8
 
 ## Typography
+Display font: Fraunces (H1, H2, editorial headings) — variable, weight 500-600,
+optical size on. This is a required dependency, not decoration.
+Body font: Source Sans 3.
+H1 34/42 Fraunces, H2 26/34 Fraunces, H3 20/28 Source Sans 600,
+Body 17/27, Secondary 15/23.
 
-Primary font: DM Sans. Weights 400, 500, 600, 700.
-Editorial heading font: Source Serif 4. Weights 400, 500, 600.
-
-If a serif font already exists in the project, it may be used
-selectively for editorial headings. Do not add a new dependency only for
-decoration.
-
-H1 32/40, H2 26/34, H3 20/28, Body 16/25, Secondary 14/21, Small 12/17.
-
-Use Source Serif 4 selectively for major editorial headings,
-hero headings, quotes, or featured content.
-Use DM Sans for navigation, controls, labels, buttons, forms,
-and other interface elements.
 ## Spacing
 
 4, 8, 12, 16, 24, 32, 48, 64px.
@@ -37,8 +29,7 @@ and other interface elements.
 Editorial sections benefit from generous vertical spacing.
 
 ## Radius
-
-Inputs/buttons 8px. Cards 12px. Featured content 16px. Pills 9999px.
+Inputs/buttons 8px. Cards 12px. Featured 16px. Pills 9999px.
 
 ## Borders and shadows
 
@@ -74,3 +65,16 @@ UDropdownMenu and UAlert.
 
 A thoughtful premium content product where typography, spacing and
 imagery do most of the visual work.
+
+
+## Shell — solid-tinted
+shell-bg: #FAF8F5
+sidebar-bg: #F0EAE1
+sidebar-text: #78716C
+sidebar-active-bg: #FCEDE6
+sidebar-active-text: #B4532A
+sidebar-border: none
+topbar-bg: #FAF8F5
+
+No border between sidebar and content — separation is by tone alone.
+Sidebar width 250px, items 40px, 15px labels, active pill 999px radius.

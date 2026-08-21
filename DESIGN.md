@@ -1,14 +1,49 @@
-### Generisanje teme
+Read design-systems/_base.md and design-systems/eco-gamification.md.
 
-Read design-systems/_base.md and design-systems/eco-gamification.md. Apply this design system to the current Nuxt UI application. First inspect the existing component structure and theme configuration, then apply the design tokens globally and update shared components before page-specific components. Preserve all functionality, routes, state, API behavior and information architecture. Do not introduce unrelated visual styles.
+PHASE 1 — AUDIT (do not modify any file yet)
 
-### Moguće teme
-- eco-gamification.md
-- business-navy.md
-- modern-saas.md
-- minimal-neutral.md
-- tech-blue.md
-- warm-editorial.md
+Inspect the current Nuxt UI setup and report:
+- Nuxt UI version and where theme config currently lives
+  (app.config.ts, nuxt.config.ts, assets/css/main.css)
+- which colors/fonts/radii are currently hardcoded in components
+  instead of coming from tokens
+- the list of shared components (layouts/, components/) vs
+  page-specific components (pages/)
+- anything in _base.md or the theme file that conflicts with the
+  existing implementation
 
-### Izmena teme
-Switch the application from the current theme to design-systems/business-navy.md. Use _base.md as the implementation rules. Preserve functionality and information architecture. Audit the existing UI and make the visual language consistent across the entire application.
+Stop and show me this before continuing.
+
+PHASE 2 — APPLY
+
+Token layer first:
+- Nuxt UI semantic colors go in app.config.ts (ui.colors)
+- custom palette, font-family, radius and shadow scales go in the
+  @theme block in assets/css/main.css
+- do not create a second parallel token system
+
+Then follow the application order in _base.md:
+shell → navigation → shared components → forms → cards → pages → states.
+
+Rules:
+- no hardcoded hex values in components; every color references a token
+- prefer existing Nuxt UI components over custom ones
+- the only new dependency allowed is the theme font (via @nuxt/fonts)
+- apply the shell variant declared in the theme file — do not leave a
+  default white sidebar
+
+CONSTRAINTS
+
+Do not change: routes, composables, stores, API calls, validation
+rules, auth, data models, or any business logic. Class and style
+changes only. If a visual change appears to require a logic change,
+stop and ask.
+
+PHASE 3 — VERIFY
+
+Run typecheck and build. Then report:
+- files changed, grouped by layer
+- any component you could not convert and why
+- confirmation that no logic file was modified
+
+Commit in separate commits per layer, on branch theme/eco-gamification.

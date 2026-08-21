@@ -33,9 +33,8 @@ Bottom navigation labels may use 10/14.
 8px grid: 4, 8, 16, 24, 32, 40, 48.
 
 ## Radius
+Default 12px. Cards 16px. Featured 20px. Buttons 12px. Pills 9999px.
 
-8, 12, 16, 20, 24px. Default 12px. Cards 16px. Featured gamification
-cards 20px. Pills 9999px.
 
 ## Borders and shadows
 
@@ -74,3 +73,14 @@ info → #6155F5 neutral → neutral gray scale
 
 Childish cartoon styling, rainbow palettes, excessive emoji, generic
 AI-SaaS purple, excessive glassmorphism and giant rounded rectangles.
+
+## Shell — solid-dark (desktop) / bottom-nav (mobile)
+shell-bg: #F6F9F8
+sidebar-bg: #062623
+sidebar-text: #A8C4C0
+sidebar-active-bg: #0E5A54
+sidebar-active-text: #FFFFFF
+topbar-bg: #FFFFFF
+
+Desktop sidebar 240px, 16px radius on active items.
+Mobile keeps the existing white bottom nav.

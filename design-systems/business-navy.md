@@ -16,19 +16,17 @@ Success: #16A34A Success Soft: #DCFCE7 Warning: #D97706 Warning Soft:
 #DBEAFE
 
 ## Typography
-
-Font: Inter. Weights 400, 500, 600, 700.
-
-H1 28/36, H2 22/30, H3 18/26, Body 14/20, Body Large 16/24, Small 12/16.
+Font: IBM Plex Sans. Weights 400, 500, 600, 700.
+Numerals: IBM Plex Mono for IDs, amounts, timestamps.
+H1 26/34, H2 20/28, H3 17/24, Body 14/20, Small 12/16.
 
 ## Spacing
 
 4, 8, 12, 16, 24, 32, 40, 48px.
 
 ## Radius
-
-6, 8, 10, 12px. Default 8px. Cards 10px. Inputs/buttons 8px. Avoid 20px+
-except pills/avatars.
+2, 4, 6px. Default 4px. Cards 6px. Inputs/buttons 4px.
+Pills only for badges. Sharp corners are part of the identity.
 
 ## Borders and shadows
 
@@ -62,3 +60,20 @@ primary → #173B63 neutral → slate success → green warning → amber error
 
 Premium B2B SaaS dashboard. Communicate trust, stability, precision and
 competence.
+
+## Shell — solid-dark
+shell-bg: #EEF2F6
+sidebar-bg: #0F2742
+sidebar-text: #B9C7D6
+sidebar-text-muted: #7A8CA3
+sidebar-active-bg: #173B63
+sidebar-active-text: #FFFFFF
+sidebar-border: none (dark block needs no border)
+topbar-bg: #FFFFFF
+topbar-border: 1px solid #E2E8F0
+
+Sidebar width 240px, section labels 11px uppercase letter-spacing 0.06em,
+items 36px high, 4px radius, no icons unless functional.
+
+## Density
+Compact. Table rows 40px. Inputs 36px.
