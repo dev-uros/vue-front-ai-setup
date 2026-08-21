@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 import { useRoute } from 'vue-router'
-import { userFullName, userInitials } from '@/features/shared/schemas/user'
+import { userFullName } from '@/features/shared/schemas/user'
 import { useSessionStore } from '@/features/shared/stores/session'
 import { formatDateTime } from '@/features/shared/utils/format'
 import { toDisplayMessage } from '@/features/shared/utils/apiErrors'
 import { useUserQuery } from '@/features/users/query/useUserQuery'
 import { useUserActions } from '@/features/users/composables/useUserActions'
+import UserAvatarField from '@/features/users/components/UserAvatarField.vue'
 import UserRoleBadge from '@/features/users/components/UserRoleBadge.vue'
 import UserStatusBadge from '@/features/users/components/UserStatusBadge.vue'
 import UserFormModal from '@/features/users/components/UserFormModal.vue'
@@ -58,7 +59,7 @@ const canSeeHistory = computed(() => session.isAdmin)
     <template v-else-if="user">
       <UCard>
         <div class="flex flex-wrap items-start gap-4">
-          <UAvatar :text="userInitials(user)" size="xl" />
+          <UserAvatarField :user="user" size="xl" />
 
           <div class="min-w-0 flex-1">
             <h2 class="text-xl font-semibold text-default">{{ userFullName(user) }}</h2>

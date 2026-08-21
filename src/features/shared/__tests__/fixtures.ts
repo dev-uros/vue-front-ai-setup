@@ -12,6 +12,7 @@ export function makeUser(overrides: Partial<User> = {}): User {
     surname: 'Minić',
     email: 'uros.minic@fifthguild.com',
     role: 'admin',
+    avatar_url: null,
     deactivated_at: null,
     email_verified_at: '2026-08-19T13:42:29+00:00',
     created_at: '2026-08-19T13:42:29+00:00',
@@ -28,6 +29,16 @@ export const plainUser = makeUser({
   surname: 'Nikolić',
   email: 'ana.nikolic@fifthguild.com',
   role: 'user',
+})
+
+/** Has a profile picture. The URL is absolute and always a `.webp` — the backend re-encodes. */
+export const avatarUser = makeUser({
+  id: 18,
+  name: 'Marko',
+  surname: 'Marković',
+  email: 'marko.markovic@fifthguild.com',
+  role: 'user',
+  avatar_url: 'http://localhost:8000/storage/avatars/01M0HV19PNJ21PBZWEDTR2056H.webp',
 })
 
 /** Invited but never activated: the invite link is still unused. */

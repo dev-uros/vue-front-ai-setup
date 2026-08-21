@@ -80,3 +80,30 @@ export async function resendActivation(id: number) {
 
   return messageOnlySchema.parse(data)
 }
+
+/**
+ * `POST /users/{id}/avatar` — `multipart/form-data`, field name `avatar`, and a `POST` even
+ * though it replaces: there is no `PUT`. Axios sets the multipart boundary itself once the
+ * body is a `FormData`, so the content type must not be spelled out here.
+ *
+ * The image comes back re-encoded to a 512x512 WebP under a fresh random name, so the
+ * returned `avatar_url` is the only correct one — the previous file is already deleted.
+ *
+ * This and `removeUserAvatar` are the only writes a plain user may make, and only on their
+ * own account; somebody else's is a 403.
+ */
+export async function updateUserAvatar(id: number, file: File) {
+  const body = new FormData()
+  body.append('avatar', file)
+
+  const { data } = await http.post(`/users/${id}/avatar`, body)
+
+  return apiResponseSchema(userSchema).parse(data)
+}
+
+/** `DELETE /users/{id}/avatar`. Removing one from an account that has none is also a 200. */
+export async function removeUserAvatar(id: number) {
+  const { data } = await http.delete(`/users/${id}/avatar`)
+
+  return apiResponseSchema(userSchema).parse(data)
+}

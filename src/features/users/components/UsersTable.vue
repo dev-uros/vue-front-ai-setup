@@ -3,13 +3,13 @@ import { computed, shallowRef } from 'vue'
 import type { TableColumn } from '@nuxt/ui'
 import {
   userFullName,
-  userInitials,
   userStatus,
   type User,
   type UserStatus,
 } from '@/features/shared/schemas/user'
 import { formatDate } from '@/features/shared/utils/format'
 import { useSessionStore } from '@/features/shared/stores/session'
+import UserAvatar from '@/features/shared/components/UserAvatar.vue'
 import { useUserActions } from '@/features/users/composables/useUserActions'
 import { userRowActions } from '@/features/users/utils/rowActions'
 import UserRoleBadge from '@/features/users/components/UserRoleBadge.vue'
@@ -116,7 +116,7 @@ function actionsFor(user: User) {
     >
       <template #name-cell="{ row }">
         <div class="flex items-center gap-3">
-          <UAvatar :text="userInitials(row.original)" size="sm" />
+          <UserAvatar :user="row.original" size="sm" />
           <div class="min-w-0">
             <RouterLink
               :to="{ name: 'users-detail', params: { id: row.original.id } }"

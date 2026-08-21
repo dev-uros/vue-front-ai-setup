@@ -28,6 +28,13 @@ export const userSchema = z.object({
   surname: z.string(),
   email: z.email(),
   role: userRoleSchema,
+  /**
+   * Absolute URL of the profile picture, or `null` when there is none — then the UI draws
+   * initials instead. The backend re-encodes every upload to a 512x512 WebP under a random
+   * file name, so this changes on every write and must be read from the response rather than
+   * cached or assembled from the id.
+   */
+  avatar_url: z.url().nullable(),
   /** `null` means the account works; a date means it has been switched off. */
   deactivated_at: timestamp.nullable(),
   /** `null` means the account was never activated — the invite link is still unused. */

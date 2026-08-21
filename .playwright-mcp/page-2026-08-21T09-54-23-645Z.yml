@@ -1,0 +1,87 @@
+- generic [active]:
+  - generic:
+    - generic [ref=f3e7]:
+      - generic [ref=f3e8]:
+        - generic [ref=f3e10]:
+          - generic [ref=f3e16]:
+            - paragraph [ref=f3e17]: Fifth Guild
+            - paragraph [ref=f3e18]: Administracija
+          - button "Collapse sidebar" [ref=f3e19]
+        - generic [ref=f3e24]:
+          - separator [ref=f3e25]
+          - navigation [ref=f3e27]:
+            - list [ref=f3e28]:
+              - listitem [ref=f3e29]:
+                - link "Početna" [ref=f3e30] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=f3e36]:
+                - link "Korisnici" [ref=f3e37] [cursor=pointer]:
+                  - /url: /users
+            - list [ref=f3e44]:
+              - listitem [ref=f3e45]:
+                - button "Podešavanja" [expanded] [ref=f3e46]
+                - region "Podešavanja" [ref=f3e55]:
+                  - list [ref=f3e56]:
+                    - listitem [ref=f3e57]:
+                      - link "Moj nalog" [ref=f3e58] [cursor=pointer]:
+                        - /url: /settings/profile
+                    - listitem [ref=f3e64]:
+                      - link "Izgled" [ref=f3e65] [cursor=pointer]:
+                        - /url: /settings/appearance
+        - button "Meni naloga za Uroš Minić" [ref=f3e75]:
+          - img "Uroš Minić" [ref=f3e77]
+          - generic [ref=f3e78]:
+            - generic [ref=f3e79]: Uroš Minić
+            - generic [ref=f3e80]: uros.minic@fifthguild.com
+      - separator
+      - generic [ref=f3e86]:
+        - heading "Moj nalog" [level=1] [ref=f3e89]
+        - generic [ref=f3e91]:
+          - generic [ref=f3e92]:
+            - generic [ref=f3e94]:
+              - heading "Podaci naloga" [level=3] [ref=f3e95]
+              - button "Izmeni" [ref=f3e96]
+            - generic [ref=f3e101]:
+              - generic [ref=f3e102]:
+                - generic [ref=f3e103]:
+                  - img "Uroš Minić" [ref=f3e105]
+                  - generic [ref=f3e106]:
+                    - button "Promeni profilnu sliku za Uroš Minić" [ref=f3e107]
+                    - button [ref=f3e112]
+                - button "Ukloni sliku" [ref=f3e113]
+              - generic [ref=f3e115]:
+                - generic [ref=f3e116]:
+                  - term [ref=f3e117]: Ime
+                  - definition [ref=f3e118]: Uroš
+                - generic [ref=f3e119]:
+                  - term [ref=f3e120]: Prezime
+                  - definition [ref=f3e121]: Minić
+                - generic [ref=f3e122]:
+                  - term [ref=f3e123]: Email
+                  - definition [ref=f3e124]: uros.minic@fifthguild.com
+                - generic [ref=f3e125]:
+                  - term [ref=f3e126]: Uloga
+                  - definition [ref=f3e127]:
+                    - generic [ref=f3e128]: Administrator
+                    - generic [ref=f3e132]: Aktivan
+                - generic [ref=f3e138]:
+                  - term [ref=f3e139]: Nalog kreiran
+                  - definition [ref=f3e140]: 21. 8. 2026. 11:39
+                - generic [ref=f3e141]:
+                  - term [ref=f3e142]: Poslednja izmena
+                  - definition [ref=f3e143]: 21. 8. 2026. 11:54
+          - generic [ref=f3e144]:
+            - heading "Lozinka" [level=3] [ref=f3e146]
+            - paragraph [ref=f3e148]: Lozinka se menja preko linka koji stiže na email. Odjavite se i izaberite „Zaboravili ste lozinku?“ na formi za prijavu.
+            - link "Zatražite link za promenu lozinke" [ref=f3e150] [cursor=pointer]:
+              - /url: /auth/forgot-password
+    - alert [ref=f3e156]: Notification Profilna slika je uspešno postavljena.
+  - generic [ref=f3e1]:
+    - generic "Toggle devtools panel" [ref=f3e2] [cursor=pointer]
+    - generic "Toggle Component Inspector" [ref=f3e158] [cursor=pointer]
+  - region "Notifications (F8)":
+    - list [ref=f3e164]:
+      - listitem [ref=f3e165]:
+        - generic [ref=f3e170]: Profilna slika je uspešno postavljena.
+        - button "Close" [ref=f3e173]
+        - progressbar "87%" [ref=f3e177]

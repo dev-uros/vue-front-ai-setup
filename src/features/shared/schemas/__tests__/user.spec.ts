@@ -21,6 +21,7 @@ const LOGIN_RESPONSE = {
     surname: 'Minić',
     email: 'uros.minic@fifthguild.com',
     role: 'admin',
+    avatar_url: null,
     deactivated_at: null,
     email_verified_at: '2026-08-19T13:42:29+00:00',
     created_at: '2026-08-19T13:42:29+00:00',
@@ -51,6 +52,24 @@ describe('userSchema', () => {
 
   it('rejects a role the app has no handling for', () => {
     expect(userSchema.safeParse(makeWith({ role: 'superadmin' })).success).toBe(false)
+  })
+
+  it('takes an absolute avatar URL, and `null` for an account without a picture', () => {
+    const withPicture = userSchema.parse(
+      makeWith({ avatar_url: 'http://localhost:8000/storage/avatars/01M0HV19PNJ21PBZ.webp' }),
+    )
+
+    expect(withPicture.avatar_url).toBe(
+      'http://localhost:8000/storage/avatars/01M0HV19PNJ21PBZ.webp',
+    )
+    expect(userSchema.parse(makeWith({ avatar_url: null })).avatar_url).toBeNull()
+  })
+
+  /** The API sends an absolute URL; a bare path would mean the `<img>` resolves it against us. */
+  it('rejects an avatar that is a path rather than a URL', () => {
+    expect(userSchema.safeParse(makeWith({ avatar_url: '/storage/avatars/a.webp' })).success).toBe(
+      false,
+    )
   })
 
   it('parses the login envelope, token included', () => {

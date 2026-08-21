@@ -30,5 +30,14 @@ export function useApiToast() {
     })
   }
 
-  return { success, error }
+  /**
+   * A refusal decided here, before any request went out — a file the API would have rejected
+   * anyway. Same toast as `error`, but the wording is ours: there is no server answer to quote
+   * when the call was never made.
+   */
+  function failure(message: string) {
+    toast.add({ title: message, color: 'error', icon: 'i-lucide-circle-alert' })
+  }
+
+  return { success, error, failure }
 }

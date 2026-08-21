@@ -5,8 +5,10 @@ import {
   createUser,
   deactivateUser,
   reactivateUser,
+  removeUserAvatar,
   resendActivation,
   updateUser,
+  updateUserAvatar,
   updateUserRole,
 } from '@/features/users/api/users'
 import { usersKeys } from '@/features/users/query/keys'
@@ -96,6 +98,36 @@ export const useReactivateUserMutation = defineMutation(() => {
 
   return useMutation({
     mutation: (id: number) => reactivateUser(id),
+    onSuccess: (result) => afterWrite(result.data),
+  })
+})
+
+export interface UpdateAvatarVars {
+  id: number
+  file: File
+}
+
+/**
+ * Setting and removing a profile picture — the only two writes that are not admin-only, since
+ * anyone may manage their own.
+ *
+ * `afterWrite` matters more here than elsewhere: the picture is on screen in the sidebar as
+ * well as in the list, and the sidebar reads the session store, which no query owns.
+ */
+export const useUpdateAvatarMutation = defineMutation(() => {
+  const afterWrite = useWriteEffects()
+
+  return useMutation({
+    mutation: ({ id, file }: UpdateAvatarVars) => updateUserAvatar(id, file),
+    onSuccess: (result) => afterWrite(result.data),
+  })
+})
+
+export const useRemoveAvatarMutation = defineMutation(() => {
+  const afterWrite = useWriteEffects()
+
+  return useMutation({
+    mutation: (id: number) => removeUserAvatar(id),
     onSuccess: (result) => afterWrite(result.data),
   })
 })

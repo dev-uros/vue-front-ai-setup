@@ -2,7 +2,8 @@
 import { computed } from 'vue'
 import type { DropdownMenuItem } from '@nuxt/ui'
 import { useSessionStore } from '@/features/shared/stores/session'
-import { userFullName, userInitials } from '@/features/shared/schemas/user'
+import { userFullName } from '@/features/shared/schemas/user'
+import UserAvatar from '@/features/shared/components/UserAvatar.vue'
 import { useAppTheme, type ThemePreference } from '@/features/shared/composables/useAppTheme'
 import { useLogout } from '@/features/auth/composables/useLogout'
 
@@ -83,7 +84,7 @@ const items = computed<DropdownMenuItem[][]>(() => [
       :class="props.collapsed ? 'p-1.5' : 'gap-2.5 p-2'"
       :aria-label="`Meni naloga za ${userFullName(user)}`"
     >
-      <UAvatar :text="userInitials(user)" size="sm" class="shrink-0" />
+      <UserAvatar :user="user" size="sm" class="shrink-0" />
 
       <template v-if="!props.collapsed">
         <span class="min-w-0 flex-1 text-left">
