@@ -9,10 +9,16 @@ what is specific to **this** codebase.
 Vue 3 single-page app built with Vite. **Plain Vue, not Nuxt** — `@nuxt/ui` is used here as a
 standalone Vue component library. TypeScript everywhere, Composition API with `<script setup>` only.
 
-Status: the first vertical slice is in place — mock auth (`features/auth`), a persisted session
-(`features/shared`), a dashboard shell (`layouts/`), and two placeholder feature areas. There is no
-HTTP layer yet: `features/auth/api/login.ts` is a documented mock, and `src/lib/` is still empty.
-Copy the shape of `features/auth` when adding a feature.
+Status: integrated with the Laravel API in `../laravel-back-ai-setup`. Auth (`features/auth`) and
+user administration (`features/users`) are real; there is no mock data anywhere. The contract
+between the two projects is `docs/frontend-integration.md` in the backend repo, and the generated
+reference is at `http://localhost:8000/docs/api` — that documentation is generated from code and
+cannot go stale, so it wins over anything written here. Copy the shape of `features/users` when
+adding a feature.
+
+The UI is **in Serbian**, because the API's `message` field is written for the end user in Serbian
+and is meant to be shown verbatim. Do not paraphrase an API message or replace it with wording of
+your own — see [API boundary](#api-boundary).
 
 ## Stack
 
@@ -81,9 +87,10 @@ src/
       query/              Pinia Colada defineQuery/defineMutation + query keys, wrapping api/
       stores/             optional — Pinia store for feature-local client state
       schemas/            Zod schemas + their z.infer types
+      utils/              pure helpers the feature owns (formatting, rule tables)
       types.ts            types not derived from a schema
       routes.ts           exports this feature's RouteRecordRaw[]
-    users/                same structure
+    users/                same structure — the fullest example, copy this one
     shared/               same structure, minus routes.ts — see rules below
   lib/                    configured third-party clients — axios.ts lives here
   assets/css/             main.css — Tailwind + Nuxt UI entry
@@ -114,6 +121,28 @@ Create these directories on demand; do not scatter equivalents elsewhere.
   belong in `lib/`.
 - Import a third-party HTTP/date/i18n library through its `lib/` module, never directly in a feature
   — swapping or reconfiguring it must stay a one-file change.
+
+### API boundary
+
+The one place that knows the API exists is `src/lib/axios.ts`: base URL from `VITE_API_URL`, the
+bearer token, and the interceptor that turns every failure into an `ApiError`. It is deliberately
+free of domain knowledge — feature `api/` folders add the endpoints.
+
+- **Sanctum personal access tokens, not cookies.** No `/sanctum/csrf-cookie`, no CSRF, no
+  `withCredentials`. If a tutorial shows those, it is describing Sanctum's other mode.
+- Successful responses share one envelope (`{ message, data }`); errors keep Laravel's shape. The
+  client therefore branches on **HTTP status**, never on the shape of the body.
+- `message` is written by the backend for the end user, in Serbian. Show it as it arrives.
+  `toFormFeedback` (422 → the fields it names, anything else → an alert) and `useApiToast` are
+  the two ways it reaches the screen; do not invent replacement copy.
+- Request field names are the API's — `name`/`surname`, `password_confirmation`, snake_case
+  timestamps — all the way into the Zod schemas and form fields, so a 422 lands on the field it
+  names without a lookup table in between.
+- The session stores the **user in memory and the token in `localStorage`**. `features/auth/
+  bootstrap.ts` trades the token for `GET /auth/me` before the router is installed. Never persist
+  the user: a cached role outlives the server's opinion of it.
+- Hiding a control a `user` may not press is a courtesy. The API answers 403 regardless, and that
+  is the actual protection.
 
 ### Routing
 
@@ -205,6 +234,25 @@ outside such a folder gets the wrong tsconfig and no Vitest lint rules.
 e2e/auth/login.spec.ts
 e2e/users/user-list.spec.ts
 ```
+
+E2E runs against the **live backend**, so `make up` and `make demo` must have been run in
+`../laravel-back-ai-setup`.
+
+The public auth endpoints are throttled, and **the counter is shared**: Laravel keys
+`throttle:n,1` on domain plus IP rather than on the route, so login, forgot-password,
+reset-password and activate-account all draw from one tally and only the ceiling differs (10, 5,
+10, 10). A few sign-in attempts are therefore enough to make a forgot-password request fail.
+Three consequences, all already in place — keep them that way:
+
+- `e2e/support/global-setup.ts` signs in once per run; specs seed the token into `localStorage`
+  and let the app restore the session, instead of driving the login form.
+- A test whose subject is the API's answer rather than the rendering runs in one browser — see
+  `onlyOneBrowser` in `e2e/auth/password-links.spec.ts`.
+- Nothing in e2e posts to `/auth/forgot-password` at all; that behaviour is covered in
+  `src/pages/auth/__tests__/ForgotPasswordPage.spec.ts` against a mocked client.
+
+Keep new specs read-only unless the write itself is the subject: the demo database is shared and
+nothing cleans up after a run.
 
 jsdom for unit tests; e2e runs on Chromium + Firefox + WebKit with `baseURL` :5173 locally and
 :4173 on CI (against `preview`). Split by purpose: e2e covers user flows across pages, unit tests

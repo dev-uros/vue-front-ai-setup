@@ -6,6 +6,13 @@ import AppSidebar from '@/layouts/components/AppSidebar.vue'
 const route = useRoute()
 
 const title = computed(() => route.meta.title ?? '')
+
+/**
+ * Only routes the sidebar cannot reach declare a parent — see `back` in `router/meta.d.ts`.
+ * The layout reads the meta rather than knowing which pages nest, so a feature adding a
+ * detail page gets the button without touching this file.
+ */
+const back = computed(() => route.meta.back)
 </script>
 
 <template>
@@ -19,7 +26,19 @@ const title = computed(() => route.meta.title ?? '')
     <UDashboardPanel>
       <template #header>
         <!-- The collapse control lives in the sidebar itself; see AppSidebar. -->
-        <UDashboardNavbar :title="title" />
+        <UDashboardNavbar :title="title">
+          <!-- `leading` renders after the sidebar toggle and before the title, not instead of them. -->
+          <template v-if="back" #leading>
+            <UButton
+              :to="back"
+              icon="i-lucide-arrow-left"
+              color="neutral"
+              variant="ghost"
+              aria-label="Nazad"
+              data-testid="page-back"
+            />
+          </template>
+        </UDashboardNavbar>
       </template>
 
       <template #body>

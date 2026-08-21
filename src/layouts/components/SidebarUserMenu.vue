@@ -1,64 +1,52 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
 import type { DropdownMenuItem } from '@nuxt/ui'
 import { useSessionStore } from '@/features/shared/stores/session'
+import { userFullName, userInitials } from '@/features/shared/schemas/user'
 import { useAppTheme, type ThemePreference } from '@/features/shared/composables/useAppTheme'
+import { useLogout } from '@/features/auth/composables/useLogout'
 
 const props = defineProps<{
   collapsed?: boolean
 }>()
 
-const router = useRouter()
 const session = useSessionStore()
 const { preference } = useAppTheme()
+const { signOut, isLoading } = useLogout()
 
 const user = computed(() => session.user)
-
-const fullName = computed(() =>
-  user.value ? `${user.value.firstName} ${user.value.lastName}` : '',
-)
-
-const initials = computed(() =>
-  user.value ? `${user.value.firstName.charAt(0)}${user.value.lastName.charAt(0)}` : '',
-)
 
 function setTheme(value: ThemePreference) {
   preference.value = value
 }
 
-async function signOut() {
-  session.end()
-  await router.push({ name: 'auth-login' })
-}
-
 const items = computed<DropdownMenuItem[][]>(() => [
   [
     {
-      label: 'Profile settings',
+      label: 'Moj nalog',
       icon: 'i-lucide-user',
       to: { name: 'settings-profile' },
     },
     {
-      label: 'Theme',
+      label: 'Tema',
       icon: 'i-lucide-sun-moon',
       children: [
         {
-          label: 'Light',
+          label: 'Svetla',
           icon: 'i-lucide-sun',
           type: 'checkbox',
           checked: preference.value === 'light',
           onSelect: () => setTheme('light'),
         },
         {
-          label: 'Dark',
+          label: 'Tamna',
           icon: 'i-lucide-moon',
           type: 'checkbox',
           checked: preference.value === 'dark',
           onSelect: () => setTheme('dark'),
         },
         {
-          label: 'System',
+          label: 'Sistemska',
           icon: 'i-lucide-monitor',
           type: 'checkbox',
           checked: preference.value === 'auto',
@@ -69,10 +57,11 @@ const items = computed<DropdownMenuItem[][]>(() => [
   ],
   [
     {
-      label: 'Sign out',
+      label: 'Odjavi se',
       icon: 'i-lucide-log-out',
       color: 'error',
-      onSelect: signOut,
+      loading: isLoading.value,
+      onSelect: () => void signOut(),
     },
   ],
 ])
@@ -92,13 +81,15 @@ const items = computed<DropdownMenuItem[][]>(() => [
       data-testid="user-menu"
       :square="props.collapsed"
       :class="props.collapsed ? 'p-1.5' : 'gap-2.5 p-2'"
-      :aria-label="`Account menu for ${fullName}`"
+      :aria-label="`Meni naloga za ${userFullName(user)}`"
     >
-      <UAvatar :text="initials" size="sm" class="shrink-0" />
+      <UAvatar :text="userInitials(user)" size="sm" class="shrink-0" />
 
       <template v-if="!props.collapsed">
         <span class="min-w-0 flex-1 text-left">
-          <span class="block truncate text-sm font-medium text-default">{{ fullName }}</span>
+          <span class="block truncate text-sm font-medium text-default">
+            {{ userFullName(user) }}
+          </span>
           <span class="block truncate text-xs font-normal text-muted">{{ user.email }}</span>
         </span>
         <UIcon name="i-lucide-ellipsis-vertical" class="size-4 shrink-0 text-dimmed" />

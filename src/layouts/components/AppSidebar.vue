@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useSessionStore } from '@/features/shared/stores/session'
+import { useRoute } from 'vue-router'
 import { mainNavigation } from '@/layouts/navigation'
 import SidebarUserMenu from '@/layouts/components/SidebarUserMenu.vue'
 
-const session = useSessionStore()
+const route = useRoute()
 
-const company = computed(() => session.user?.company ?? 'Workspace')
+/** The menu recomputes on every navigation, which is what moves the active highlight. */
+const items = computed(() => mainNavigation(String(route.name ?? '')))
 </script>
 
 <template>
@@ -32,8 +33,8 @@ const company = computed(() => session.user?.company ?? 'Workspace')
           <UAvatar icon="i-lucide-gem" size="lg" class="shrink-0 bg-primary/10 text-primary" />
 
           <div class="min-w-0 flex-1">
-            <p class="truncate text-sm font-semibold text-default">{{ company }}</p>
-            <p class="truncate text-xs text-muted">Workspace</p>
+            <p class="truncate text-sm font-semibold text-default">Fifth Guild</p>
+            <p class="truncate text-xs text-muted">Administracija</p>
           </div>
         </template>
 
@@ -46,7 +47,7 @@ const company = computed(() => session.user?.company ?? 'Workspace')
 
       <UNavigationMenu
         :collapsed="collapsed"
-        :items="mainNavigation"
+        :items="items"
         orientation="vertical"
         tooltip
         popover

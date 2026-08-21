@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { authRoutes } from '@/features/auth/routes'
 import { dashboardRoutes } from '@/features/dashboard/routes'
 import { settingsRoutes } from '@/features/settings/routes'
+import { usersRoutes } from '@/features/users/routes'
 import { authGuard } from '@/router/guards'
 
 /**
@@ -20,7 +21,13 @@ const router = createRouter({
     {
       path: '/',
       component: () => import('@/layouts/MainLayout.vue'),
-      children: [...dashboardRoutes, ...settingsRoutes],
+      children: [...dashboardRoutes, ...usersRoutes, ...settingsRoutes],
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: () => import('@/pages/NotFoundPage.vue'),
+      meta: { public: true },
     },
   ],
 })

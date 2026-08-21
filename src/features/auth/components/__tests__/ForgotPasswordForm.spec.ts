@@ -11,11 +11,11 @@ describe('ForgotPasswordForm', () => {
   it('emits the email once it validates', async () => {
     const wrapper = mountForm()
 
-    await wrapper.get('input[autocomplete="email"]').setValue('ana.kovac@fifthguild.dev')
+    await wrapper.get('input[autocomplete="email"]').setValue('ana.nikolic@fifthguild.com')
     await wrapper.get('form').trigger('submit')
     await flushPromises()
 
-    expect(wrapper.emitted('submit')).toEqual([[{ email: 'ana.kovac@fifthguild.dev' }]])
+    expect(wrapper.emitted('submit')).toEqual([[{ email: 'ana.nikolic@fifthguild.com' }]])
   })
 
   it('does not emit when the address is malformed', async () => {
@@ -26,6 +26,6 @@ describe('ForgotPasswordForm', () => {
     await flushPromises()
 
     expect(wrapper.emitted('submit')).toBeUndefined()
-    expect(wrapper.text()).toContain('Enter a valid email address')
+    expect(wrapper.text()).toContain('Unesite ispravnu email adresu')
   })
 })

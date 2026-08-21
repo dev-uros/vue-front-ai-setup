@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { useResetPasswordFlow } from '@/features/auth/composables/useResetPasswordFlow'
-import ResetPasswordForm from '@/features/auth/components/ResetPasswordForm.vue'
+import { useSetPasswordFlow } from '@/features/auth/composables/useSetPasswordFlow'
+import SetPasswordForm from '@/features/auth/components/SetPasswordForm.vue'
 
-const { link, submit, isLoading, errorMessage } = useResetPasswordFlow()
+/** Reached from the password reset email: /auth/reset-password?email=…&token=… */
+const { link, submit, isLoading, feedback, isLinkRejected } = useSetPasswordFlow('reset')
 </script>
 
 <template>
@@ -16,39 +17,48 @@ const { link, submit, isLoading, errorMessage } = useResetPasswordFlow()
         />
         <div>
           <h1 class="text-lg font-semibold text-default">
-            {{ link ? 'Choose a new password' : 'This link is not valid' }}
+            {{ link ? 'Nova lozinka' : 'Link nije ispravan' }}
           </h1>
           <p class="mt-1 text-sm text-muted">
             {{
               link
-                ? `Resetting the password for ${link.email}.`
-                : 'The reset link is incomplete or has expired. Request a new one.'
+                ? `Postavljate novu lozinku za ${link.email}.`
+                : 'Link je nepotpun. Zatražite novi.'
             }}
           </p>
         </div>
       </div>
     </template>
 
-    <ResetPasswordForm
+    <SetPasswordForm
       v-if="link"
       :email="link.email"
+      submit-label="Sačuvaj lozinku"
       :loading="isLoading"
-      :error-message="errorMessage"
+      :feedback="feedback"
       @submit="submit"
     />
 
+    <!--
+      A rejected link cannot be fixed by retyping the password, so the way forward is a new
+      link. The API deliberately does not say whether it expired, was already used, or belongs
+      to another account — the alert above carries its wording, and this only offers the exit.
+    -->
     <UButton
-      v-else
+      v-if="!link || isLinkRejected"
       :to="{ name: 'auth-forgot-password' }"
-      label="Request a new link"
+      label="Zatražite novi link"
       size="lg"
       block
+      :variant="link ? 'outline' : 'solid'"
+      :color="link ? 'neutral' : 'primary'"
+      :class="link ? 'mt-4' : ''"
       data-testid="request-new-link"
     />
 
     <template #footer>
       <ULink :to="{ name: 'auth-login' }" class="text-sm font-medium text-primary">
-        Back to sign in
+        Nazad na prijavu
       </ULink>
     </template>
   </UCard>

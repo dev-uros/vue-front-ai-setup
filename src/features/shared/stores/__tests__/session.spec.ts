@@ -1,19 +1,12 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
-import { useSessionStore, SESSION_STORAGE_KEY } from '@/features/shared/stores/session'
-import type { User } from '@/features/shared/schemas/user'
-
-const user: User = {
-  id: 'usr_1',
-  firstName: 'Ana',
-  lastName: 'Kovač',
-  email: 'ana.kovac@fifthguild.dev',
-  company: 'Fifth Guild',
-}
+import { getAuthToken, setAuthToken } from '@/lib/axios'
+import { useSessionStore } from '@/features/shared/stores/session'
+import { adminUser, plainUser } from '@/features/shared/__tests__/fixtures'
 
 describe('session store', () => {
   beforeEach(() => {
-    localStorage.clear()
+    setAuthToken(null)
     setActivePinia(createPinia())
   })
 
@@ -22,40 +15,57 @@ describe('session store', () => {
 
     expect(session.isAuthenticated).toBe(false)
     expect(session.user).toBeNull()
+    expect(session.isAdmin).toBe(false)
   })
 
-  it('persists the user when a session starts', () => {
+  it('opens a session with a user and hands the token to the HTTP client', () => {
     const session = useSessionStore()
-    session.start(user)
+    session.start(adminUser, '20|abc')
 
     expect(session.isAuthenticated).toBe(true)
-    expect(JSON.parse(localStorage.getItem(SESSION_STORAGE_KEY) ?? 'null')).toEqual(user)
+    expect(session.user).toEqual(adminUser)
+    expect(getAuthToken()).toBe('20|abc')
   })
 
-  it('restores a persisted user, which is what survives a page refresh', () => {
-    localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(user))
+  /**
+   * The user is deliberately not persisted: only the token survives a reload, and the app
+   * trades it for fresh details at start. Caching the user would let a revoked role or a
+   * switched-off account keep rendering as if nothing happened.
+   */
+  it('leaves nothing but the token behind for the next page load', () => {
+    useSessionStore().start(adminUser, '20|abc')
 
-    const session = useSessionStore()
-
-    expect(session.user).toEqual(user)
-    expect(session.isAuthenticated).toBe(true)
+    expect(localStorage.getItem('app.auth.token')).toBe('20|abc')
+    expect(JSON.stringify(localStorage)).not.toContain(adminUser.email)
   })
 
-  it('drops a stored value that no longer matches the schema', () => {
-    localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify({ id: 'usr_1', email: 'nope' }))
-
+  it('refreshes the user without touching the token, which is what /auth/me does', () => {
     const session = useSessionStore()
+    session.start(adminUser, '20|abc')
 
-    expect(session.user).toBeNull()
-    expect(localStorage.getItem(SESSION_STORAGE_KEY)).toBeNull()
+    session.setUser({ ...adminUser, name: 'Novo ime' })
+
+    expect(session.user?.name).toBe('Novo ime')
+    expect(getAuthToken()).toBe('20|abc')
   })
 
-  it('clears storage when the session ends', () => {
+  it('reports an admin as one, and a plain user as not', () => {
     const session = useSessionStore()
-    session.start(user)
+
+    session.start(adminUser, '20|abc')
+    expect(session.isAdmin).toBe(true)
+
+    session.setUser(plainUser)
+    expect(session.isAdmin).toBe(false)
+  })
+
+  it('drops the token along with the user when the session ends', () => {
+    const session = useSessionStore()
+    session.start(adminUser, '20|abc')
     session.end()
 
     expect(session.isAuthenticated).toBe(false)
-    expect(localStorage.getItem(SESSION_STORAGE_KEY)).toBeNull()
+    expect(getAuthToken()).toBeNull()
+    expect(localStorage.getItem('app.auth.token')).toBeNull()
   })
 })

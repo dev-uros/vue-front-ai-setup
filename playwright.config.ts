@@ -12,6 +12,11 @@ import { defineConfig, devices } from '@playwright/test'
  */
 export default defineConfig({
   testDir: './e2e',
+  /**
+   * Signs in once per run and writes the tokens to `e2e/.tokens.json`, so specs can seed a
+   * session instead of driving the login form. See the file for why that matters.
+   */
+  globalSetup: './e2e/support/global-setup.ts',
   /* Maximum time one test can run for. */
   timeout: 30 * 1000,
   expect: {

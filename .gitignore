@@ -43,3 +43,10 @@ playwright-report/
 
 auto-imports.d.ts
 components.d.ts
+# Local environment overrides
+.env.local
+.env.*.local
+
+e2e/.tokens.json
+
+.env

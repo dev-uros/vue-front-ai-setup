@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import { reactive, shallowRef } from 'vue'
+import { reactive, shallowRef, useTemplateRef, watch } from 'vue'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import { credentialsSchema, type Credentials } from '@/features/auth/schemas/credentials'
+import { NO_FEEDBACK, type FormFeedback } from '@/features/shared/utils/apiErrors'
 
-const props = defineProps<{
-  loading?: boolean
-  errorMessage?: string | null
-}>()
+const props = withDefaults(
+  defineProps<{
+    loading?: boolean
+    feedback?: FormFeedback
+  }>(),
+  { feedback: () => NO_FEEDBACK },
+)
 
 const emit = defineEmits<{
   submit: [credentials: Credentials]
@@ -14,6 +18,16 @@ const emit = defineEmits<{
 
 const state = reactive<Partial<Credentials>>({ email: '', password: '' })
 const isPasswordVisible = shallowRef(false)
+const form = useTemplateRef('form')
+
+/**
+ * Server-side field errors are pushed into the form rather than rendered next to it, so they
+ * land under the field they name and are cleared the moment the user edits it.
+ */
+watch(
+  () => props.feedback.fields,
+  (fields) => form.value?.setErrors(fields),
+)
 
 /** UForm validates against the schema first, so `event.data` is already typed and clean. */
 function onSubmit(event: FormSubmitEvent<Credentials>) {
@@ -22,13 +36,14 @@ function onSubmit(event: FormSubmitEvent<Credentials>) {
 </script>
 
 <template>
-  <UForm :schema="credentialsSchema" :state="state" class="space-y-5" @submit="onSubmit">
+  <UForm ref="form" :schema="credentialsSchema" :state="state" class="space-y-5" @submit="onSubmit">
     <UAlert
-      v-if="props.errorMessage"
+      v-if="props.feedback.message"
       color="error"
       variant="subtle"
       icon="i-lucide-circle-alert"
-      :description="props.errorMessage"
+      :description="props.feedback.message"
+      data-testid="form-error"
     />
 
     <UFormField name="email" label="Email" required>
@@ -36,16 +51,16 @@ function onSubmit(event: FormSubmitEvent<Credentials>) {
         v-model="state.email"
         type="email"
         autocomplete="email"
-        placeholder="you@example.com"
+        placeholder="ime.prezime@primer.com"
         size="lg"
         class="w-full"
       />
     </UFormField>
 
-    <UFormField name="password" label="Password" required>
+    <UFormField name="password" label="Lozinka" required>
       <template #hint>
         <ULink :to="{ name: 'auth-forgot-password' }" class="text-xs font-medium text-primary">
-          Forgot password?
+          Zaboravili ste lozinku?
         </ULink>
       </template>
 
@@ -64,7 +79,7 @@ function onSubmit(event: FormSubmitEvent<Credentials>) {
             variant="link"
             size="sm"
             :icon="isPasswordVisible ? 'i-lucide-eye-off' : 'i-lucide-eye'"
-            :aria-label="isPasswordVisible ? 'Hide password' : 'Show password'"
+            :aria-label="isPasswordVisible ? 'Sakrij lozinku' : 'Prikaži lozinku'"
             :aria-pressed="isPasswordVisible"
             data-testid="toggle-password"
             @click="isPasswordVisible = !isPasswordVisible"
@@ -73,6 +88,6 @@ function onSubmit(event: FormSubmitEvent<Credentials>) {
       </UInput>
     </UFormField>
 
-    <UButton type="submit" label="Sign in" size="lg" block :loading="props.loading" />
+    <UButton type="submit" label="Prijavi se" size="lg" block :loading="props.loading" />
   </UForm>
 </template>

@@ -1,35 +1,49 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, useTemplateRef, watch } from 'vue'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import {
-  passwordResetRequestSchema,
-  type PasswordResetRequest,
-} from '@/features/auth/schemas/passwordReset'
+import { forgotPasswordSchema, type ForgotPasswordRequest } from '@/features/auth/schemas/password'
+import { NO_FEEDBACK, type FormFeedback } from '@/features/shared/utils/apiErrors'
 
-const props = defineProps<{
-  loading?: boolean
-  errorMessage?: string | null
-}>()
+const props = withDefaults(
+  defineProps<{
+    loading?: boolean
+    feedback?: FormFeedback
+  }>(),
+  { feedback: () => NO_FEEDBACK },
+)
 
 const emit = defineEmits<{
-  submit: [request: PasswordResetRequest]
+  submit: [request: ForgotPasswordRequest]
 }>()
 
-const state = reactive<Partial<PasswordResetRequest>>({ email: '' })
+const state = reactive<Partial<ForgotPasswordRequest>>({ email: '' })
+const form = useTemplateRef('form')
 
-function onSubmit(event: FormSubmitEvent<PasswordResetRequest>) {
+watch(
+  () => props.feedback.fields,
+  (fields) => form.value?.setErrors(fields),
+)
+
+function onSubmit(event: FormSubmitEvent<ForgotPasswordRequest>) {
   emit('submit', event.data)
 }
 </script>
 
 <template>
-  <UForm :schema="passwordResetRequestSchema" :state="state" class="space-y-5" @submit="onSubmit">
+  <UForm
+    ref="form"
+    :schema="forgotPasswordSchema"
+    :state="state"
+    class="space-y-5"
+    @submit="onSubmit"
+  >
     <UAlert
-      v-if="props.errorMessage"
+      v-if="props.feedback.message"
       color="error"
       variant="subtle"
       icon="i-lucide-circle-alert"
-      :description="props.errorMessage"
+      :description="props.feedback.message"
+      data-testid="form-error"
     />
 
     <UFormField name="email" label="Email" required>
@@ -37,12 +51,12 @@ function onSubmit(event: FormSubmitEvent<PasswordResetRequest>) {
         v-model="state.email"
         type="email"
         autocomplete="email"
-        placeholder="you@example.com"
+        placeholder="ime.prezime@primer.com"
         size="lg"
         class="w-full"
       />
     </UFormField>
 
-    <UButton type="submit" label="Send reset link" size="lg" block :loading="props.loading" />
+    <UButton type="submit" label="Pošalji link" size="lg" block :loading="props.loading" />
   </UForm>
 </template>

@@ -4,9 +4,9 @@ import { useAppTheme, type ThemePreference } from '@/features/shared/composables
 const { preference, resolved } = useAppTheme()
 
 const options: { label: string; value: ThemePreference; icon: string }[] = [
-  { label: 'Light', value: 'light', icon: 'i-lucide-sun' },
-  { label: 'Dark', value: 'dark', icon: 'i-lucide-moon' },
-  { label: 'System', value: 'auto', icon: 'i-lucide-monitor' },
+  { label: 'Svetla', value: 'light', icon: 'i-lucide-sun' },
+  { label: 'Tamna', value: 'dark', icon: 'i-lucide-moon' },
+  { label: 'Sistemska', value: 'auto', icon: 'i-lucide-monitor' },
 ]
 </script>
 
@@ -14,8 +14,10 @@ const options: { label: string; value: ThemePreference; icon: string }[] = [
   <UCard>
     <div class="space-y-4">
       <div>
-        <h3 class="text-sm font-medium text-default">Theme</h3>
-        <p class="text-xs text-muted">Currently rendering in {{ resolved }} mode.</p>
+        <h3 class="text-sm font-medium text-default">Tema</h3>
+        <p class="text-xs text-muted">
+          Trenutno je uključena {{ resolved === 'dark' ? 'tamna' : 'svetla' }} tema.
+        </p>
       </div>
 
       <div class="flex flex-wrap gap-2">

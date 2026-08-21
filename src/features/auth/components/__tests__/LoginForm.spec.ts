@@ -41,13 +41,13 @@ describe('LoginForm', () => {
   it('emits the validated credentials on submit', async () => {
     const wrapper = mountForm()
 
-    await wrapper.get('input[autocomplete="email"]').setValue('ana.kovac@fifthguild.dev')
-    await wrapper.get('input[autocomplete="current-password"]').setValue('Password123!')
+    await wrapper.get('input[autocomplete="email"]').setValue('uros.minic@fifthguild.com')
+    await wrapper.get('input[autocomplete="current-password"]').setValue('password')
     await wrapper.get('form').trigger('submit')
     await flushPromises()
 
     expect(wrapper.emitted('submit')).toEqual([
-      [{ email: 'ana.kovac@fifthguild.dev', password: 'Password123!' }],
+      [{ email: 'uros.minic@fifthguild.com', password: 'password' }],
     ])
   })
 
@@ -55,23 +55,53 @@ describe('LoginForm', () => {
     const wrapper = mountForm()
 
     await wrapper.get('input[autocomplete="email"]').setValue('not-an-email')
-    await wrapper.get('input[autocomplete="current-password"]').setValue('short')
     await wrapper.get('form').trigger('submit')
     await flushPromises()
 
     expect(wrapper.emitted('submit')).toBeUndefined()
   })
 
-  it('shows the error message it is given', () => {
-    const wrapper = mountForm({ errorMessage: 'No account exists for x@y.dev.' })
+  /**
+   * A short password must still reach the API. The policy applies to passwords being *set*;
+   * refusing an existing one locally would lock out every account created under older rules.
+   */
+  it('submits a password that would fail the new-password policy', async () => {
+    const wrapper = mountForm()
 
-    expect(wrapper.text()).toContain('No account exists for x@y.dev.')
+    await wrapper.get('input[autocomplete="email"]').setValue('uros.minic@fifthguild.com')
+    await wrapper.get('input[autocomplete="current-password"]').setValue('short')
+    await wrapper.get('form').trigger('submit')
+    await flushPromises()
+
+    expect(wrapper.emitted('submit')).toHaveLength(1)
+  })
+
+  it("shows the API's message when there is no field to pin it to", () => {
+    const wrapper = mountForm({
+      feedback: { message: 'Podaci za prijavu nisu tačni.', fields: [] },
+    })
+
+    expect(wrapper.get('[data-testid="form-error"]').text()).toContain(
+      'Podaci za prijavu nisu tačni.',
+    )
+  })
+
+  it('pushes server-side field errors onto the field they name', async () => {
+    const wrapper = mountForm()
+
+    await wrapper.setProps({
+      feedback: { message: null, fields: [{ name: 'email', message: 'Nalog je isključen.' }] },
+    })
+    await flushPromises()
+
+    expect(wrapper.text()).toContain('Nalog je isključen.')
+    expect(wrapper.find('[data-testid="form-error"]').exists()).toBe(false)
   })
 
   it('links to the forgot-password route', () => {
     const link = mountForm().get('a')
 
-    expect(link.text()).toBe('Forgot password?')
+    expect(link.text()).toBe('Zaboravili ste lozinku?')
     expect(link.attributes('href')).toBe('/auth/forgot-password')
   })
 })
