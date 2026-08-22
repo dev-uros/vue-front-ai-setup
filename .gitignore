@@ -49,4 +49,7 @@ components.d.ts
 
 e2e/.tokens.json
 
+# Server coordinates for deploy.sh. Not secret, but per-environment -- see deploy.env.example.
+deploy.env
+
 .env

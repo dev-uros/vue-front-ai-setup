@@ -56,6 +56,7 @@ the matching skill or MCP first.
 | `npm run type-check` | `vue-tsc --build` — never plain `tsc`, it cannot read `.vue` |
 | `npm run lint` | oxlint `--fix`, then eslint `--fix` |
 | `npm run format` | Prettier over `src/` |
+| `npm run deploy` | ship to the server — see [Deployment](#deployment) |
 
 **Definition of done for any code change:** `npm run type-check` and `npm run lint` pass, and
 `npm run test:unit` passes when anything under `src/` changed. Run them before reporting the task
@@ -257,6 +258,20 @@ nothing cleans up after a run.
 jsdom for unit tests; e2e runs on Chromium + Firefox + WebKit with `baseURL` :5173 locally and
 :4173 on CI (against `preview`). Split by purpose: e2e covers user flows across pages, unit tests
 cover logic and component behaviour. Do not duplicate the same assertion across both layers.
+
+## Deployment
+
+`docs/deployment.md` is the full account; what matters when changing code:
+
+- The app ships as static files in an nginx container behind the Traefik that already runs on the
+  server. `Dockerfile`, `nginx.conf`, `compose.yaml` and `deploy.sh` at the repo root are that
+  setup — `deploy.sh` is the only entry point, and nothing is edited on the server by hand.
+- `VITE_API_URL` is baked into the bundle at **build** time, so it is a Docker build arg, not a
+  runtime variable. Changing it needs a rebuild. It is the only `VITE_` variable, and nothing
+  secret may ever become one: everything with that prefix ends up readable in the browser.
+- A new route works after a refresh only because of `try_files` in `nginx.conf`. The two paths the
+  backend puts in emails (`/auth/activate-account`, `/auth/reset-password`) depend on it.
+- `npm run build` runs inside the image, so a type error fails the deploy.
 
 ## Skill & MCP routing
 

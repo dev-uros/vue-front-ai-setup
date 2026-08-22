@@ -162,3 +162,19 @@ npm run test:e2e -- --debug
 ```sh
 npm run lint
 ```
+
+## Deploy
+
+One command, first time and every time after:
+
+```sh
+cp deploy.env.example deploy.env   # once: server, domain, API base URL
+npm run deploy
+```
+
+It builds the image on the server, releases it behind the Traefik that already runs there, and
+verifies the domain answers before reporting success. `npm run deploy -- --local` builds the same
+image and serves it on <http://localhost:8080> without touching the server, `-- --status` shows
+what is deployed, `-- --ref <sha>` releases an exact commit (that is also the rollback).
+
+Full instructions, including what has to be true on the server first: [`docs/deployment.md`](docs/deployment.md).

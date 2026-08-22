@@ -1,0 +1,50 @@
+# Runs on the server, in /opt/web. The two values it needs -- APP_DOMAIN and VITE_API_URL --
+# come from the `.env` file next to this one, which `deploy.sh` writes from `deploy.env`.
+# Nothing here is edited by hand on the server.
+
+name: web
+
+services:
+  web:
+    build:
+      context: .
+      args:
+        VITE_API_URL: ${VITE_API_URL:?set VITE_API_URL in .env next to compose.yaml (deploy.sh writes it)}
+    restart: unless-stopped
+
+    # No `ports:`. The only way into this container is through Traefik, which is also the only
+    # thing that terminates TLS and adds the security headers.
+    networks: [edge]
+
+    labels:
+      traefik.enable: 'true'
+
+      # Required whenever a container sits on more than one network. Without it Traefik can pick
+      # the wrong address and you get a 502 with no message anywhere.
+      traefik.docker.network: edge
+
+      traefik.http.routers.web.rule: Host(`${APP_DOMAIN:?set APP_DOMAIN in .env next to compose.yaml (deploy.sh writes it)}`)
+      traefik.http.routers.web.entrypoints: websecure
+      traefik.http.routers.web.tls.certresolver: le
+      traefik.http.routers.web.middlewares: security-headers@file,compress@file
+      traefik.http.services.web.loadbalancer.server.port: '80'
+
+    # `deploy.sh` waits on this before it calls the deploy done.
+    healthcheck:
+      test: ['CMD', 'wget', '--quiet', '--spider', 'http://127.0.0.1/healthz']
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '3'
+
+networks:
+  # Created by the backend deploy. `external` means "find it", not "create it".
+  edge:
+    external: true
+    name: edge
