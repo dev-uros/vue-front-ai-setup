@@ -236,6 +236,11 @@ ENV
 
 docker compose up -d --build
 docker image prune -f >/dev/null
+# The build cache grows with every build and nothing else ever trims it. 5 GB keeps the layers a
+# rebuild reuses (node_modules, the base images). --reserved-space is Docker 28+; older daemons
+# only know the former name of the same flag.
+docker builder prune -f --reserved-space 5gb >/dev/null 2>&1 \
+  || docker builder prune -f --keep-storage 5gb >/dev/null 2>&1 || true
 
 container=$(docker compose ps -q web)
 say "waiting for the container to report healthy"

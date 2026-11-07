@@ -103,7 +103,8 @@ Ista komanda i za prvi put i za svaki sledeći. Šta radi, redom:
    `localhost` (to je greška koja se vidi tek u browseru, na produkciji), da li si zaboravio da
    `push`-uješ. Server povlači iz gita, pa ono što je ostalo na tvojoj mašini ne ide nigde.
 2. **Na serveru** — `git clone` prvi put, posle `fetch` + checkout tačnog commita; upiše `.env`;
-   `docker compose up -d --build`; `docker image prune -f`; čeka da kontejner javi `healthy`.
+   `docker compose up -d --build`; `docker image prune -f`; build keš se skraćuje na 5 GB (inače
+   raste sa svakim buildom); čeka da kontejner javi `healthy`.
 3. **Verifikacija spolja** — poziva `https://app.tvoj-domen.rs/healthz` dok ne odgovori 200
    (prvi put Traefik vadi sertifikat, to traje 30-60 sekundi), pa još proveri da duboka ruta
    `/auth/login` vraća 200, a ne 404.
