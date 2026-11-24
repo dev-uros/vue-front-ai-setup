@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { authRoutes } from '@/features/auth/routes'
 import { dashboardRoutes } from '@/features/dashboard/routes'
+import { mobileUsersRoutes } from '@/features/mobile-users/routes'
 import { settingsRoutes } from '@/features/settings/routes'
 import { usersRoutes } from '@/features/users/routes'
 import { useShortcutsStore } from '@/features/shortcuts/stores/shortcuts'
@@ -22,7 +23,7 @@ const router = createRouter({
     {
       path: '/',
       component: () => import('@/layouts/MainLayout.vue'),
-      children: [...dashboardRoutes, ...usersRoutes, ...settingsRoutes],
+      children: [...dashboardRoutes, ...usersRoutes, ...mobileUsersRoutes, ...settingsRoutes],
     },
     {
       path: '/:pathMatch(.*)*',

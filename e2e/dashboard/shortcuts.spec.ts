@@ -14,7 +14,7 @@ const MARKO = 'Marko Petrović-Ilić'
  * from, so an unscoped "Korisnici" matches both as soon as the feature works.
  */
 function nav(page: Page, name: string) {
-  return page.locator('#app-dashboard-sidebar-main').getByRole('link', { name })
+  return page.locator('#app-dashboard-sidebar-main').getByRole('link', { name, exact: true })
 }
 
 async function goHome(page: Page) {

@@ -39,6 +39,12 @@ export function mainNavigation(routeName: string): NavigationMenuItem[][] {
         to: { name: 'users-list' },
         active: inSection('users'),
       },
+      {
+        label: 'Korisnici aplikacije',
+        icon: 'i-lucide-smartphone',
+        to: { name: 'mobile-users-list' },
+        active: inSection('mobile-users'),
+      },
     ],
     [
       {

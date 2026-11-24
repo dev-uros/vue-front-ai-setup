@@ -27,7 +27,7 @@ test('collapses and expands the sidebar, and remembers the choice', async ({ pag
 })
 
 test('navigates through single and expandable menu items', async ({ page }) => {
-  await page.getByRole('link', { name: 'Korisnici' }).click()
+  await page.getByRole('link', { name: 'Korisnici', exact: true }).click()
   await expect(page).toHaveURL('/users')
 
   // The Settings group is `defaultOpen` in `layouts/navigation.ts`, so its children are already
@@ -50,7 +50,7 @@ test('navigates through single and expandable menu items', async ({ page }) => {
  */
 test('lights the section you are in, and only that one', async ({ page }) => {
   const home = page.getByRole('link', { name: 'Početna' })
-  const users = page.getByRole('link', { name: 'Korisnici' })
+  const users = page.getByRole('link', { name: 'Korisnici', exact: true })
   const profile = page.getByRole('link', { name: 'Moj nalog' })
   const appearance = page.getByRole('link', { name: 'Izgled' })
 
@@ -103,7 +103,7 @@ test('shows the sidebar as an overlay on a phone viewport', async ({ page }) => 
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/')
 
-  const nav = page.getByRole('link', { name: 'Korisnici' })
+  const nav = page.getByRole('link', { name: 'Korisnici', exact: true })
   await expect(nav).toBeHidden()
 
   await page.getByRole('button', { name: 'Open sidebar' }).click()
@@ -126,7 +126,7 @@ test('runs the page transition on a route change', async ({ page }) => {
   // Visit the target once so its lazy chunk is cached. `mode="out-in"` runs the enter phase only
   // after the incoming component resolves, and on a cold dev server that fetch outlasts the
   // 200ms window this test is watching for.
-  await page.getByRole('link', { name: 'Korisnici' }).click()
+  await page.getByRole('link', { name: 'Korisnici', exact: true }).click()
   await expect(page).toHaveURL('/users')
   await page.getByRole('link', { name: 'Početna' }).click()
   await expect(page).toHaveURL('/')
@@ -134,7 +134,7 @@ test('runs the page transition on a route change', async ({ page }) => {
   // Start waiting before the click: the enter phase only lasts 200ms.
   const entering = page.locator('.page-enter-active').waitFor({ state: 'attached', timeout: 3000 })
 
-  await page.getByRole('link', { name: 'Korisnici' }).click()
+  await page.getByRole('link', { name: 'Korisnici', exact: true }).click()
 
   await entering
   await expect(page).toHaveURL('/users')

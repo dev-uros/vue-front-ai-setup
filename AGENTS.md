@@ -11,7 +11,9 @@ Vue 3 single-page app built with Vite. **Plain Vue, not Nuxt** — `@nuxt/ui` is
 standalone Vue component library. TypeScript everywhere, Composition API with `<script setup>` only.
 
 Status: integrated with the Laravel API in `../laravel-back-ai-setup`. Auth (`features/auth`) and
-user administration (`features/users`) are real; there is no mock data anywhere. The contract
+user administration (`features/users`) are real, and so is `features/mobile-users` — the accounts of
+the project's external (customer) mobile app, a separate population on the backend: read by anyone
+signed in, blocked and unblocked by admins, never edited here. There is no mock data anywhere. The contract
 between the two projects is `docs/frontend-integration.md` in the backend repo, and the generated
 reference is at `http://localhost:8000/docs/api` — that documentation is generated from code and
 cannot go stale, so it wins over anything written here. Copy the shape of `features/users` when
