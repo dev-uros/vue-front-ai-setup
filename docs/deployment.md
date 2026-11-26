@@ -23,8 +23,8 @@ Ceo deploy je jedna komanda:
 npm run deploy
 ```
 
-Detalji infrastrukture su u [`docs/frontend-infra.md`](../../laravel-back-ai-setup/docs/frontend-infra.md)
-u backend repou; ovde je ono što je specifično za ovaj projekat.
+Detalji infrastrukture su u backend repou, `docs/deployment.md`, odeljak „5. Frontend“
+(u generisanom projektu [`../api/docs/deployment.md`](../../api/docs/deployment.md)); ovde je ono što je specifično za ovaj projekat.
 
 ---
 

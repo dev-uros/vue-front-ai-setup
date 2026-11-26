@@ -53,3 +53,5 @@ e2e/.tokens.json
 deploy.env
 
 .env
+# Playwright MCP page snapshots -- local session output
+.playwright-mcp/

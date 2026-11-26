@@ -10,12 +10,12 @@ what is specific to **this** codebase.
 Vue 3 single-page app built with Vite. **Plain Vue, not Nuxt** — `@nuxt/ui` is used here as a
 standalone Vue component library. TypeScript everywhere, Composition API with `<script setup>` only.
 
-Status: integrated with the Laravel API in `../laravel-back-ai-setup`. Auth (`features/auth`) and
+Status: integrated with the Laravel API in `../api` (in a generated project; `../laravel-backend-ai-setup` next to the template repo). Auth (`features/auth`) and
 user administration (`features/users`) are real, and so is `features/mobile-users` — the accounts of
 the project's external (customer) mobile app, a separate population on the backend: read by anyone
 signed in, blocked and unblocked by admins, never edited here. There is no mock data anywhere. The contract
 between the two projects is `docs/frontend-integration.md` in the backend repo, and the generated
-reference is at `http://localhost:8000/docs/api` — that documentation is generated from code and
+reference is at `/docs/api` on the running API (`http://localhost:8000/docs/api` by default; `make ports` at the project root) — that documentation is generated from code and
 cannot go stale, so it wins over anything written here. Copy the shape of `features/users` when
 adding a feature.
 
@@ -51,7 +51,7 @@ the matching skill or MCP first.
 
 | Command | Notes |
 | --- | --- |
-| `npm run dev` | dev server on :5173 |
+| `npm run dev` | dev server on :5173 — in a generated project start it with `make web` from the root instead: it uses the project's port, the only origin the API's CORS allows (`make ports` lists them) |
 | `npm run build` | `build-only` + `type-check` |
 | `npm run preview` | preview build on :4173 |
 | `npm run test:unit` | Vitest |
@@ -112,7 +112,8 @@ Create these directories on demand; do not scatter equivalents elsewhere.
 - `pages/` holds route targets only: one component per route, mirroring the feature name
   (`pages/auth/LoginPage.vue`). A page composes feature components and calls feature `query/`
   composables — no business logic, no direct `api/` calls, no markup that belongs in a component.
-- `layouts/` holds app chrome and never imports from a feature.
+- `layouts/` holds app chrome. It imports from `features/shared/` only — the one exception is
+  `SidebarUserMenu.vue`, which uses `features/auth`'s `useLogout`. No other feature import.
 - `api/` returns parsed, typed data. `query/` wraps it in Colada `defineQuery` / `defineMutation`
   and owns the query keys. Components and pages call `query/`, never `api/` directly.
 - `src/lib/` is the only place a third-party library gets configured — one module per library. HTTP
@@ -159,12 +160,13 @@ free of domain knowledge — feature `api/` folders add the endpoints.
 
   ```ts
   routes: [
-    { path: '/', component: () => import('@/layouts/DefaultLayout.vue'), children: [...usersRoutes] },
     { path: '/auth', component: () => import('@/layouts/AuthLayout.vue'), children: [...authRoutes] },
+    { path: '/', component: () => import('@/layouts/MainLayout.vue'), children: [...usersRoutes] },
   ]
   ```
 
-- Global guards stay in `src/router/index.ts`; feature-specific guards go in that feature's
+- Global guards live in `src/router/guards.ts` and are registered in `src/router/index.ts`
+  (`router.beforeEach(authGuard)`); feature-specific guards go in that feature's
   `routes.ts` as per-route guards.
 
 ### Conventions
@@ -225,7 +227,7 @@ src/features/auth/components/__tests__/LoginForm.spec.ts
 src/features/auth/composables/__tests__/useLogin.spec.ts
 src/features/auth/query/__tests__/useLoginMutation.spec.ts
 src/pages/auth/__tests__/LoginPage.spec.ts
-src/layouts/__tests__/DefaultLayout.spec.ts
+src/router/__tests__/guards.spec.ts
 ```
 
 The `__tests__` name is not cosmetic: `tsconfig.app.json` excludes and `tsconfig.vitest.json`
@@ -240,7 +242,7 @@ e2e/users/user-list.spec.ts
 ```
 
 E2E runs against the **live backend**, so `make up` and `make demo` must have been run in
-`../laravel-back-ai-setup`.
+`../api` (in a generated project; `../laravel-backend-ai-setup` next to the template repo).
 
 The public auth endpoints are throttled, and **the counter is shared**: Laravel keys
 `throttle:n,1` on domain plus IP rather than on the route, so login, forgot-password,

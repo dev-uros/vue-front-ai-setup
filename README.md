@@ -2,7 +2,7 @@
 
 ## Backend
 
-This SPA talks to the Laravel API in `../laravel-back-ai-setup`. Start it there with `make up`,
+This SPA talks to the Laravel API in `../api` (`../laravel-backend-ai-setup`, next to the template). Start it there with `make up`,
 then seed the demo accounts with `make demo`. The contract between the two projects is
 `docs/frontend-integration.md` in that repo, and the generated reference is at
 <http://localhost:8000/docs/api>.
