@@ -1,8 +1,7 @@
 import { useRouter } from 'vue-router'
-import { useQueryCache } from '@pinia/colada'
-import { useSessionStore } from '@/features/shared/stores/session'
 import { useLogoutMutation } from '@/features/auth/query/useLogoutMutation'
 import { useApiToast } from '@/features/shared/composables/useApiToast'
+import { forgetSignedInUser } from '@/features/auth/bootstrap'
 import { LOGIN_ROUTE } from '@/router/guards'
 
 /**
@@ -15,8 +14,6 @@ import { LOGIN_ROUTE } from '@/router/guards'
  */
 export function useLogout() {
   const router = useRouter()
-  const session = useSessionStore()
-  const cache = useQueryCache()
   const toast = useApiToast()
   const { mutateAsync, isLoading } = useLogoutMutation()
 
@@ -28,13 +25,7 @@ export function useLogout() {
       // Already logged out as far as this browser is concerned; see above.
     }
 
-    session.end()
-    // Otherwise the next person to sign in on this browser sees the previous user's data
-    // for as long as it takes their own to arrive. Removing beats invalidating: an
-    // invalidated entry keeps its data and only refetches, which is the same leak.
-    for (const entry of cache.getEntries()) {
-      cache.remove(entry)
-    }
+    forgetSignedInUser()
 
     await router.push({ name: LOGIN_ROUTE })
   }

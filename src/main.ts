@@ -7,9 +7,7 @@ import ui from '@nuxt/ui/vue-plugin'
 import App from './App.vue'
 import router from './router'
 import { onUnauthorized } from '@/lib/axios'
-import { useSessionStore } from '@/features/shared/stores/session'
-import { restoreSession } from '@/features/auth/bootstrap'
-import { LOGIN_ROUTE } from '@/router/guards'
+import { endExpiredSession, restoreSession } from '@/features/auth/bootstrap'
 
 const app = createApp(App)
 
@@ -29,12 +27,9 @@ app.use(ui)
  * wait for a request to land.
  */
 restoreSession().then(() => {
-  // From here on a 401 means the token died mid-session — revoked elsewhere, or invalidated
-  // by a password reset. `lib/axios` has already thrown it away; this is the other half.
-  onUnauthorized(() => {
-    useSessionStore().end()
-    void router.push({ name: LOGIN_ROUTE })
-  })
+  // From here on a 401 either ends a dead session or is the login form's wrong password —
+  // `endExpiredSession` tells the two apart.
+  onUnauthorized(() => endExpiredSession(router))
 
   app.use(router)
   app.mount('#app')
